@@ -1,0 +1,61 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+option java_multiple_files = true;
+option java_package = "sw.stepCounter.service1";
+option java_outer_classname = "SmartWatchHealthImpl";
+
+package service1;
+
+// StepCounter service
+service StepCounter {
+  // Sends multiple steps every second, changing on the current hour of the day(Client Streaming)
+  rpc SendSteps(stream StepsRequest) returns (google.protobuf.Empty) {}
+
+  // Requests how many steps have been done in the last hour (Unary)
+  rpc GetLastHourSteps(google.protobuf.Empty) returns (StepCount) {}
+
+  // Requests average steps for the hours of the day (Client Streaming)
+  rpc GetAverageHourlySteps(stream HourlyStepRequest) returns (HourlyStepCount) {}
+
+  // Sets a daily step goal and tracks progress towards that goal (Unary)
+  rpc SetStepGoal(StepGoal) returns (StepGoalResponse) {}
+}
+
+// StepCounter request and response messages
+message StepsRequest {
+  int32 steps = 1;
+}
+
+message StepCount {
+  int32 count = 1;
+}
+
+// Defined the TimePeriod enumeration in a separate file or message to ensure consistency
+enum TimePeriod {
+  LAST_WEEK = 0;
+  LAST_MONTH = 1;
+  LAST_YEAR = 2;
+}
+
+// HourlyStepRequest message references the TimePeriod enumeration
+message HourlyStepRequest {
+  int32 hour = 1;
+  TimePeriod time_period = 2;
+}
+
+// HourlyStepCount message also references the TimePeriod enumeration
+message HourlyStepCount {
+  int32 average_steps = 1;
+  TimePeriod time_period = 2;
+  string message = 3;
+}
+
+message StepGoal {
+  int32 goal = 1;
+}
+
+message StepGoalResponse {
+  bool success = 1;
+}
+

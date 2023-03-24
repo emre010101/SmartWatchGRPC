@@ -1,0 +1,47 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+option java_multiple_files = true;
+option java_package = "ds.service3";
+option java_outer_classname = "Service3Impl";
+
+package service3;
+
+/// Monitoring service
+service Monitoring {
+  // Saves user credentials for accessing health records (Unary)
+  rpc SetUserRecords(stream UserRecords) returns (ServerResponse) {}
+
+  // Requests health records (Server Streaming)
+  rpc GetHealthRecords(GetHealthRecordsRequest) returns (stream UserRecords) {}
+
+  // Sends heart rate data from client and receives warnings from server (Bidirectional Streaming)
+  rpc MonitorHeartRate(stream HeartRateRequest) returns (stream HeartRateWarning) {}
+}
+
+// Monitoring request and response messages
+message UserRecords {
+	int32 patient_id = 1;
+	int32 age = 2;
+	string name = 3;
+	double weight = 4;
+	double height = 5;
+	repeated string close_contacts = 6;
+	string address = 7;
+}
+
+message ServerResponse {
+	string confirmed = 1;
+}
+
+message GetHealthRecordsRequest {
+	int32 patient_id = 1;
+}
+
+message HeartRateRequest {
+  double heart_rate = 1;
+}
+
+message HeartRateWarning {
+  string message = 1;
+}

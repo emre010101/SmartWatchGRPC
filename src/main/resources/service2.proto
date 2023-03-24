@@ -1,0 +1,39 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+option java_multiple_files = true;
+option java_package = "sw.Reminder.service1";
+option java_outer_classname = "SmartWatchHealthImpl";
+
+package service2;
+
+// Reminder service
+service Reminder {
+  // Saves when pills need to be taken and others tasks and reminds the user (Unary)
+  rpc SetTaskReminder(TaskReminder) returns (ServerResponse) {}
+
+  // Check the reminders whether the time is up or not(Server Streaming)
+  rpc checkReminder(google.protobuf.Empty) returns (stream ServerResponse) {} 
+
+  // Tracks completion of a task/event (Unary) //It could be doctor appointment reminder or whatever
+  rpc MarkTaskComplete(TaskComplete) returns (ServerResponse) {}
+  
+  // Retrieves the list of tasks that have been set on the server (Server Streaming)
+  rpc GetTaskList(google.protobuf.Empty) returns (stream TaskReminder) {}
+}
+
+
+// Reminder request and response messages
+message TaskReminder {
+  int64 time = 1;
+  string task_name = 2;
+}
+
+message ServerResponse {
+	string confirmed = 1;
+}
+
+message TaskComplete {
+  string task_name = 1;
+  bool completed = 2;
+}
