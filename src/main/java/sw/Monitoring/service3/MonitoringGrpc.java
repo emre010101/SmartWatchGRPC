@@ -1,4 +1,4 @@
-package ds.service3;
+package sw.Monitoring.service3;
 
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 import static io.grpc.stub.ClientCalls.asyncBidiStreamingCall;
@@ -30,30 +30,30 @@ public final class MonitoringGrpc {
   public static final String SERVICE_NAME = "service3.Monitoring";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<ds.service3.UserRecords,
-      ds.service3.ServerResponse> getSetUserRecordsMethod;
+  private static volatile io.grpc.MethodDescriptor<sw.Monitoring.service3.UserRecords,
+      sw.Monitoring.service3.ServerResponse> getSetUserRecordsMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "SetUserRecords",
-      requestType = ds.service3.UserRecords.class,
-      responseType = ds.service3.ServerResponse.class,
+      requestType = sw.Monitoring.service3.UserRecords.class,
+      responseType = sw.Monitoring.service3.ServerResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
-  public static io.grpc.MethodDescriptor<ds.service3.UserRecords,
-      ds.service3.ServerResponse> getSetUserRecordsMethod() {
-    io.grpc.MethodDescriptor<ds.service3.UserRecords, ds.service3.ServerResponse> getSetUserRecordsMethod;
+  public static io.grpc.MethodDescriptor<sw.Monitoring.service3.UserRecords,
+      sw.Monitoring.service3.ServerResponse> getSetUserRecordsMethod() {
+    io.grpc.MethodDescriptor<sw.Monitoring.service3.UserRecords, sw.Monitoring.service3.ServerResponse> getSetUserRecordsMethod;
     if ((getSetUserRecordsMethod = MonitoringGrpc.getSetUserRecordsMethod) == null) {
       synchronized (MonitoringGrpc.class) {
         if ((getSetUserRecordsMethod = MonitoringGrpc.getSetUserRecordsMethod) == null) {
           MonitoringGrpc.getSetUserRecordsMethod = getSetUserRecordsMethod = 
-              io.grpc.MethodDescriptor.<ds.service3.UserRecords, ds.service3.ServerResponse>newBuilder()
+              io.grpc.MethodDescriptor.<sw.Monitoring.service3.UserRecords, sw.Monitoring.service3.ServerResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
               .setFullMethodName(generateFullMethodName(
                   "service3.Monitoring", "SetUserRecords"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  ds.service3.UserRecords.getDefaultInstance()))
+                  sw.Monitoring.service3.UserRecords.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  ds.service3.ServerResponse.getDefaultInstance()))
+                  sw.Monitoring.service3.ServerResponse.getDefaultInstance()))
                   .setSchemaDescriptor(new MonitoringMethodDescriptorSupplier("SetUserRecords"))
                   .build();
           }
@@ -62,30 +62,30 @@ public final class MonitoringGrpc {
      return getSetUserRecordsMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<ds.service3.GetHealthRecordsRequest,
-      ds.service3.UserRecords> getGetHealthRecordsMethod;
+  private static volatile io.grpc.MethodDescriptor<sw.Monitoring.service3.GetHealthRecordsRequest,
+      sw.Monitoring.service3.UserRecords> getGetHealthRecordsMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "GetHealthRecords",
-      requestType = ds.service3.GetHealthRecordsRequest.class,
-      responseType = ds.service3.UserRecords.class,
+      requestType = sw.Monitoring.service3.GetHealthRecordsRequest.class,
+      responseType = sw.Monitoring.service3.UserRecords.class,
       methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
-  public static io.grpc.MethodDescriptor<ds.service3.GetHealthRecordsRequest,
-      ds.service3.UserRecords> getGetHealthRecordsMethod() {
-    io.grpc.MethodDescriptor<ds.service3.GetHealthRecordsRequest, ds.service3.UserRecords> getGetHealthRecordsMethod;
+  public static io.grpc.MethodDescriptor<sw.Monitoring.service3.GetHealthRecordsRequest,
+      sw.Monitoring.service3.UserRecords> getGetHealthRecordsMethod() {
+    io.grpc.MethodDescriptor<sw.Monitoring.service3.GetHealthRecordsRequest, sw.Monitoring.service3.UserRecords> getGetHealthRecordsMethod;
     if ((getGetHealthRecordsMethod = MonitoringGrpc.getGetHealthRecordsMethod) == null) {
       synchronized (MonitoringGrpc.class) {
         if ((getGetHealthRecordsMethod = MonitoringGrpc.getGetHealthRecordsMethod) == null) {
           MonitoringGrpc.getGetHealthRecordsMethod = getGetHealthRecordsMethod = 
-              io.grpc.MethodDescriptor.<ds.service3.GetHealthRecordsRequest, ds.service3.UserRecords>newBuilder()
+              io.grpc.MethodDescriptor.<sw.Monitoring.service3.GetHealthRecordsRequest, sw.Monitoring.service3.UserRecords>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
               .setFullMethodName(generateFullMethodName(
                   "service3.Monitoring", "GetHealthRecords"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  ds.service3.GetHealthRecordsRequest.getDefaultInstance()))
+                  sw.Monitoring.service3.GetHealthRecordsRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  ds.service3.UserRecords.getDefaultInstance()))
+                  sw.Monitoring.service3.UserRecords.getDefaultInstance()))
                   .setSchemaDescriptor(new MonitoringMethodDescriptorSupplier("GetHealthRecords"))
                   .build();
           }
@@ -94,30 +94,30 @@ public final class MonitoringGrpc {
      return getGetHealthRecordsMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<ds.service3.HeartRateRequest,
-      ds.service3.HeartRateWarning> getMonitorHeartRateMethod;
+  private static volatile io.grpc.MethodDescriptor<sw.Monitoring.service3.HeartRateRequest,
+      sw.Monitoring.service3.HeartRateWarning> getMonitorHeartRateMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "MonitorHeartRate",
-      requestType = ds.service3.HeartRateRequest.class,
-      responseType = ds.service3.HeartRateWarning.class,
+      requestType = sw.Monitoring.service3.HeartRateRequest.class,
+      responseType = sw.Monitoring.service3.HeartRateWarning.class,
       methodType = io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
-  public static io.grpc.MethodDescriptor<ds.service3.HeartRateRequest,
-      ds.service3.HeartRateWarning> getMonitorHeartRateMethod() {
-    io.grpc.MethodDescriptor<ds.service3.HeartRateRequest, ds.service3.HeartRateWarning> getMonitorHeartRateMethod;
+  public static io.grpc.MethodDescriptor<sw.Monitoring.service3.HeartRateRequest,
+      sw.Monitoring.service3.HeartRateWarning> getMonitorHeartRateMethod() {
+    io.grpc.MethodDescriptor<sw.Monitoring.service3.HeartRateRequest, sw.Monitoring.service3.HeartRateWarning> getMonitorHeartRateMethod;
     if ((getMonitorHeartRateMethod = MonitoringGrpc.getMonitorHeartRateMethod) == null) {
       synchronized (MonitoringGrpc.class) {
         if ((getMonitorHeartRateMethod = MonitoringGrpc.getMonitorHeartRateMethod) == null) {
           MonitoringGrpc.getMonitorHeartRateMethod = getMonitorHeartRateMethod = 
-              io.grpc.MethodDescriptor.<ds.service3.HeartRateRequest, ds.service3.HeartRateWarning>newBuilder()
+              io.grpc.MethodDescriptor.<sw.Monitoring.service3.HeartRateRequest, sw.Monitoring.service3.HeartRateWarning>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
               .setFullMethodName(generateFullMethodName(
                   "service3.Monitoring", "MonitorHeartRate"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  ds.service3.HeartRateRequest.getDefaultInstance()))
+                  sw.Monitoring.service3.HeartRateRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  ds.service3.HeartRateWarning.getDefaultInstance()))
+                  sw.Monitoring.service3.HeartRateWarning.getDefaultInstance()))
                   .setSchemaDescriptor(new MonitoringMethodDescriptorSupplier("MonitorHeartRate"))
                   .build();
           }
@@ -161,8 +161,8 @@ public final class MonitoringGrpc {
      * Saves user credentials for accessing health records (Unary)
      * </pre>
      */
-    public io.grpc.stub.StreamObserver<ds.service3.UserRecords> setUserRecords(
-        io.grpc.stub.StreamObserver<ds.service3.ServerResponse> responseObserver) {
+    public io.grpc.stub.StreamObserver<sw.Monitoring.service3.UserRecords> setUserRecords(
+        io.grpc.stub.StreamObserver<sw.Monitoring.service3.ServerResponse> responseObserver) {
       return asyncUnimplementedStreamingCall(getSetUserRecordsMethod(), responseObserver);
     }
 
@@ -171,8 +171,8 @@ public final class MonitoringGrpc {
      * Requests health records (Server Streaming)
      * </pre>
      */
-    public void getHealthRecords(ds.service3.GetHealthRecordsRequest request,
-        io.grpc.stub.StreamObserver<ds.service3.UserRecords> responseObserver) {
+    public void getHealthRecords(sw.Monitoring.service3.GetHealthRecordsRequest request,
+        io.grpc.stub.StreamObserver<sw.Monitoring.service3.UserRecords> responseObserver) {
       asyncUnimplementedUnaryCall(getGetHealthRecordsMethod(), responseObserver);
     }
 
@@ -181,8 +181,8 @@ public final class MonitoringGrpc {
      * Sends heart rate data from client and receives warnings from server (Bidirectional Streaming)
      * </pre>
      */
-    public io.grpc.stub.StreamObserver<ds.service3.HeartRateRequest> monitorHeartRate(
-        io.grpc.stub.StreamObserver<ds.service3.HeartRateWarning> responseObserver) {
+    public io.grpc.stub.StreamObserver<sw.Monitoring.service3.HeartRateRequest> monitorHeartRate(
+        io.grpc.stub.StreamObserver<sw.Monitoring.service3.HeartRateWarning> responseObserver) {
       return asyncUnimplementedStreamingCall(getMonitorHeartRateMethod(), responseObserver);
     }
 
@@ -192,22 +192,22 @@ public final class MonitoringGrpc {
             getSetUserRecordsMethod(),
             asyncClientStreamingCall(
               new MethodHandlers<
-                ds.service3.UserRecords,
-                ds.service3.ServerResponse>(
+                sw.Monitoring.service3.UserRecords,
+                sw.Monitoring.service3.ServerResponse>(
                   this, METHODID_SET_USER_RECORDS)))
           .addMethod(
             getGetHealthRecordsMethod(),
             asyncServerStreamingCall(
               new MethodHandlers<
-                ds.service3.GetHealthRecordsRequest,
-                ds.service3.UserRecords>(
+                sw.Monitoring.service3.GetHealthRecordsRequest,
+                sw.Monitoring.service3.UserRecords>(
                   this, METHODID_GET_HEALTH_RECORDS)))
           .addMethod(
             getMonitorHeartRateMethod(),
             asyncBidiStreamingCall(
               new MethodHandlers<
-                ds.service3.HeartRateRequest,
-                ds.service3.HeartRateWarning>(
+                sw.Monitoring.service3.HeartRateRequest,
+                sw.Monitoring.service3.HeartRateWarning>(
                   this, METHODID_MONITOR_HEART_RATE)))
           .build();
     }
@@ -239,8 +239,8 @@ public final class MonitoringGrpc {
      * Saves user credentials for accessing health records (Unary)
      * </pre>
      */
-    public io.grpc.stub.StreamObserver<ds.service3.UserRecords> setUserRecords(
-        io.grpc.stub.StreamObserver<ds.service3.ServerResponse> responseObserver) {
+    public io.grpc.stub.StreamObserver<sw.Monitoring.service3.UserRecords> setUserRecords(
+        io.grpc.stub.StreamObserver<sw.Monitoring.service3.ServerResponse> responseObserver) {
       return asyncClientStreamingCall(
           getChannel().newCall(getSetUserRecordsMethod(), getCallOptions()), responseObserver);
     }
@@ -250,8 +250,8 @@ public final class MonitoringGrpc {
      * Requests health records (Server Streaming)
      * </pre>
      */
-    public void getHealthRecords(ds.service3.GetHealthRecordsRequest request,
-        io.grpc.stub.StreamObserver<ds.service3.UserRecords> responseObserver) {
+    public void getHealthRecords(sw.Monitoring.service3.GetHealthRecordsRequest request,
+        io.grpc.stub.StreamObserver<sw.Monitoring.service3.UserRecords> responseObserver) {
       asyncServerStreamingCall(
           getChannel().newCall(getGetHealthRecordsMethod(), getCallOptions()), request, responseObserver);
     }
@@ -261,8 +261,8 @@ public final class MonitoringGrpc {
      * Sends heart rate data from client and receives warnings from server (Bidirectional Streaming)
      * </pre>
      */
-    public io.grpc.stub.StreamObserver<ds.service3.HeartRateRequest> monitorHeartRate(
-        io.grpc.stub.StreamObserver<ds.service3.HeartRateWarning> responseObserver) {
+    public io.grpc.stub.StreamObserver<sw.Monitoring.service3.HeartRateRequest> monitorHeartRate(
+        io.grpc.stub.StreamObserver<sw.Monitoring.service3.HeartRateWarning> responseObserver) {
       return asyncBidiStreamingCall(
           getChannel().newCall(getMonitorHeartRateMethod(), getCallOptions()), responseObserver);
     }
@@ -294,8 +294,8 @@ public final class MonitoringGrpc {
      * Requests health records (Server Streaming)
      * </pre>
      */
-    public java.util.Iterator<ds.service3.UserRecords> getHealthRecords(
-        ds.service3.GetHealthRecordsRequest request) {
+    public java.util.Iterator<sw.Monitoring.service3.UserRecords> getHealthRecords(
+        sw.Monitoring.service3.GetHealthRecordsRequest request) {
       return blockingServerStreamingCall(
           getChannel(), getGetHealthRecordsMethod(), getCallOptions(), request);
     }
@@ -345,8 +345,8 @@ public final class MonitoringGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_GET_HEALTH_RECORDS:
-          serviceImpl.getHealthRecords((ds.service3.GetHealthRecordsRequest) request,
-              (io.grpc.stub.StreamObserver<ds.service3.UserRecords>) responseObserver);
+          serviceImpl.getHealthRecords((sw.Monitoring.service3.GetHealthRecordsRequest) request,
+              (io.grpc.stub.StreamObserver<sw.Monitoring.service3.UserRecords>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -360,10 +360,10 @@ public final class MonitoringGrpc {
       switch (methodId) {
         case METHODID_SET_USER_RECORDS:
           return (io.grpc.stub.StreamObserver<Req>) serviceImpl.setUserRecords(
-              (io.grpc.stub.StreamObserver<ds.service3.ServerResponse>) responseObserver);
+              (io.grpc.stub.StreamObserver<sw.Monitoring.service3.ServerResponse>) responseObserver);
         case METHODID_MONITOR_HEART_RATE:
           return (io.grpc.stub.StreamObserver<Req>) serviceImpl.monitorHeartRate(
-              (io.grpc.stub.StreamObserver<ds.service3.HeartRateWarning>) responseObserver);
+              (io.grpc.stub.StreamObserver<sw.Monitoring.service3.HeartRateWarning>) responseObserver);
         default:
           throw new AssertionError();
       }
@@ -376,7 +376,7 @@ public final class MonitoringGrpc {
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return ds.service3.Service3Impl.getDescriptor();
+      return sw.Monitoring.service3.Service3Impl.getDescriptor();
     }
 
     @java.lang.Override
