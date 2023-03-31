@@ -3,8 +3,8 @@
 
 package sw.stepCounter.service1;
 
-public final class SmartWatchHealthImpl {
-  private SmartWatchHealthImpl() {}
+public final class stepCounterImpl {
+  private stepCounterImpl() {}
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistryLite registry) {
   }
@@ -70,9 +70,9 @@ public final class SmartWatchHealthImpl {
       "unt\"\000\022S\n\025GetAverageHourlySteps\022\033.service" +
       "1.HourlyStepRequest\032\031.service1.HourlySte" +
       "pCount\"\000(\001\022?\n\013SetStepGoal\022\022.service1.Ste" +
-      "pGoal\032\032.service1.StepGoalResponse\"\000B1\n\027s" +
-      "w.stepCounter.service1B\024SmartWatchHealth" +
-      "ImplP\001b\006proto3"
+      "pGoal\032\032.service1.StepGoalResponse\"\000B,\n\027s" +
+      "w.stepCounter.service1B\017stepCounterImplP" +
+      "\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

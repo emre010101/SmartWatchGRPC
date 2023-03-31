@@ -69,13 +69,13 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return sw.Monitoring.service3.Service3Impl.internal_static_service3_GetHealthRecordsRequest_descriptor;
+    return sw.Monitoring.service3.MonitorImpl.internal_static_service3_GetHealthRecordsRequest_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return sw.Monitoring.service3.Service3Impl.internal_static_service3_GetHealthRecordsRequest_fieldAccessorTable
+    return sw.Monitoring.service3.MonitorImpl.internal_static_service3_GetHealthRecordsRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             sw.Monitoring.service3.GetHealthRecordsRequest.class, sw.Monitoring.service3.GetHealthRecordsRequest.Builder.class);
   }
@@ -254,13 +254,13 @@ private static final long serialVersionUID = 0L;
       sw.Monitoring.service3.GetHealthRecordsRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return sw.Monitoring.service3.Service3Impl.internal_static_service3_GetHealthRecordsRequest_descriptor;
+      return sw.Monitoring.service3.MonitorImpl.internal_static_service3_GetHealthRecordsRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return sw.Monitoring.service3.Service3Impl.internal_static_service3_GetHealthRecordsRequest_fieldAccessorTable
+      return sw.Monitoring.service3.MonitorImpl.internal_static_service3_GetHealthRecordsRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               sw.Monitoring.service3.GetHealthRecordsRequest.class, sw.Monitoring.service3.GetHealthRecordsRequest.Builder.class);
     }
@@ -291,7 +291,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return sw.Monitoring.service3.Service3Impl.internal_static_service3_GetHealthRecordsRequest_descriptor;
+      return sw.Monitoring.service3.MonitorImpl.internal_static_service3_GetHealthRecordsRequest_descriptor;
     }
 
     @java.lang.Override

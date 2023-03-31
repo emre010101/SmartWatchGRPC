@@ -69,13 +69,13 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return sw.stepCounter.service1.SmartWatchHealthImpl.internal_static_service1_StepCount_descriptor;
+    return sw.stepCounter.service1.stepCounterImpl.internal_static_service1_StepCount_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return sw.stepCounter.service1.SmartWatchHealthImpl.internal_static_service1_StepCount_fieldAccessorTable
+    return sw.stepCounter.service1.stepCounterImpl.internal_static_service1_StepCount_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             sw.stepCounter.service1.StepCount.class, sw.stepCounter.service1.StepCount.Builder.class);
   }
@@ -254,13 +254,13 @@ private static final long serialVersionUID = 0L;
       sw.stepCounter.service1.StepCountOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return sw.stepCounter.service1.SmartWatchHealthImpl.internal_static_service1_StepCount_descriptor;
+      return sw.stepCounter.service1.stepCounterImpl.internal_static_service1_StepCount_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return sw.stepCounter.service1.SmartWatchHealthImpl.internal_static_service1_StepCount_fieldAccessorTable
+      return sw.stepCounter.service1.stepCounterImpl.internal_static_service1_StepCount_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               sw.stepCounter.service1.StepCount.class, sw.stepCounter.service1.StepCount.Builder.class);
     }
@@ -291,7 +291,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return sw.stepCounter.service1.SmartWatchHealthImpl.internal_static_service1_StepCount_descriptor;
+      return sw.stepCounter.service1.stepCounterImpl.internal_static_service1_StepCount_descriptor;
     }
 
     @java.lang.Override

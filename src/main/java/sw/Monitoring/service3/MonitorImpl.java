@@ -3,8 +3,8 @@
 
 package sw.Monitoring.service3;
 
-public final class Service3Impl {
-  private Service3Impl() {}
+public final class MonitorImpl {
+  private MonitorImpl() {}
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistryLite registry) {
   }
@@ -63,8 +63,8 @@ public final class Service3Impl {
       "ecordsRequest\032\025.service3.UserRecords\"\0000\001" +
       "\022P\n\020MonitorHeartRate\022\032.service3.HeartRat" +
       "eRequest\032\032.service3.HeartRateWarning\"\000(\001" +
-      "0\001B(\n\026sw.Monitoring.service3B\014Service3Im" +
-      "plP\001b\006proto3"
+      "0\001B\'\n\026sw.Monitoring.service3B\013MonitorImp" +
+      "lP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

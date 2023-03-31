@@ -1,4 +1,4 @@
-package sw.Reminder.service1;
+package sw.Reminder.service2;
 
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 import static io.grpc.stub.ClientCalls.asyncBidiStreamingCall;
@@ -30,30 +30,30 @@ public final class ReminderGrpc {
   public static final String SERVICE_NAME = "service2.Reminder";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<sw.Reminder.service1.TaskReminder,
-      sw.Reminder.service1.ServerResponse> getSetTaskReminderMethod;
+  private static volatile io.grpc.MethodDescriptor<sw.Reminder.service2.TaskReminder,
+      sw.Reminder.service2.ServerResponse> getSetTaskReminderMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "SetTaskReminder",
-      requestType = sw.Reminder.service1.TaskReminder.class,
-      responseType = sw.Reminder.service1.ServerResponse.class,
+      requestType = sw.Reminder.service2.TaskReminder.class,
+      responseType = sw.Reminder.service2.ServerResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<sw.Reminder.service1.TaskReminder,
-      sw.Reminder.service1.ServerResponse> getSetTaskReminderMethod() {
-    io.grpc.MethodDescriptor<sw.Reminder.service1.TaskReminder, sw.Reminder.service1.ServerResponse> getSetTaskReminderMethod;
+  public static io.grpc.MethodDescriptor<sw.Reminder.service2.TaskReminder,
+      sw.Reminder.service2.ServerResponse> getSetTaskReminderMethod() {
+    io.grpc.MethodDescriptor<sw.Reminder.service2.TaskReminder, sw.Reminder.service2.ServerResponse> getSetTaskReminderMethod;
     if ((getSetTaskReminderMethod = ReminderGrpc.getSetTaskReminderMethod) == null) {
       synchronized (ReminderGrpc.class) {
         if ((getSetTaskReminderMethod = ReminderGrpc.getSetTaskReminderMethod) == null) {
           ReminderGrpc.getSetTaskReminderMethod = getSetTaskReminderMethod = 
-              io.grpc.MethodDescriptor.<sw.Reminder.service1.TaskReminder, sw.Reminder.service1.ServerResponse>newBuilder()
+              io.grpc.MethodDescriptor.<sw.Reminder.service2.TaskReminder, sw.Reminder.service2.ServerResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "service2.Reminder", "SetTaskReminder"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  sw.Reminder.service1.TaskReminder.getDefaultInstance()))
+                  sw.Reminder.service2.TaskReminder.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  sw.Reminder.service1.ServerResponse.getDefaultInstance()))
+                  sw.Reminder.service2.ServerResponse.getDefaultInstance()))
                   .setSchemaDescriptor(new ReminderMethodDescriptorSupplier("SetTaskReminder"))
                   .build();
           }
@@ -63,21 +63,21 @@ public final class ReminderGrpc {
   }
 
   private static volatile io.grpc.MethodDescriptor<com.google.protobuf.Empty,
-      sw.Reminder.service1.ServerResponse> getCheckReminderMethod;
+      sw.Reminder.service2.ServerResponse> getCheckReminderMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "checkReminder",
       requestType = com.google.protobuf.Empty.class,
-      responseType = sw.Reminder.service1.ServerResponse.class,
+      responseType = sw.Reminder.service2.ServerResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
   public static io.grpc.MethodDescriptor<com.google.protobuf.Empty,
-      sw.Reminder.service1.ServerResponse> getCheckReminderMethod() {
-    io.grpc.MethodDescriptor<com.google.protobuf.Empty, sw.Reminder.service1.ServerResponse> getCheckReminderMethod;
+      sw.Reminder.service2.ServerResponse> getCheckReminderMethod() {
+    io.grpc.MethodDescriptor<com.google.protobuf.Empty, sw.Reminder.service2.ServerResponse> getCheckReminderMethod;
     if ((getCheckReminderMethod = ReminderGrpc.getCheckReminderMethod) == null) {
       synchronized (ReminderGrpc.class) {
         if ((getCheckReminderMethod = ReminderGrpc.getCheckReminderMethod) == null) {
           ReminderGrpc.getCheckReminderMethod = getCheckReminderMethod = 
-              io.grpc.MethodDescriptor.<com.google.protobuf.Empty, sw.Reminder.service1.ServerResponse>newBuilder()
+              io.grpc.MethodDescriptor.<com.google.protobuf.Empty, sw.Reminder.service2.ServerResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
               .setFullMethodName(generateFullMethodName(
                   "service2.Reminder", "checkReminder"))
@@ -85,7 +85,7 @@ public final class ReminderGrpc {
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.google.protobuf.Empty.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  sw.Reminder.service1.ServerResponse.getDefaultInstance()))
+                  sw.Reminder.service2.ServerResponse.getDefaultInstance()))
                   .setSchemaDescriptor(new ReminderMethodDescriptorSupplier("checkReminder"))
                   .build();
           }
@@ -94,30 +94,30 @@ public final class ReminderGrpc {
      return getCheckReminderMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<sw.Reminder.service1.TaskComplete,
-      sw.Reminder.service1.ServerResponse> getMarkTaskCompleteMethod;
+  private static volatile io.grpc.MethodDescriptor<sw.Reminder.service2.TaskComplete,
+      sw.Reminder.service2.ServerResponse> getMarkTaskCompleteMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "MarkTaskComplete",
-      requestType = sw.Reminder.service1.TaskComplete.class,
-      responseType = sw.Reminder.service1.ServerResponse.class,
+      requestType = sw.Reminder.service2.TaskComplete.class,
+      responseType = sw.Reminder.service2.ServerResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<sw.Reminder.service1.TaskComplete,
-      sw.Reminder.service1.ServerResponse> getMarkTaskCompleteMethod() {
-    io.grpc.MethodDescriptor<sw.Reminder.service1.TaskComplete, sw.Reminder.service1.ServerResponse> getMarkTaskCompleteMethod;
+  public static io.grpc.MethodDescriptor<sw.Reminder.service2.TaskComplete,
+      sw.Reminder.service2.ServerResponse> getMarkTaskCompleteMethod() {
+    io.grpc.MethodDescriptor<sw.Reminder.service2.TaskComplete, sw.Reminder.service2.ServerResponse> getMarkTaskCompleteMethod;
     if ((getMarkTaskCompleteMethod = ReminderGrpc.getMarkTaskCompleteMethod) == null) {
       synchronized (ReminderGrpc.class) {
         if ((getMarkTaskCompleteMethod = ReminderGrpc.getMarkTaskCompleteMethod) == null) {
           ReminderGrpc.getMarkTaskCompleteMethod = getMarkTaskCompleteMethod = 
-              io.grpc.MethodDescriptor.<sw.Reminder.service1.TaskComplete, sw.Reminder.service1.ServerResponse>newBuilder()
+              io.grpc.MethodDescriptor.<sw.Reminder.service2.TaskComplete, sw.Reminder.service2.ServerResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "service2.Reminder", "MarkTaskComplete"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  sw.Reminder.service1.TaskComplete.getDefaultInstance()))
+                  sw.Reminder.service2.TaskComplete.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  sw.Reminder.service1.ServerResponse.getDefaultInstance()))
+                  sw.Reminder.service2.ServerResponse.getDefaultInstance()))
                   .setSchemaDescriptor(new ReminderMethodDescriptorSupplier("MarkTaskComplete"))
                   .build();
           }
@@ -127,21 +127,21 @@ public final class ReminderGrpc {
   }
 
   private static volatile io.grpc.MethodDescriptor<com.google.protobuf.Empty,
-      sw.Reminder.service1.TaskReminder> getGetTaskListMethod;
+      sw.Reminder.service2.TaskReminder> getGetTaskListMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "GetTaskList",
       requestType = com.google.protobuf.Empty.class,
-      responseType = sw.Reminder.service1.TaskReminder.class,
+      responseType = sw.Reminder.service2.TaskReminder.class,
       methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
   public static io.grpc.MethodDescriptor<com.google.protobuf.Empty,
-      sw.Reminder.service1.TaskReminder> getGetTaskListMethod() {
-    io.grpc.MethodDescriptor<com.google.protobuf.Empty, sw.Reminder.service1.TaskReminder> getGetTaskListMethod;
+      sw.Reminder.service2.TaskReminder> getGetTaskListMethod() {
+    io.grpc.MethodDescriptor<com.google.protobuf.Empty, sw.Reminder.service2.TaskReminder> getGetTaskListMethod;
     if ((getGetTaskListMethod = ReminderGrpc.getGetTaskListMethod) == null) {
       synchronized (ReminderGrpc.class) {
         if ((getGetTaskListMethod = ReminderGrpc.getGetTaskListMethod) == null) {
           ReminderGrpc.getGetTaskListMethod = getGetTaskListMethod = 
-              io.grpc.MethodDescriptor.<com.google.protobuf.Empty, sw.Reminder.service1.TaskReminder>newBuilder()
+              io.grpc.MethodDescriptor.<com.google.protobuf.Empty, sw.Reminder.service2.TaskReminder>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
               .setFullMethodName(generateFullMethodName(
                   "service2.Reminder", "GetTaskList"))
@@ -149,7 +149,7 @@ public final class ReminderGrpc {
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.google.protobuf.Empty.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  sw.Reminder.service1.TaskReminder.getDefaultInstance()))
+                  sw.Reminder.service2.TaskReminder.getDefaultInstance()))
                   .setSchemaDescriptor(new ReminderMethodDescriptorSupplier("GetTaskList"))
                   .build();
           }
@@ -193,8 +193,8 @@ public final class ReminderGrpc {
      * Saves when pills need to be taken and others tasks and reminds the user (Unary)
      * </pre>
      */
-    public void setTaskReminder(sw.Reminder.service1.TaskReminder request,
-        io.grpc.stub.StreamObserver<sw.Reminder.service1.ServerResponse> responseObserver) {
+    public void setTaskReminder(sw.Reminder.service2.TaskReminder request,
+        io.grpc.stub.StreamObserver<sw.Reminder.service2.ServerResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getSetTaskReminderMethod(), responseObserver);
     }
 
@@ -204,7 +204,7 @@ public final class ReminderGrpc {
      * </pre>
      */
     public void checkReminder(com.google.protobuf.Empty request,
-        io.grpc.stub.StreamObserver<sw.Reminder.service1.ServerResponse> responseObserver) {
+        io.grpc.stub.StreamObserver<sw.Reminder.service2.ServerResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getCheckReminderMethod(), responseObserver);
     }
 
@@ -213,8 +213,8 @@ public final class ReminderGrpc {
      * Tracks completion of a task/event (Unary) //It could be doctor appointment reminder or whatever
      * </pre>
      */
-    public void markTaskComplete(sw.Reminder.service1.TaskComplete request,
-        io.grpc.stub.StreamObserver<sw.Reminder.service1.ServerResponse> responseObserver) {
+    public void markTaskComplete(sw.Reminder.service2.TaskComplete request,
+        io.grpc.stub.StreamObserver<sw.Reminder.service2.ServerResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getMarkTaskCompleteMethod(), responseObserver);
     }
 
@@ -224,7 +224,7 @@ public final class ReminderGrpc {
      * </pre>
      */
     public void getTaskList(com.google.protobuf.Empty request,
-        io.grpc.stub.StreamObserver<sw.Reminder.service1.TaskReminder> responseObserver) {
+        io.grpc.stub.StreamObserver<sw.Reminder.service2.TaskReminder> responseObserver) {
       asyncUnimplementedUnaryCall(getGetTaskListMethod(), responseObserver);
     }
 
@@ -234,29 +234,29 @@ public final class ReminderGrpc {
             getSetTaskReminderMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                sw.Reminder.service1.TaskReminder,
-                sw.Reminder.service1.ServerResponse>(
+                sw.Reminder.service2.TaskReminder,
+                sw.Reminder.service2.ServerResponse>(
                   this, METHODID_SET_TASK_REMINDER)))
           .addMethod(
             getCheckReminderMethod(),
             asyncServerStreamingCall(
               new MethodHandlers<
                 com.google.protobuf.Empty,
-                sw.Reminder.service1.ServerResponse>(
+                sw.Reminder.service2.ServerResponse>(
                   this, METHODID_CHECK_REMINDER)))
           .addMethod(
             getMarkTaskCompleteMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                sw.Reminder.service1.TaskComplete,
-                sw.Reminder.service1.ServerResponse>(
+                sw.Reminder.service2.TaskComplete,
+                sw.Reminder.service2.ServerResponse>(
                   this, METHODID_MARK_TASK_COMPLETE)))
           .addMethod(
             getGetTaskListMethod(),
             asyncServerStreamingCall(
               new MethodHandlers<
                 com.google.protobuf.Empty,
-                sw.Reminder.service1.TaskReminder>(
+                sw.Reminder.service2.TaskReminder>(
                   this, METHODID_GET_TASK_LIST)))
           .build();
     }
@@ -288,8 +288,8 @@ public final class ReminderGrpc {
      * Saves when pills need to be taken and others tasks and reminds the user (Unary)
      * </pre>
      */
-    public void setTaskReminder(sw.Reminder.service1.TaskReminder request,
-        io.grpc.stub.StreamObserver<sw.Reminder.service1.ServerResponse> responseObserver) {
+    public void setTaskReminder(sw.Reminder.service2.TaskReminder request,
+        io.grpc.stub.StreamObserver<sw.Reminder.service2.ServerResponse> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getSetTaskReminderMethod(), getCallOptions()), request, responseObserver);
     }
@@ -300,7 +300,7 @@ public final class ReminderGrpc {
      * </pre>
      */
     public void checkReminder(com.google.protobuf.Empty request,
-        io.grpc.stub.StreamObserver<sw.Reminder.service1.ServerResponse> responseObserver) {
+        io.grpc.stub.StreamObserver<sw.Reminder.service2.ServerResponse> responseObserver) {
       asyncServerStreamingCall(
           getChannel().newCall(getCheckReminderMethod(), getCallOptions()), request, responseObserver);
     }
@@ -310,8 +310,8 @@ public final class ReminderGrpc {
      * Tracks completion of a task/event (Unary) //It could be doctor appointment reminder or whatever
      * </pre>
      */
-    public void markTaskComplete(sw.Reminder.service1.TaskComplete request,
-        io.grpc.stub.StreamObserver<sw.Reminder.service1.ServerResponse> responseObserver) {
+    public void markTaskComplete(sw.Reminder.service2.TaskComplete request,
+        io.grpc.stub.StreamObserver<sw.Reminder.service2.ServerResponse> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getMarkTaskCompleteMethod(), getCallOptions()), request, responseObserver);
     }
@@ -322,7 +322,7 @@ public final class ReminderGrpc {
      * </pre>
      */
     public void getTaskList(com.google.protobuf.Empty request,
-        io.grpc.stub.StreamObserver<sw.Reminder.service1.TaskReminder> responseObserver) {
+        io.grpc.stub.StreamObserver<sw.Reminder.service2.TaskReminder> responseObserver) {
       asyncServerStreamingCall(
           getChannel().newCall(getGetTaskListMethod(), getCallOptions()), request, responseObserver);
     }
@@ -354,7 +354,7 @@ public final class ReminderGrpc {
      * Saves when pills need to be taken and others tasks and reminds the user (Unary)
      * </pre>
      */
-    public sw.Reminder.service1.ServerResponse setTaskReminder(sw.Reminder.service1.TaskReminder request) {
+    public sw.Reminder.service2.ServerResponse setTaskReminder(sw.Reminder.service2.TaskReminder request) {
       return blockingUnaryCall(
           getChannel(), getSetTaskReminderMethod(), getCallOptions(), request);
     }
@@ -364,7 +364,7 @@ public final class ReminderGrpc {
      * Check the reminders whether the time is up or not(Server Streaming)
      * </pre>
      */
-    public java.util.Iterator<sw.Reminder.service1.ServerResponse> checkReminder(
+    public java.util.Iterator<sw.Reminder.service2.ServerResponse> checkReminder(
         com.google.protobuf.Empty request) {
       return blockingServerStreamingCall(
           getChannel(), getCheckReminderMethod(), getCallOptions(), request);
@@ -375,7 +375,7 @@ public final class ReminderGrpc {
      * Tracks completion of a task/event (Unary) //It could be doctor appointment reminder or whatever
      * </pre>
      */
-    public sw.Reminder.service1.ServerResponse markTaskComplete(sw.Reminder.service1.TaskComplete request) {
+    public sw.Reminder.service2.ServerResponse markTaskComplete(sw.Reminder.service2.TaskComplete request) {
       return blockingUnaryCall(
           getChannel(), getMarkTaskCompleteMethod(), getCallOptions(), request);
     }
@@ -385,7 +385,7 @@ public final class ReminderGrpc {
      * Retrieves the list of tasks that have been set on the server (Server Streaming)
      * </pre>
      */
-    public java.util.Iterator<sw.Reminder.service1.TaskReminder> getTaskList(
+    public java.util.Iterator<sw.Reminder.service2.TaskReminder> getTaskList(
         com.google.protobuf.Empty request) {
       return blockingServerStreamingCall(
           getChannel(), getGetTaskListMethod(), getCallOptions(), request);
@@ -418,8 +418,8 @@ public final class ReminderGrpc {
      * Saves when pills need to be taken and others tasks and reminds the user (Unary)
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<sw.Reminder.service1.ServerResponse> setTaskReminder(
-        sw.Reminder.service1.TaskReminder request) {
+    public com.google.common.util.concurrent.ListenableFuture<sw.Reminder.service2.ServerResponse> setTaskReminder(
+        sw.Reminder.service2.TaskReminder request) {
       return futureUnaryCall(
           getChannel().newCall(getSetTaskReminderMethod(), getCallOptions()), request);
     }
@@ -429,8 +429,8 @@ public final class ReminderGrpc {
      * Tracks completion of a task/event (Unary) //It could be doctor appointment reminder or whatever
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<sw.Reminder.service1.ServerResponse> markTaskComplete(
-        sw.Reminder.service1.TaskComplete request) {
+    public com.google.common.util.concurrent.ListenableFuture<sw.Reminder.service2.ServerResponse> markTaskComplete(
+        sw.Reminder.service2.TaskComplete request) {
       return futureUnaryCall(
           getChannel().newCall(getMarkTaskCompleteMethod(), getCallOptions()), request);
     }
@@ -459,20 +459,20 @@ public final class ReminderGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_SET_TASK_REMINDER:
-          serviceImpl.setTaskReminder((sw.Reminder.service1.TaskReminder) request,
-              (io.grpc.stub.StreamObserver<sw.Reminder.service1.ServerResponse>) responseObserver);
+          serviceImpl.setTaskReminder((sw.Reminder.service2.TaskReminder) request,
+              (io.grpc.stub.StreamObserver<sw.Reminder.service2.ServerResponse>) responseObserver);
           break;
         case METHODID_CHECK_REMINDER:
           serviceImpl.checkReminder((com.google.protobuf.Empty) request,
-              (io.grpc.stub.StreamObserver<sw.Reminder.service1.ServerResponse>) responseObserver);
+              (io.grpc.stub.StreamObserver<sw.Reminder.service2.ServerResponse>) responseObserver);
           break;
         case METHODID_MARK_TASK_COMPLETE:
-          serviceImpl.markTaskComplete((sw.Reminder.service1.TaskComplete) request,
-              (io.grpc.stub.StreamObserver<sw.Reminder.service1.ServerResponse>) responseObserver);
+          serviceImpl.markTaskComplete((sw.Reminder.service2.TaskComplete) request,
+              (io.grpc.stub.StreamObserver<sw.Reminder.service2.ServerResponse>) responseObserver);
           break;
         case METHODID_GET_TASK_LIST:
           serviceImpl.getTaskList((com.google.protobuf.Empty) request,
-              (io.grpc.stub.StreamObserver<sw.Reminder.service1.TaskReminder>) responseObserver);
+              (io.grpc.stub.StreamObserver<sw.Reminder.service2.TaskReminder>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -496,7 +496,7 @@ public final class ReminderGrpc {
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return sw.Reminder.service1.SmartWatchHealthImpl.getDescriptor();
+      return sw.Reminder.service2.ReminderImpl.getDescriptor();
     }
 
     @java.lang.Override

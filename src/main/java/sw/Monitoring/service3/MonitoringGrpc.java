@@ -376,7 +376,7 @@ public final class MonitoringGrpc {
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return sw.Monitoring.service3.Service3Impl.getDescriptor();
+      return sw.Monitoring.service3.MonitorImpl.getDescriptor();
     }
 
     @java.lang.Override

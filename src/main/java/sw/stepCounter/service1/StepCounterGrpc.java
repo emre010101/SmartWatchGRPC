@@ -472,7 +472,7 @@ public final class StepCounterGrpc {
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return sw.stepCounter.service1.SmartWatchHealthImpl.getDescriptor();
+      return sw.stepCounter.service1.stepCounterImpl.getDescriptor();
     }
 
     @java.lang.Override

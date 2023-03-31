@@ -3,7 +3,7 @@ import "google/protobuf/empty.proto";
 
 option java_multiple_files = true;
 option java_package = "sw.stepCounter.service1";
-option java_outer_classname = "SmartWatchHealthImpl";
+option java_outer_classname = "stepCounterImpl";
 
 package service1;
 

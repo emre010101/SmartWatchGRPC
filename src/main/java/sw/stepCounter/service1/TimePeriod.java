@@ -88,7 +88,7 @@ public enum TimePeriod
   }
   public static final com.google.protobuf.Descriptors.EnumDescriptor
       getDescriptor() {
-    return sw.stepCounter.service1.SmartWatchHealthImpl.getDescriptor().getEnumTypes().get(0);
+    return sw.stepCounter.service1.stepCounterImpl.getDescriptor().getEnumTypes().get(0);
   }
 
   private static final TimePeriod[] VALUES = values();
