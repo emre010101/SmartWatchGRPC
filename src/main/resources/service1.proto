@@ -15,6 +15,7 @@ service StepCounter {
   // Requests how many steps have been done in the last hour (Unary)
   rpc GetLastHourSteps(google.protobuf.Empty) returns (StepCount) {}
 
+//change this one to unary rpc
   // Requests average steps for the hours of the day (Client Streaming)
   rpc GetAverageHourlySteps(stream HourlyStepRequest) returns (HourlyStepCount) {}
 
@@ -36,6 +37,17 @@ enum TimePeriod {
   LAST_WEEK = 0;
   LAST_MONTH = 1;
   LAST_YEAR = 2;
+}
+
+//
+enum WeekDays {
+	MONDAY = 0;
+	TUESDAY = 1;
+	WEDNESDAY = 2;
+	THURSDAY = 3;
+	FRIDAY = 4;
+	SATURDAY = 5;
+	SUNDAY = 6;
 }
 
 // HourlyStepRequest message references the TimePeriod enumeration
