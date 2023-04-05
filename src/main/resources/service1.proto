@@ -17,7 +17,7 @@ service StepCounter {
 
 //change this one to unary rpc
   // Requests average steps for the hours of the day (Client Streaming)
-  rpc GetAverageHourlySteps(stream HourlyStepRequest) returns (HourlyStepCount) {}
+  rpc GetAverageHourlySteps(HourlyStepRequest) returns (HourlyStepCount) {}
 
   // Sets a daily step goal and tracks progress towards that goal (Unary)
   rpc SetStepGoal(StepGoal) returns (StepGoalResponse) {}
@@ -32,12 +32,6 @@ message StepCount {
   int32 count = 1;
 }
 
-// Defined the TimePeriod enumeration in a separate file or message to ensure consistency
-enum TimePeriod {
-  LAST_WEEK = 0;
-  LAST_MONTH = 1;
-  LAST_YEAR = 2;
-}
 
 //
 enum WeekDays {
@@ -53,13 +47,13 @@ enum WeekDays {
 // HourlyStepRequest message references the TimePeriod enumeration
 message HourlyStepRequest {
   int32 hour = 1;
-  TimePeriod time_period = 2;
+  WeekDays week_days = 2;
 }
 
-// HourlyStepCount message also references the TimePeriod enumeration
+// HourlyStepCount message also references the WeekDays enumeration
 message HourlyStepCount {
   int32 average_steps = 1;
-  TimePeriod time_period = 2;
+  WeekDays week_days = 2;
   string message = 3;
 }
 

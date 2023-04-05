@@ -13,7 +13,7 @@ import sw.stepCounter.service1.StepsRequest;
 
 
 public class Service1 extends StepCounterImplBase{
-	
+
 	/*This method will send the steps to database which will write to text file */
 	@Override
 	public StreamObserver<StepsRequest> sendSteps(StreamObserver<Empty> responseObserver) {
@@ -28,11 +28,10 @@ public class Service1 extends StepCounterImplBase{
 		super.getLastHourSteps(request, responseObserver);
 	}
 
-	/*Requested time */
 	@Override
-	public StreamObserver<HourlyStepRequest> getAverageHourlySteps(StreamObserver<HourlyStepCount> responseObserver) {
+	public void getAverageHourlySteps(HourlyStepRequest request, StreamObserver<HourlyStepCount> responseObserver) {
 		// TODO Auto-generated method stub
-		return super.getAverageHourlySteps(responseObserver);
+		super.getAverageHourlySteps(request, responseObserver);
 	}
 
 	@Override
@@ -40,8 +39,6 @@ public class Service1 extends StepCounterImplBase{
 		// TODO Auto-generated method stub
 		super.setStepGoal(request, responseObserver);
 	}
-
 	
-
 	
 }

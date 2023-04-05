@@ -101,7 +101,7 @@ public final class StepCounterGrpc {
       fullMethodName = SERVICE_NAME + '/' + "GetAverageHourlySteps",
       requestType = sw.stepCounter.service1.HourlyStepRequest.class,
       responseType = sw.stepCounter.service1.HourlyStepCount.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<sw.stepCounter.service1.HourlyStepRequest,
       sw.stepCounter.service1.HourlyStepCount> getGetAverageHourlyStepsMethod() {
     io.grpc.MethodDescriptor<sw.stepCounter.service1.HourlyStepRequest, sw.stepCounter.service1.HourlyStepCount> getGetAverageHourlyStepsMethod;
@@ -110,7 +110,7 @@ public final class StepCounterGrpc {
         if ((getGetAverageHourlyStepsMethod = StepCounterGrpc.getGetAverageHourlyStepsMethod) == null) {
           StepCounterGrpc.getGetAverageHourlyStepsMethod = getGetAverageHourlyStepsMethod = 
               io.grpc.MethodDescriptor.<sw.stepCounter.service1.HourlyStepRequest, sw.stepCounter.service1.HourlyStepCount>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "service1.StepCounter", "GetAverageHourlySteps"))
               .setSampledToLocalTracing(true)
@@ -210,12 +210,13 @@ public final class StepCounterGrpc {
 
     /**
      * <pre>
+     *change this one to unary rpc
      * Requests average steps for the hours of the day (Client Streaming)
      * </pre>
      */
-    public io.grpc.stub.StreamObserver<sw.stepCounter.service1.HourlyStepRequest> getAverageHourlySteps(
+    public void getAverageHourlySteps(sw.stepCounter.service1.HourlyStepRequest request,
         io.grpc.stub.StreamObserver<sw.stepCounter.service1.HourlyStepCount> responseObserver) {
-      return asyncUnimplementedStreamingCall(getGetAverageHourlyStepsMethod(), responseObserver);
+      asyncUnimplementedUnaryCall(getGetAverageHourlyStepsMethod(), responseObserver);
     }
 
     /**
@@ -246,7 +247,7 @@ public final class StepCounterGrpc {
                   this, METHODID_GET_LAST_HOUR_STEPS)))
           .addMethod(
             getGetAverageHourlyStepsMethod(),
-            asyncClientStreamingCall(
+            asyncUnaryCall(
               new MethodHandlers<
                 sw.stepCounter.service1.HourlyStepRequest,
                 sw.stepCounter.service1.HourlyStepCount>(
@@ -307,13 +308,14 @@ public final class StepCounterGrpc {
 
     /**
      * <pre>
+     *change this one to unary rpc
      * Requests average steps for the hours of the day (Client Streaming)
      * </pre>
      */
-    public io.grpc.stub.StreamObserver<sw.stepCounter.service1.HourlyStepRequest> getAverageHourlySteps(
+    public void getAverageHourlySteps(sw.stepCounter.service1.HourlyStepRequest request,
         io.grpc.stub.StreamObserver<sw.stepCounter.service1.HourlyStepCount> responseObserver) {
-      return asyncClientStreamingCall(
-          getChannel().newCall(getGetAverageHourlyStepsMethod(), getCallOptions()), responseObserver);
+      asyncUnaryCall(
+          getChannel().newCall(getGetAverageHourlyStepsMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -361,6 +363,17 @@ public final class StepCounterGrpc {
 
     /**
      * <pre>
+     *change this one to unary rpc
+     * Requests average steps for the hours of the day (Client Streaming)
+     * </pre>
+     */
+    public sw.stepCounter.service1.HourlyStepCount getAverageHourlySteps(sw.stepCounter.service1.HourlyStepRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getGetAverageHourlyStepsMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
      * Sets a daily step goal and tracks progress towards that goal (Unary)
      * </pre>
      */
@@ -404,6 +417,18 @@ public final class StepCounterGrpc {
 
     /**
      * <pre>
+     *change this one to unary rpc
+     * Requests average steps for the hours of the day (Client Streaming)
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<sw.stepCounter.service1.HourlyStepCount> getAverageHourlySteps(
+        sw.stepCounter.service1.HourlyStepRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getGetAverageHourlyStepsMethod(), getCallOptions()), request);
+    }
+
+    /**
+     * <pre>
      * Sets a daily step goal and tracks progress towards that goal (Unary)
      * </pre>
      */
@@ -415,9 +440,9 @@ public final class StepCounterGrpc {
   }
 
   private static final int METHODID_GET_LAST_HOUR_STEPS = 0;
-  private static final int METHODID_SET_STEP_GOAL = 1;
-  private static final int METHODID_SEND_STEPS = 2;
-  private static final int METHODID_GET_AVERAGE_HOURLY_STEPS = 3;
+  private static final int METHODID_GET_AVERAGE_HOURLY_STEPS = 1;
+  private static final int METHODID_SET_STEP_GOAL = 2;
+  private static final int METHODID_SEND_STEPS = 3;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -440,6 +465,10 @@ public final class StepCounterGrpc {
           serviceImpl.getLastHourSteps((com.google.protobuf.Empty) request,
               (io.grpc.stub.StreamObserver<sw.stepCounter.service1.StepCount>) responseObserver);
           break;
+        case METHODID_GET_AVERAGE_HOURLY_STEPS:
+          serviceImpl.getAverageHourlySteps((sw.stepCounter.service1.HourlyStepRequest) request,
+              (io.grpc.stub.StreamObserver<sw.stepCounter.service1.HourlyStepCount>) responseObserver);
+          break;
         case METHODID_SET_STEP_GOAL:
           serviceImpl.setStepGoal((sw.stepCounter.service1.StepGoal) request,
               (io.grpc.stub.StreamObserver<sw.stepCounter.service1.StepGoalResponse>) responseObserver);
@@ -457,9 +486,6 @@ public final class StepCounterGrpc {
         case METHODID_SEND_STEPS:
           return (io.grpc.stub.StreamObserver<Req>) serviceImpl.sendSteps(
               (io.grpc.stub.StreamObserver<com.google.protobuf.Empty>) responseObserver);
-        case METHODID_GET_AVERAGE_HOURLY_STEPS:
-          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.getAverageHourlySteps(
-              (io.grpc.stub.StreamObserver<sw.stepCounter.service1.HourlyStepCount>) responseObserver);
         default:
           throw new AssertionError();
       }

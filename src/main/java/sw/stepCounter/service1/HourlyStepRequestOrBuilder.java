@@ -13,11 +13,11 @@ public interface HourlyStepRequestOrBuilder extends
   int getHour();
 
   /**
-   * <code>.service1.TimePeriod time_period = 2;</code>
+   * <code>.service1.WeekDays week_days = 2;</code>
    */
-  int getTimePeriodValue();
+  int getWeekDaysValue();
   /**
-   * <code>.service1.TimePeriod time_period = 2;</code>
+   * <code>.service1.WeekDays week_days = 2;</code>
    */
-  sw.stepCounter.service1.TimePeriod getTimePeriod();
+  sw.stepCounter.service1.WeekDays getWeekDays();
 }
