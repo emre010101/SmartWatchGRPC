@@ -64,16 +64,15 @@ public final class stepCounterImpl {
       "GoalResponse\022\017\n\007success\030\001 \001(\010*f\n\010WeekDay" +
       "s\022\n\n\006MONDAY\020\000\022\013\n\007TUESDAY\020\001\022\r\n\tWEDNESDAY\020" +
       "\002\022\014\n\010THURSDAY\020\003\022\n\n\006FRIDAY\020\004\022\014\n\010SATURDAY\020" +
-      "\005\022\n\n\006SUNDAY\020\0062\245\002\n\013StepCounter\022?\n\tSendSte" +
-      "ps\022\026.service1.StepsRequest\032\026.google.prot" +
-      "obuf.Empty\"\000(\001\022A\n\020GetLastHourSteps\022\026.goo" +
-      "gle.protobuf.Empty\032\023.service1.StepCount\"" +
-      "\000\022Q\n\025GetAverageHourlySteps\022\033.service1.Ho" +
-      "urlyStepRequest\032\031.service1.HourlyStepCou" +
-      "nt\"\000\022?\n\013SetStepGoal\022\022.service1.StepGoal\032" +
-      "\032.service1.StepGoalResponse\"\000B,\n\027sw.step" +
-      "Counter.service1B\017stepCounterImplP\001b\006pro" +
-      "to3"
+      "\005\022\n\n\006SUNDAY\020\0062\242\002\n\013StepCounter\022<\n\tSendSte" +
+      "ps\022\026.service1.StepsRequest\032\023.service1.St" +
+      "epCount\"\000(\001\022A\n\020GetLastHourSteps\022\026.google" +
+      ".protobuf.Empty\032\023.service1.StepCount\"\000\022Q" +
+      "\n\025GetAverageHourlySteps\022\033.service1.Hourl" +
+      "yStepRequest\032\031.service1.HourlyStepCount\"" +
+      "\000\022?\n\013SetStepGoal\022\022.service1.StepGoal\032\032.s" +
+      "ervice1.StepGoalResponse\"\000B,\n\027sw.stepCou" +
+      "nter.service1B\017stepCounterImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

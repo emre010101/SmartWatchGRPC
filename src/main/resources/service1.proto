@@ -10,7 +10,7 @@ package service1;
 // StepCounter service
 service StepCounter {
   // Sends multiple steps every second, changing on the current hour of the day(Client Streaming)
-  rpc SendSteps(stream StepsRequest) returns (google.protobuf.Empty) {}
+  rpc SendSteps(stream StepsRequest) returns (StepCount) {}
 
   // Requests how many steps have been done in the last hour (Unary)
   rpc GetLastHourSteps(google.protobuf.Empty) returns (StepCount) {}
@@ -31,7 +31,6 @@ message StepsRequest {
 message StepCount {
   int32 count = 1;
 }
-
 
 //
 enum WeekDays {

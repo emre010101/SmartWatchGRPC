@@ -31,21 +31,21 @@ public final class StepCounterGrpc {
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<sw.stepCounter.service1.StepsRequest,
-      com.google.protobuf.Empty> getSendStepsMethod;
+      sw.stepCounter.service1.StepCount> getSendStepsMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "SendSteps",
       requestType = sw.stepCounter.service1.StepsRequest.class,
-      responseType = com.google.protobuf.Empty.class,
+      responseType = sw.stepCounter.service1.StepCount.class,
       methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
   public static io.grpc.MethodDescriptor<sw.stepCounter.service1.StepsRequest,
-      com.google.protobuf.Empty> getSendStepsMethod() {
-    io.grpc.MethodDescriptor<sw.stepCounter.service1.StepsRequest, com.google.protobuf.Empty> getSendStepsMethod;
+      sw.stepCounter.service1.StepCount> getSendStepsMethod() {
+    io.grpc.MethodDescriptor<sw.stepCounter.service1.StepsRequest, sw.stepCounter.service1.StepCount> getSendStepsMethod;
     if ((getSendStepsMethod = StepCounterGrpc.getSendStepsMethod) == null) {
       synchronized (StepCounterGrpc.class) {
         if ((getSendStepsMethod = StepCounterGrpc.getSendStepsMethod) == null) {
           StepCounterGrpc.getSendStepsMethod = getSendStepsMethod = 
-              io.grpc.MethodDescriptor.<sw.stepCounter.service1.StepsRequest, com.google.protobuf.Empty>newBuilder()
+              io.grpc.MethodDescriptor.<sw.stepCounter.service1.StepsRequest, sw.stepCounter.service1.StepCount>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
               .setFullMethodName(generateFullMethodName(
                   "service1.StepCounter", "SendSteps"))
@@ -53,7 +53,7 @@ public final class StepCounterGrpc {
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   sw.stepCounter.service1.StepsRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.google.protobuf.Empty.getDefaultInstance()))
+                  sw.stepCounter.service1.StepCount.getDefaultInstance()))
                   .setSchemaDescriptor(new StepCounterMethodDescriptorSupplier("SendSteps"))
                   .build();
           }
@@ -194,7 +194,7 @@ public final class StepCounterGrpc {
      * </pre>
      */
     public io.grpc.stub.StreamObserver<sw.stepCounter.service1.StepsRequest> sendSteps(
-        io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
+        io.grpc.stub.StreamObserver<sw.stepCounter.service1.StepCount> responseObserver) {
       return asyncUnimplementedStreamingCall(getSendStepsMethod(), responseObserver);
     }
 
@@ -236,7 +236,7 @@ public final class StepCounterGrpc {
             asyncClientStreamingCall(
               new MethodHandlers<
                 sw.stepCounter.service1.StepsRequest,
-                com.google.protobuf.Empty>(
+                sw.stepCounter.service1.StepCount>(
                   this, METHODID_SEND_STEPS)))
           .addMethod(
             getGetLastHourStepsMethod(),
@@ -290,7 +290,7 @@ public final class StepCounterGrpc {
      * </pre>
      */
     public io.grpc.stub.StreamObserver<sw.stepCounter.service1.StepsRequest> sendSteps(
-        io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
+        io.grpc.stub.StreamObserver<sw.stepCounter.service1.StepCount> responseObserver) {
       return asyncClientStreamingCall(
           getChannel().newCall(getSendStepsMethod(), getCallOptions()), responseObserver);
     }
@@ -485,7 +485,7 @@ public final class StepCounterGrpc {
       switch (methodId) {
         case METHODID_SEND_STEPS:
           return (io.grpc.stub.StreamObserver<Req>) serviceImpl.sendSteps(
-              (io.grpc.stub.StreamObserver<com.google.protobuf.Empty>) responseObserver);
+              (io.grpc.stub.StreamObserver<sw.stepCounter.service1.StepCount>) responseObserver);
         default:
           throw new AssertionError();
       }
