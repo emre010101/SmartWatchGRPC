@@ -20,6 +20,8 @@ import io.grpc.ServerBuilder;
 public class GrpcServer1 {
 	
 	private static final Logger logger = LogManager.getLogger(GrpcServer.class);
+	//
+	private JmDNS jmdns;
 
 	
 	public static void main(String[] args) {
@@ -34,6 +36,7 @@ public class GrpcServer1 {
 		
 		//Port number is also in the properties file
 		int port = Integer.valueOf(prop.getProperty("service_port"));
+		
 		
 		//Using try and catch on starting a server
 		try {
@@ -84,7 +87,7 @@ public class GrpcServer1 {
 	private void registerService(Properties prop) {
 		try {
 			//Create a JmDNS instance
-			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+			jmdns = JmDNS.create(InetAddress.getLocalHost());
 			
 			//Initialising properties to variables
 			String service_type = prop.getProperty("service_type");
@@ -101,13 +104,17 @@ public class GrpcServer1 {
 			//Wait a bit
 			Thread.sleep(1000);
 			
-			// Unregister all services
+			//Unregister all services
             //jmdns.unregisterAllServices();
 		}catch(IOException e) {
 			System.out.println(e.getMessage());
 		}catch(InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void unregisterService() {
+		jmdns.unregisterAllServices();
 	}
 
 }

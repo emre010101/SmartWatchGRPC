@@ -14,19 +14,18 @@ import sw.stepCounter.service1.StepsRequest;
 
 public class Service1 extends StepCounterImplBase{
 	
-	int totalSteps;
 	/*This method will send the steps to database which will write to text file */
 	@Override
 	public StreamObserver<StepsRequest> sendSteps(StreamObserver<StepCount> responseObserver) {
-		// TODO Auto-generated method stub
 		 return new StepsStreamingRequest(responseObserver);
 	}
 
 	/*Database will be consulted for the last hour steps*/
 	@Override
 	public void getLastHourSteps(Empty request, StreamObserver<StepCount> responseObserver) {
-		// TODO Auto-generated method stub
-		super.getLastHourSteps(request, responseObserver);
+		StepCount lastHourSteps = StepCount.newBuilder().setCount(DataBaseConsulter.checkLastHour()).build();
+		responseObserver.onNext(lastHourSteps);
+		responseObserver.onCompleted();
 	}
 
 

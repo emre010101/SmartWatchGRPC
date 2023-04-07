@@ -1,10 +1,19 @@
 package ClientSides;
 
+import java.util.concurrent.CountDownLatch;
+
 import io.grpc.stub.StreamObserver;
 import sw.stepCounter.service1.StepCount;
 
 public class StepStreamObserver implements StreamObserver<StepCount>{
 
+	private CountDownLatch latch;
+	
+	
+	public StepStreamObserver(CountDownLatch latch) {
+		this.latch = latch;
+	}
+	
 	@Override
 	public void onNext(StepCount step) {
 		System.out.println(
@@ -15,7 +24,7 @@ public class StepStreamObserver implements StreamObserver<StepCount>{
 
 	@Override
 	public void onError(Throwable t) {
-		// TODO Auto-generated method stub
+		this.latch.countDown();
 		
 	}
 
@@ -24,6 +33,7 @@ public class StepStreamObserver implements StreamObserver<StepCount>{
 		System.out.println(
 				"Server is completed!"
 				);
+		this.latch.countDown();
 		
 	}
 	

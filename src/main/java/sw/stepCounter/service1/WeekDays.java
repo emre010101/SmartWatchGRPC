@@ -12,64 +12,40 @@ package sw.stepCounter.service1;
 public enum WeekDays
     implements com.google.protobuf.ProtocolMessageEnum {
   /**
-   * <code>MONDAY = 0;</code>
+   * <code>LAST_DAY = 0;</code>
    */
-  MONDAY(0),
+  LAST_DAY(0),
   /**
-   * <code>TUESDAY = 1;</code>
+   * <code>LAST_5_DAYS = 1;</code>
    */
-  TUESDAY(1),
+  LAST_5_DAYS(1),
   /**
-   * <code>WEDNESDAY = 2;</code>
+   * <code>LAST_10_DAYS = 2;</code>
    */
-  WEDNESDAY(2),
+  LAST_10_DAYS(2),
   /**
-   * <code>THURSDAY = 3;</code>
+   * <code>LAST_30_DAYS = 3;</code>
    */
-  THURSDAY(3),
-  /**
-   * <code>FRIDAY = 4;</code>
-   */
-  FRIDAY(4),
-  /**
-   * <code>SATURDAY = 5;</code>
-   */
-  SATURDAY(5),
-  /**
-   * <code>SUNDAY = 6;</code>
-   */
-  SUNDAY(6),
+  LAST_30_DAYS(3),
   UNRECOGNIZED(-1),
   ;
 
   /**
-   * <code>MONDAY = 0;</code>
+   * <code>LAST_DAY = 0;</code>
    */
-  public static final int MONDAY_VALUE = 0;
+  public static final int LAST_DAY_VALUE = 0;
   /**
-   * <code>TUESDAY = 1;</code>
+   * <code>LAST_5_DAYS = 1;</code>
    */
-  public static final int TUESDAY_VALUE = 1;
+  public static final int LAST_5_DAYS_VALUE = 1;
   /**
-   * <code>WEDNESDAY = 2;</code>
+   * <code>LAST_10_DAYS = 2;</code>
    */
-  public static final int WEDNESDAY_VALUE = 2;
+  public static final int LAST_10_DAYS_VALUE = 2;
   /**
-   * <code>THURSDAY = 3;</code>
+   * <code>LAST_30_DAYS = 3;</code>
    */
-  public static final int THURSDAY_VALUE = 3;
-  /**
-   * <code>FRIDAY = 4;</code>
-   */
-  public static final int FRIDAY_VALUE = 4;
-  /**
-   * <code>SATURDAY = 5;</code>
-   */
-  public static final int SATURDAY_VALUE = 5;
-  /**
-   * <code>SUNDAY = 6;</code>
-   */
-  public static final int SUNDAY_VALUE = 6;
+  public static final int LAST_30_DAYS_VALUE = 3;
 
 
   public final int getNumber() {
@@ -90,13 +66,10 @@ public enum WeekDays
 
   public static WeekDays forNumber(int value) {
     switch (value) {
-      case 0: return MONDAY;
-      case 1: return TUESDAY;
-      case 2: return WEDNESDAY;
-      case 3: return THURSDAY;
-      case 4: return FRIDAY;
-      case 5: return SATURDAY;
-      case 6: return SUNDAY;
+      case 0: return LAST_DAY;
+      case 1: return LAST_5_DAYS;
+      case 2: return LAST_10_DAYS;
+      case 3: return LAST_30_DAYS;
       default: return null;
     }
   }

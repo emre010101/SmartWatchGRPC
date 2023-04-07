@@ -8,16 +8,11 @@ public interface HourlyStepRequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>int32 hour = 1;</code>
-   */
-  int getHour();
-
-  /**
-   * <code>.service1.WeekDays week_days = 2;</code>
+   * <code>.service1.WeekDays week_days = 1;</code>
    */
   int getWeekDaysValue();
   /**
-   * <code>.service1.WeekDays week_days = 2;</code>
+   * <code>.service1.WeekDays week_days = 1;</code>
    */
   sw.stepCounter.service1.WeekDays getWeekDays();
 }

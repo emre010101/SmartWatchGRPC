@@ -1,5 +1,0 @@
-Total steps at 2023-04-06T10:14:13.379566700: 3
-Total steps at 2023-04-06T10:17:46.192262700: 12
-Total steps at 2023-04-06T10:18:12.869225100: 5
-Steps taken during the hour ending at 2023-04-06T10:56:52.229803700: 4
-Steps taken during the hour ending at 2023-04-06T11:26:35.190206300: 2

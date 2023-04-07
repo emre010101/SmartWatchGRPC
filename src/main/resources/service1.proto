@@ -34,19 +34,15 @@ message StepCount {
 
 //
 enum WeekDays {
-	MONDAY = 0;
-	TUESDAY = 1;
-	WEDNESDAY = 2;
-	THURSDAY = 3;
-	FRIDAY = 4;
-	SATURDAY = 5;
-	SUNDAY = 6;
+	LAST_DAY = 0;
+	LAST_5_DAYS = 1;
+	LAST_10_DAYS = 2;
+	LAST_30_DAYS = 3;
 }
 
 // HourlyStepRequest message references the TimePeriod enumeration
 message HourlyStepRequest {
-  int32 hour = 1;
-  WeekDays week_days = 2;
+  WeekDays week_days = 1;
 }
 
 // HourlyStepCount message also references the WeekDays enumeration

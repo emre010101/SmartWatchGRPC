@@ -20,7 +20,6 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private HourlyStepRequest() {
-    hour_ = 0;
     weekDays_ = 0;
   }
 
@@ -49,11 +48,6 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 8: {
-
-            hour_ = input.readInt32();
-            break;
-          }
-          case 16: {
             int rawValue = input.readEnum();
 
             weekDays_ = rawValue;
@@ -91,25 +85,16 @@ private static final long serialVersionUID = 0L;
             sw.stepCounter.service1.HourlyStepRequest.class, sw.stepCounter.service1.HourlyStepRequest.Builder.class);
   }
 
-  public static final int HOUR_FIELD_NUMBER = 1;
-  private int hour_;
-  /**
-   * <code>int32 hour = 1;</code>
-   */
-  public int getHour() {
-    return hour_;
-  }
-
-  public static final int WEEK_DAYS_FIELD_NUMBER = 2;
+  public static final int WEEK_DAYS_FIELD_NUMBER = 1;
   private int weekDays_;
   /**
-   * <code>.service1.WeekDays week_days = 2;</code>
+   * <code>.service1.WeekDays week_days = 1;</code>
    */
   public int getWeekDaysValue() {
     return weekDays_;
   }
   /**
-   * <code>.service1.WeekDays week_days = 2;</code>
+   * <code>.service1.WeekDays week_days = 1;</code>
    */
   public sw.stepCounter.service1.WeekDays getWeekDays() {
     @SuppressWarnings("deprecation")
@@ -131,11 +116,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (hour_ != 0) {
-      output.writeInt32(1, hour_);
-    }
-    if (weekDays_ != sw.stepCounter.service1.WeekDays.MONDAY.getNumber()) {
-      output.writeEnum(2, weekDays_);
+    if (weekDays_ != sw.stepCounter.service1.WeekDays.LAST_DAY.getNumber()) {
+      output.writeEnum(1, weekDays_);
     }
     unknownFields.writeTo(output);
   }
@@ -146,13 +128,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (hour_ != 0) {
+    if (weekDays_ != sw.stepCounter.service1.WeekDays.LAST_DAY.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(1, hour_);
-    }
-    if (weekDays_ != sw.stepCounter.service1.WeekDays.MONDAY.getNumber()) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeEnumSize(2, weekDays_);
+        .computeEnumSize(1, weekDays_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -170,8 +148,6 @@ private static final long serialVersionUID = 0L;
     sw.stepCounter.service1.HourlyStepRequest other = (sw.stepCounter.service1.HourlyStepRequest) obj;
 
     boolean result = true;
-    result = result && (getHour()
-        == other.getHour());
     result = result && weekDays_ == other.weekDays_;
     result = result && unknownFields.equals(other.unknownFields);
     return result;
@@ -184,8 +160,6 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + HOUR_FIELD_NUMBER;
-    hash = (53 * hash) + getHour();
     hash = (37 * hash) + WEEK_DAYS_FIELD_NUMBER;
     hash = (53 * hash) + weekDays_;
     hash = (29 * hash) + unknownFields.hashCode();
@@ -325,8 +299,6 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      hour_ = 0;
-
       weekDays_ = 0;
 
       return this;
@@ -355,7 +327,6 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public sw.stepCounter.service1.HourlyStepRequest buildPartial() {
       sw.stepCounter.service1.HourlyStepRequest result = new sw.stepCounter.service1.HourlyStepRequest(this);
-      result.hour_ = hour_;
       result.weekDays_ = weekDays_;
       onBuilt();
       return result;
@@ -405,9 +376,6 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(sw.stepCounter.service1.HourlyStepRequest other) {
       if (other == sw.stepCounter.service1.HourlyStepRequest.getDefaultInstance()) return this;
-      if (other.getHour() != 0) {
-        setHour(other.getHour());
-      }
       if (other.weekDays_ != 0) {
         setWeekDaysValue(other.getWeekDaysValue());
       }
@@ -440,41 +408,15 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private int hour_ ;
-    /**
-     * <code>int32 hour = 1;</code>
-     */
-    public int getHour() {
-      return hour_;
-    }
-    /**
-     * <code>int32 hour = 1;</code>
-     */
-    public Builder setHour(int value) {
-      
-      hour_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>int32 hour = 1;</code>
-     */
-    public Builder clearHour() {
-      
-      hour_ = 0;
-      onChanged();
-      return this;
-    }
-
     private int weekDays_ = 0;
     /**
-     * <code>.service1.WeekDays week_days = 2;</code>
+     * <code>.service1.WeekDays week_days = 1;</code>
      */
     public int getWeekDaysValue() {
       return weekDays_;
     }
     /**
-     * <code>.service1.WeekDays week_days = 2;</code>
+     * <code>.service1.WeekDays week_days = 1;</code>
      */
     public Builder setWeekDaysValue(int value) {
       weekDays_ = value;
@@ -482,7 +424,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.service1.WeekDays week_days = 2;</code>
+     * <code>.service1.WeekDays week_days = 1;</code>
      */
     public sw.stepCounter.service1.WeekDays getWeekDays() {
       @SuppressWarnings("deprecation")
@@ -490,7 +432,7 @@ private static final long serialVersionUID = 0L;
       return result == null ? sw.stepCounter.service1.WeekDays.UNRECOGNIZED : result;
     }
     /**
-     * <code>.service1.WeekDays week_days = 2;</code>
+     * <code>.service1.WeekDays week_days = 1;</code>
      */
     public Builder setWeekDays(sw.stepCounter.service1.WeekDays value) {
       if (value == null) {
@@ -502,7 +444,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.service1.WeekDays week_days = 2;</code>
+     * <code>.service1.WeekDays week_days = 1;</code>
      */
     public Builder clearWeekDays() {
       

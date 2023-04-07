@@ -56,15 +56,15 @@ public final class MonitorImpl {
       "rResponse\022\021\n\tconfirmed\030\001 \001(\t\"-\n\027GetHealt" +
       "hRecordsRequest\022\022\n\npatient_id\030\001 \001(\005\"&\n\020H" +
       "eartRateRequest\022\022\n\nheart_rate\030\001 \001(\001\"#\n\020H" +
-      "eartRateWarning\022\017\n\007message\030\001 \001(\t2\367\001\n\nMon" +
-      "itoring\022E\n\016SetUserRecords\022\025.service3.Use" +
-      "rRecords\032\030.service3.ServerResponse\"\000(\001\022P" +
-      "\n\020GetHealthRecords\022!.service3.GetHealthR" +
-      "ecordsRequest\032\025.service3.UserRecords\"\0000\001" +
-      "\022P\n\020MonitorHeartRate\022\032.service3.HeartRat" +
-      "eRequest\032\032.service3.HeartRateWarning\"\000(\001" +
-      "0\001B\'\n\026sw.Monitoring.service3B\013MonitorImp" +
-      "lP\001b\006proto3"
+      "eartRateWarning\022\017\n\007message\030\001 \001(\t2\365\001\n\nMon" +
+      "itoring\022C\n\016SetUserRecords\022\025.service3.Use" +
+      "rRecords\032\030.service3.ServerResponse\"\000\022P\n\020" +
+      "GetHealthRecords\022!.service3.GetHealthRec" +
+      "ordsRequest\032\025.service3.UserRecords\"\0000\001\022P" +
+      "\n\020MonitorHeartRate\022\032.service3.HeartRateR" +
+      "equest\032\032.service3.HeartRateWarning\"\000(\0010\001" +
+      "B\'\n\026sw.Monitoring.service3B\013MonitorImplP" +
+      "\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

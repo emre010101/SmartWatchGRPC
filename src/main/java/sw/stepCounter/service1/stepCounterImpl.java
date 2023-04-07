@@ -55,24 +55,24 @@ public final class stepCounterImpl {
     java.lang.String[] descriptorData = {
       "\n\016service1.proto\022\010service1\032\033google/proto" +
       "buf/empty.proto\"\035\n\014StepsRequest\022\r\n\005steps" +
-      "\030\001 \001(\005\"\032\n\tStepCount\022\r\n\005count\030\001 \001(\005\"H\n\021Ho" +
-      "urlyStepRequest\022\014\n\004hour\030\001 \001(\005\022%\n\tweek_da" +
-      "ys\030\002 \001(\0162\022.service1.WeekDays\"`\n\017HourlySt" +
-      "epCount\022\025\n\raverage_steps\030\001 \001(\005\022%\n\tweek_d" +
-      "ays\030\002 \001(\0162\022.service1.WeekDays\022\017\n\007message" +
-      "\030\003 \001(\t\"\030\n\010StepGoal\022\014\n\004goal\030\001 \001(\005\"#\n\020Step" +
-      "GoalResponse\022\017\n\007success\030\001 \001(\010*f\n\010WeekDay" +
-      "s\022\n\n\006MONDAY\020\000\022\013\n\007TUESDAY\020\001\022\r\n\tWEDNESDAY\020" +
-      "\002\022\014\n\010THURSDAY\020\003\022\n\n\006FRIDAY\020\004\022\014\n\010SATURDAY\020" +
-      "\005\022\n\n\006SUNDAY\020\0062\242\002\n\013StepCounter\022<\n\tSendSte" +
-      "ps\022\026.service1.StepsRequest\032\023.service1.St" +
-      "epCount\"\000(\001\022A\n\020GetLastHourSteps\022\026.google" +
-      ".protobuf.Empty\032\023.service1.StepCount\"\000\022Q" +
-      "\n\025GetAverageHourlySteps\022\033.service1.Hourl" +
-      "yStepRequest\032\031.service1.HourlyStepCount\"" +
-      "\000\022?\n\013SetStepGoal\022\022.service1.StepGoal\032\032.s" +
-      "ervice1.StepGoalResponse\"\000B,\n\027sw.stepCou" +
-      "nter.service1B\017stepCounterImplP\001b\006proto3"
+      "\030\001 \001(\005\"\032\n\tStepCount\022\r\n\005count\030\001 \001(\005\":\n\021Ho" +
+      "urlyStepRequest\022%\n\tweek_days\030\001 \001(\0162\022.ser" +
+      "vice1.WeekDays\"`\n\017HourlyStepCount\022\025\n\rave" +
+      "rage_steps\030\001 \001(\005\022%\n\tweek_days\030\002 \001(\0162\022.se" +
+      "rvice1.WeekDays\022\017\n\007message\030\003 \001(\t\"\030\n\010Step" +
+      "Goal\022\014\n\004goal\030\001 \001(\005\"#\n\020StepGoalResponse\022\017" +
+      "\n\007success\030\001 \001(\010*M\n\010WeekDays\022\014\n\010LAST_DAY\020" +
+      "\000\022\017\n\013LAST_5_DAYS\020\001\022\020\n\014LAST_10_DAYS\020\002\022\020\n\014" +
+      "LAST_30_DAYS\020\0032\242\002\n\013StepCounter\022<\n\tSendSt" +
+      "eps\022\026.service1.StepsRequest\032\023.service1.S" +
+      "tepCount\"\000(\001\022A\n\020GetLastHourSteps\022\026.googl" +
+      "e.protobuf.Empty\032\023.service1.StepCount\"\000\022" +
+      "Q\n\025GetAverageHourlySteps\022\033.service1.Hour" +
+      "lyStepRequest\032\031.service1.HourlyStepCount" +
+      "\"\000\022?\n\013SetStepGoal\022\022.service1.StepGoal\032\032." +
+      "service1.StepGoalResponse\"\000B,\n\027sw.stepCo" +
+      "unter.service1B\017stepCounterImplP\001b\006proto" +
+      "3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -104,7 +104,7 @@ public final class stepCounterImpl {
     internal_static_service1_HourlyStepRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_service1_HourlyStepRequest_descriptor,
-        new java.lang.String[] { "Hour", "WeekDays", });
+        new java.lang.String[] { "WeekDays", });
     internal_static_service1_HourlyStepCount_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_service1_HourlyStepCount_fieldAccessorTable = new

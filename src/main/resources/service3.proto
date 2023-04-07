@@ -10,7 +10,7 @@ package service3;
 /// Monitoring service
 service Monitoring {
   // Saves user credentials for accessing health records (Unary)
-  rpc SetUserRecords(stream UserRecords) returns (ServerResponse) {}
+  rpc SetUserRecords(UserRecords) returns (ServerResponse) {}
 
   // Requests health records (Server Streaming)
   rpc GetHealthRecords(GetHealthRecordsRequest) returns (stream UserRecords) {}

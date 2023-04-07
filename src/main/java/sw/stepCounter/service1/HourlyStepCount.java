@@ -175,7 +175,7 @@ private static final long serialVersionUID = 0L;
     if (averageSteps_ != 0) {
       output.writeInt32(1, averageSteps_);
     }
-    if (weekDays_ != sw.stepCounter.service1.WeekDays.MONDAY.getNumber()) {
+    if (weekDays_ != sw.stepCounter.service1.WeekDays.LAST_DAY.getNumber()) {
       output.writeEnum(2, weekDays_);
     }
     if (!getMessageBytes().isEmpty()) {
@@ -194,7 +194,7 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeInt32Size(1, averageSteps_);
     }
-    if (weekDays_ != sw.stepCounter.service1.WeekDays.MONDAY.getNumber()) {
+    if (weekDays_ != sw.stepCounter.service1.WeekDays.LAST_DAY.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(2, weekDays_);
     }

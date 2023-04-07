@@ -37,7 +37,7 @@ public final class MonitoringGrpc {
       fullMethodName = SERVICE_NAME + '/' + "SetUserRecords",
       requestType = sw.Monitoring.service3.UserRecords.class,
       responseType = sw.Monitoring.service3.ServerResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<sw.Monitoring.service3.UserRecords,
       sw.Monitoring.service3.ServerResponse> getSetUserRecordsMethod() {
     io.grpc.MethodDescriptor<sw.Monitoring.service3.UserRecords, sw.Monitoring.service3.ServerResponse> getSetUserRecordsMethod;
@@ -46,7 +46,7 @@ public final class MonitoringGrpc {
         if ((getSetUserRecordsMethod = MonitoringGrpc.getSetUserRecordsMethod) == null) {
           MonitoringGrpc.getSetUserRecordsMethod = getSetUserRecordsMethod = 
               io.grpc.MethodDescriptor.<sw.Monitoring.service3.UserRecords, sw.Monitoring.service3.ServerResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "service3.Monitoring", "SetUserRecords"))
               .setSampledToLocalTracing(true)
@@ -161,9 +161,9 @@ public final class MonitoringGrpc {
      * Saves user credentials for accessing health records (Unary)
      * </pre>
      */
-    public io.grpc.stub.StreamObserver<sw.Monitoring.service3.UserRecords> setUserRecords(
+    public void setUserRecords(sw.Monitoring.service3.UserRecords request,
         io.grpc.stub.StreamObserver<sw.Monitoring.service3.ServerResponse> responseObserver) {
-      return asyncUnimplementedStreamingCall(getSetUserRecordsMethod(), responseObserver);
+      asyncUnimplementedUnaryCall(getSetUserRecordsMethod(), responseObserver);
     }
 
     /**
@@ -190,7 +190,7 @@ public final class MonitoringGrpc {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
             getSetUserRecordsMethod(),
-            asyncClientStreamingCall(
+            asyncUnaryCall(
               new MethodHandlers<
                 sw.Monitoring.service3.UserRecords,
                 sw.Monitoring.service3.ServerResponse>(
@@ -239,10 +239,10 @@ public final class MonitoringGrpc {
      * Saves user credentials for accessing health records (Unary)
      * </pre>
      */
-    public io.grpc.stub.StreamObserver<sw.Monitoring.service3.UserRecords> setUserRecords(
+    public void setUserRecords(sw.Monitoring.service3.UserRecords request,
         io.grpc.stub.StreamObserver<sw.Monitoring.service3.ServerResponse> responseObserver) {
-      return asyncClientStreamingCall(
-          getChannel().newCall(getSetUserRecordsMethod(), getCallOptions()), responseObserver);
+      asyncUnaryCall(
+          getChannel().newCall(getSetUserRecordsMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -291,6 +291,16 @@ public final class MonitoringGrpc {
 
     /**
      * <pre>
+     * Saves user credentials for accessing health records (Unary)
+     * </pre>
+     */
+    public sw.Monitoring.service3.ServerResponse setUserRecords(sw.Monitoring.service3.UserRecords request) {
+      return blockingUnaryCall(
+          getChannel(), getSetUserRecordsMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
      * Requests health records (Server Streaming)
      * </pre>
      */
@@ -321,10 +331,21 @@ public final class MonitoringGrpc {
         io.grpc.CallOptions callOptions) {
       return new MonitoringFutureStub(channel, callOptions);
     }
+
+    /**
+     * <pre>
+     * Saves user credentials for accessing health records (Unary)
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<sw.Monitoring.service3.ServerResponse> setUserRecords(
+        sw.Monitoring.service3.UserRecords request) {
+      return futureUnaryCall(
+          getChannel().newCall(getSetUserRecordsMethod(), getCallOptions()), request);
+    }
   }
 
-  private static final int METHODID_GET_HEALTH_RECORDS = 0;
-  private static final int METHODID_SET_USER_RECORDS = 1;
+  private static final int METHODID_SET_USER_RECORDS = 0;
+  private static final int METHODID_GET_HEALTH_RECORDS = 1;
   private static final int METHODID_MONITOR_HEART_RATE = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
@@ -344,6 +365,10 @@ public final class MonitoringGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
+        case METHODID_SET_USER_RECORDS:
+          serviceImpl.setUserRecords((sw.Monitoring.service3.UserRecords) request,
+              (io.grpc.stub.StreamObserver<sw.Monitoring.service3.ServerResponse>) responseObserver);
+          break;
         case METHODID_GET_HEALTH_RECORDS:
           serviceImpl.getHealthRecords((sw.Monitoring.service3.GetHealthRecordsRequest) request,
               (io.grpc.stub.StreamObserver<sw.Monitoring.service3.UserRecords>) responseObserver);
@@ -358,9 +383,6 @@ public final class MonitoringGrpc {
     public io.grpc.stub.StreamObserver<Req> invoke(
         io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_SET_USER_RECORDS:
-          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.setUserRecords(
-              (io.grpc.stub.StreamObserver<sw.Monitoring.service3.ServerResponse>) responseObserver);
         case METHODID_MONITOR_HEART_RATE:
           return (io.grpc.stub.StreamObserver<Req>) serviceImpl.monitorHeartRate(
               (io.grpc.stub.StreamObserver<sw.Monitoring.service3.HeartRateWarning>) responseObserver);
