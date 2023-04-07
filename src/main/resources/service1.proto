@@ -15,12 +15,13 @@ service StepCounter {
   // Requests how many steps have been done in the last hour (Unary)
   rpc GetLastHourSteps(google.protobuf.Empty) returns (StepCount) {}
 
-//change this one to unary rpc
-  // Requests average steps for the hours of the day (Client Streaming)
+//change this one to unary rpc //change the name to getAverage
+  // Requests average steps for the hours of the day (Unary)
   rpc GetAverageHourlySteps(HourlyStepRequest) returns (HourlyStepCount) {}
 
+//convert to serverStreaming
   // Sets a daily step goal and tracks progress towards that goal (Unary)
-  rpc SetStepGoal(StepGoal) returns (StepGoalResponse) {}
+  rpc SetStepGoal(StepGoal) returns (stream StepGoalResponse) {}
 }
 
 // StepCounter request and response messages
@@ -58,5 +59,7 @@ message StepGoal {
 
 message StepGoalResponse {
   bool success = 1;
+  int32 left = 2;
+  string message = 3;
 }
 

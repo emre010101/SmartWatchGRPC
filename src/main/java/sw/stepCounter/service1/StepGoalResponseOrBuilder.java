@@ -11,4 +11,19 @@ public interface StepGoalResponseOrBuilder extends
    * <code>bool success = 1;</code>
    */
   boolean getSuccess();
+
+  /**
+   * <code>int32 left = 2;</code>
+   */
+  int getLeft();
+
+  /**
+   * <code>string message = 3;</code>
+   */
+  java.lang.String getMessage();
+  /**
+   * <code>string message = 3;</code>
+   */
+  com.google.protobuf.ByteString
+      getMessageBytes();
 }

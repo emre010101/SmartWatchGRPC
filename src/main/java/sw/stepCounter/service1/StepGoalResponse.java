@@ -17,6 +17,8 @@ private static final long serialVersionUID = 0L;
   }
   private StepGoalResponse() {
     success_ = false;
+    left_ = 0;
+    message_ = "";
   }
 
   @java.lang.Override
@@ -46,6 +48,17 @@ private static final long serialVersionUID = 0L;
           case 8: {
 
             success_ = input.readBool();
+            break;
+          }
+          case 16: {
+
+            left_ = input.readInt32();
+            break;
+          }
+          case 26: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            message_ = s;
             break;
           }
           default: {
@@ -89,6 +102,49 @@ private static final long serialVersionUID = 0L;
     return success_;
   }
 
+  public static final int LEFT_FIELD_NUMBER = 2;
+  private int left_;
+  /**
+   * <code>int32 left = 2;</code>
+   */
+  public int getLeft() {
+    return left_;
+  }
+
+  public static final int MESSAGE_FIELD_NUMBER = 3;
+  private volatile java.lang.Object message_;
+  /**
+   * <code>string message = 3;</code>
+   */
+  public java.lang.String getMessage() {
+    java.lang.Object ref = message_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      message_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string message = 3;</code>
+   */
+  public com.google.protobuf.ByteString
+      getMessageBytes() {
+    java.lang.Object ref = message_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      message_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -106,6 +162,12 @@ private static final long serialVersionUID = 0L;
     if (success_ != false) {
       output.writeBool(1, success_);
     }
+    if (left_ != 0) {
+      output.writeInt32(2, left_);
+    }
+    if (!getMessageBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, message_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -118,6 +180,13 @@ private static final long serialVersionUID = 0L;
     if (success_ != false) {
       size += com.google.protobuf.CodedOutputStream
         .computeBoolSize(1, success_);
+    }
+    if (left_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(2, left_);
+    }
+    if (!getMessageBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, message_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -137,6 +206,10 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && (getSuccess()
         == other.getSuccess());
+    result = result && (getLeft()
+        == other.getLeft());
+    result = result && getMessage()
+        .equals(other.getMessage());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -151,6 +224,10 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + SUCCESS_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
         getSuccess());
+    hash = (37 * hash) + LEFT_FIELD_NUMBER;
+    hash = (53 * hash) + getLeft();
+    hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
+    hash = (53 * hash) + getMessage().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -286,6 +363,10 @@ private static final long serialVersionUID = 0L;
       super.clear();
       success_ = false;
 
+      left_ = 0;
+
+      message_ = "";
+
       return this;
     }
 
@@ -313,6 +394,8 @@ private static final long serialVersionUID = 0L;
     public sw.stepCounter.service1.StepGoalResponse buildPartial() {
       sw.stepCounter.service1.StepGoalResponse result = new sw.stepCounter.service1.StepGoalResponse(this);
       result.success_ = success_;
+      result.left_ = left_;
+      result.message_ = message_;
       onBuilt();
       return result;
     }
@@ -363,6 +446,13 @@ private static final long serialVersionUID = 0L;
       if (other == sw.stepCounter.service1.StepGoalResponse.getDefaultInstance()) return this;
       if (other.getSuccess() != false) {
         setSuccess(other.getSuccess());
+      }
+      if (other.getLeft() != 0) {
+        setLeft(other.getLeft());
+      }
+      if (!other.getMessage().isEmpty()) {
+        message_ = other.message_;
+        onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -415,6 +505,101 @@ private static final long serialVersionUID = 0L;
     public Builder clearSuccess() {
       
       success_ = false;
+      onChanged();
+      return this;
+    }
+
+    private int left_ ;
+    /**
+     * <code>int32 left = 2;</code>
+     */
+    public int getLeft() {
+      return left_;
+    }
+    /**
+     * <code>int32 left = 2;</code>
+     */
+    public Builder setLeft(int value) {
+      
+      left_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>int32 left = 2;</code>
+     */
+    public Builder clearLeft() {
+      
+      left_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object message_ = "";
+    /**
+     * <code>string message = 3;</code>
+     */
+    public java.lang.String getMessage() {
+      java.lang.Object ref = message_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        message_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string message = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getMessageBytes() {
+      java.lang.Object ref = message_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        message_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string message = 3;</code>
+     */
+    public Builder setMessage(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      message_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string message = 3;</code>
+     */
+    public Builder clearMessage() {
+      
+      message_ = getDefaultInstance().getMessage();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string message = 3;</code>
+     */
+    public Builder setMessageBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      message_ = value;
       onChanged();
       return this;
     }

@@ -60,19 +60,19 @@ public final class stepCounterImpl {
       "vice1.WeekDays\"`\n\017HourlyStepCount\022\025\n\rave" +
       "rage_steps\030\001 \001(\005\022%\n\tweek_days\030\002 \001(\0162\022.se" +
       "rvice1.WeekDays\022\017\n\007message\030\003 \001(\t\"\030\n\010Step" +
-      "Goal\022\014\n\004goal\030\001 \001(\005\"#\n\020StepGoalResponse\022\017" +
-      "\n\007success\030\001 \001(\010*M\n\010WeekDays\022\014\n\010LAST_DAY\020" +
-      "\000\022\017\n\013LAST_5_DAYS\020\001\022\020\n\014LAST_10_DAYS\020\002\022\020\n\014" +
-      "LAST_30_DAYS\020\0032\242\002\n\013StepCounter\022<\n\tSendSt" +
-      "eps\022\026.service1.StepsRequest\032\023.service1.S" +
-      "tepCount\"\000(\001\022A\n\020GetLastHourSteps\022\026.googl" +
-      "e.protobuf.Empty\032\023.service1.StepCount\"\000\022" +
-      "Q\n\025GetAverageHourlySteps\022\033.service1.Hour" +
-      "lyStepRequest\032\031.service1.HourlyStepCount" +
-      "\"\000\022?\n\013SetStepGoal\022\022.service1.StepGoal\032\032." +
-      "service1.StepGoalResponse\"\000B,\n\027sw.stepCo" +
-      "unter.service1B\017stepCounterImplP\001b\006proto" +
-      "3"
+      "Goal\022\014\n\004goal\030\001 \001(\005\"B\n\020StepGoalResponse\022\017" +
+      "\n\007success\030\001 \001(\010\022\014\n\004left\030\002 \001(\005\022\017\n\007message" +
+      "\030\003 \001(\t*M\n\010WeekDays\022\014\n\010LAST_DAY\020\000\022\017\n\013LAST" +
+      "_5_DAYS\020\001\022\020\n\014LAST_10_DAYS\020\002\022\020\n\014LAST_30_D" +
+      "AYS\020\0032\244\002\n\013StepCounter\022<\n\tSendSteps\022\026.ser" +
+      "vice1.StepsRequest\032\023.service1.StepCount\"" +
+      "\000(\001\022A\n\020GetLastHourSteps\022\026.google.protobu" +
+      "f.Empty\032\023.service1.StepCount\"\000\022Q\n\025GetAve" +
+      "rageHourlySteps\022\033.service1.HourlyStepReq" +
+      "uest\032\031.service1.HourlyStepCount\"\000\022A\n\013Set" +
+      "StepGoal\022\022.service1.StepGoal\032\032.service1." +
+      "StepGoalResponse\"\0000\001B,\n\027sw.stepCounter.s" +
+      "ervice1B\017stepCounterImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -122,7 +122,7 @@ public final class stepCounterImpl {
     internal_static_service1_StepGoalResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_service1_StepGoalResponse_descriptor,
-        new java.lang.String[] { "Success", });
+        new java.lang.String[] { "Success", "Left", "Message", });
     com.google.protobuf.EmptyProto.getDescriptor();
   }
 
