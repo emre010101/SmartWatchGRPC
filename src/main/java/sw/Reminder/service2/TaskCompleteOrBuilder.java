@@ -16,9 +16,4 @@ public interface TaskCompleteOrBuilder extends
    */
   com.google.protobuf.ByteString
       getTaskNameBytes();
-
-  /**
-   * <code>bool completed = 2;</code>
-   */
-  boolean getCompleted();
 }

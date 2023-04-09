@@ -8,9 +8,14 @@ public interface TaskReminderOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>int64 time = 1;</code>
+   * <code>string date_time = 1;</code>
    */
-  long getTime();
+  java.lang.String getDateTime();
+  /**
+   * <code>string date_time = 1;</code>
+   */
+  com.google.protobuf.ByteString
+      getDateTimeBytes();
 
   /**
    * <code>string task_name = 2;</code>
@@ -21,4 +26,13 @@ public interface TaskReminderOrBuilder extends
    */
   com.google.protobuf.ByteString
       getTaskNameBytes();
+
+  /**
+   * <code>.service2.Type type = 3;</code>
+   */
+  int getTypeValue();
+  /**
+   * <code>.service2.Type type = 3;</code>
+   */
+  sw.Reminder.service2.Type getType();
 }

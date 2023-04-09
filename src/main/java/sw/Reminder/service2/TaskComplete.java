@@ -4,6 +4,10 @@
 package sw.Reminder.service2;
 
 /**
+ * <pre>
+ *Send the task name to find in database end mark completed
+ * </pre>
+ *
  * Protobuf type {@code service2.TaskComplete}
  */
 public  final class TaskComplete extends
@@ -17,7 +21,6 @@ private static final long serialVersionUID = 0L;
   }
   private TaskComplete() {
     taskName_ = "";
-    completed_ = false;
   }
 
   @java.lang.Override
@@ -50,11 +53,6 @@ private static final long serialVersionUID = 0L;
             taskName_ = s;
             break;
           }
-          case 16: {
-
-            completed_ = input.readBool();
-            break;
-          }
           default: {
             if (!parseUnknownFieldProto3(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -76,13 +74,13 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return sw.Reminder.service2.ReminderImpl.internal_static_service2_TaskComplete_descriptor;
+    return sw.Reminder.service2.taskReminderImpl.internal_static_service2_TaskComplete_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return sw.Reminder.service2.ReminderImpl.internal_static_service2_TaskComplete_fieldAccessorTable
+    return sw.Reminder.service2.taskReminderImpl.internal_static_service2_TaskComplete_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             sw.Reminder.service2.TaskComplete.class, sw.Reminder.service2.TaskComplete.Builder.class);
   }
@@ -121,15 +119,6 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int COMPLETED_FIELD_NUMBER = 2;
-  private boolean completed_;
-  /**
-   * <code>bool completed = 2;</code>
-   */
-  public boolean getCompleted() {
-    return completed_;
-  }
-
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -147,9 +136,6 @@ private static final long serialVersionUID = 0L;
     if (!getTaskNameBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, taskName_);
     }
-    if (completed_ != false) {
-      output.writeBool(2, completed_);
-    }
     unknownFields.writeTo(output);
   }
 
@@ -161,10 +147,6 @@ private static final long serialVersionUID = 0L;
     size = 0;
     if (!getTaskNameBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, taskName_);
-    }
-    if (completed_ != false) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeBoolSize(2, completed_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -184,8 +166,6 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && getTaskName()
         .equals(other.getTaskName());
-    result = result && (getCompleted()
-        == other.getCompleted());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -199,9 +179,6 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + TASK_NAME_FIELD_NUMBER;
     hash = (53 * hash) + getTaskName().hashCode();
-    hash = (37 * hash) + COMPLETED_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-        getCompleted());
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -298,6 +275,10 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
+   * <pre>
+   *Send the task name to find in database end mark completed
+   * </pre>
+   *
    * Protobuf type {@code service2.TaskComplete}
    */
   public static final class Builder extends
@@ -306,13 +287,13 @@ private static final long serialVersionUID = 0L;
       sw.Reminder.service2.TaskCompleteOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return sw.Reminder.service2.ReminderImpl.internal_static_service2_TaskComplete_descriptor;
+      return sw.Reminder.service2.taskReminderImpl.internal_static_service2_TaskComplete_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return sw.Reminder.service2.ReminderImpl.internal_static_service2_TaskComplete_fieldAccessorTable
+      return sw.Reminder.service2.taskReminderImpl.internal_static_service2_TaskComplete_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               sw.Reminder.service2.TaskComplete.class, sw.Reminder.service2.TaskComplete.Builder.class);
     }
@@ -337,15 +318,13 @@ private static final long serialVersionUID = 0L;
       super.clear();
       taskName_ = "";
 
-      completed_ = false;
-
       return this;
     }
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return sw.Reminder.service2.ReminderImpl.internal_static_service2_TaskComplete_descriptor;
+      return sw.Reminder.service2.taskReminderImpl.internal_static_service2_TaskComplete_descriptor;
     }
 
     @java.lang.Override
@@ -366,7 +345,6 @@ private static final long serialVersionUID = 0L;
     public sw.Reminder.service2.TaskComplete buildPartial() {
       sw.Reminder.service2.TaskComplete result = new sw.Reminder.service2.TaskComplete(this);
       result.taskName_ = taskName_;
-      result.completed_ = completed_;
       onBuilt();
       return result;
     }
@@ -418,9 +396,6 @@ private static final long serialVersionUID = 0L;
       if (!other.getTaskName().isEmpty()) {
         taskName_ = other.taskName_;
         onChanged();
-      }
-      if (other.getCompleted() != false) {
-        setCompleted(other.getCompleted());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -516,32 +491,6 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       taskName_ = value;
-      onChanged();
-      return this;
-    }
-
-    private boolean completed_ ;
-    /**
-     * <code>bool completed = 2;</code>
-     */
-    public boolean getCompleted() {
-      return completed_;
-    }
-    /**
-     * <code>bool completed = 2;</code>
-     */
-    public Builder setCompleted(boolean value) {
-      
-      completed_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>bool completed = 2;</code>
-     */
-    public Builder clearCompleted() {
-      
-      completed_ = false;
       onChanged();
       return this;
     }

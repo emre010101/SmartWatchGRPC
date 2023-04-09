@@ -5,6 +5,7 @@ package sw.Reminder.service2;
 
 /**
  * <pre>
+ *Change this to save data time instead in64 time!!!!
  * Reminder request and response messages
  * </pre>
  *
@@ -20,8 +21,9 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private TaskReminder() {
-    time_ = 0L;
+    dateTime_ = "";
     taskName_ = "";
+    type_ = 0;
   }
 
   @java.lang.Override
@@ -48,15 +50,22 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 8: {
+          case 10: {
+            java.lang.String s = input.readStringRequireUtf8();
 
-            time_ = input.readInt64();
+            dateTime_ = s;
             break;
           }
           case 18: {
             java.lang.String s = input.readStringRequireUtf8();
 
             taskName_ = s;
+            break;
+          }
+          case 24: {
+            int rawValue = input.readEnum();
+
+            type_ = rawValue;
             break;
           }
           default: {
@@ -80,24 +89,49 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return sw.Reminder.service2.ReminderImpl.internal_static_service2_TaskReminder_descriptor;
+    return sw.Reminder.service2.taskReminderImpl.internal_static_service2_TaskReminder_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return sw.Reminder.service2.ReminderImpl.internal_static_service2_TaskReminder_fieldAccessorTable
+    return sw.Reminder.service2.taskReminderImpl.internal_static_service2_TaskReminder_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             sw.Reminder.service2.TaskReminder.class, sw.Reminder.service2.TaskReminder.Builder.class);
   }
 
-  public static final int TIME_FIELD_NUMBER = 1;
-  private long time_;
+  public static final int DATE_TIME_FIELD_NUMBER = 1;
+  private volatile java.lang.Object dateTime_;
   /**
-   * <code>int64 time = 1;</code>
+   * <code>string date_time = 1;</code>
    */
-  public long getTime() {
-    return time_;
+  public java.lang.String getDateTime() {
+    java.lang.Object ref = dateTime_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      dateTime_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string date_time = 1;</code>
+   */
+  public com.google.protobuf.ByteString
+      getDateTimeBytes() {
+    java.lang.Object ref = dateTime_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      dateTime_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
   public static final int TASK_NAME_FIELD_NUMBER = 2;
@@ -134,6 +168,23 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int TYPE_FIELD_NUMBER = 3;
+  private int type_;
+  /**
+   * <code>.service2.Type type = 3;</code>
+   */
+  public int getTypeValue() {
+    return type_;
+  }
+  /**
+   * <code>.service2.Type type = 3;</code>
+   */
+  public sw.Reminder.service2.Type getType() {
+    @SuppressWarnings("deprecation")
+    sw.Reminder.service2.Type result = sw.Reminder.service2.Type.valueOf(type_);
+    return result == null ? sw.Reminder.service2.Type.UNRECOGNIZED : result;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -148,11 +199,14 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (time_ != 0L) {
-      output.writeInt64(1, time_);
+    if (!getDateTimeBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, dateTime_);
     }
     if (!getTaskNameBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, taskName_);
+    }
+    if (type_ != sw.Reminder.service2.Type.STANDART.getNumber()) {
+      output.writeEnum(3, type_);
     }
     unknownFields.writeTo(output);
   }
@@ -163,12 +217,15 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (time_ != 0L) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt64Size(1, time_);
+    if (!getDateTimeBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, dateTime_);
     }
     if (!getTaskNameBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, taskName_);
+    }
+    if (type_ != sw.Reminder.service2.Type.STANDART.getNumber()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeEnumSize(3, type_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -186,10 +243,11 @@ private static final long serialVersionUID = 0L;
     sw.Reminder.service2.TaskReminder other = (sw.Reminder.service2.TaskReminder) obj;
 
     boolean result = true;
-    result = result && (getTime()
-        == other.getTime());
+    result = result && getDateTime()
+        .equals(other.getDateTime());
     result = result && getTaskName()
         .equals(other.getTaskName());
+    result = result && type_ == other.type_;
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -201,11 +259,12 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + TIME_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        getTime());
+    hash = (37 * hash) + DATE_TIME_FIELD_NUMBER;
+    hash = (53 * hash) + getDateTime().hashCode();
     hash = (37 * hash) + TASK_NAME_FIELD_NUMBER;
     hash = (53 * hash) + getTaskName().hashCode();
+    hash = (37 * hash) + TYPE_FIELD_NUMBER;
+    hash = (53 * hash) + type_;
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -303,6 +362,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
+   *Change this to save data time instead in64 time!!!!
    * Reminder request and response messages
    * </pre>
    *
@@ -314,13 +374,13 @@ private static final long serialVersionUID = 0L;
       sw.Reminder.service2.TaskReminderOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return sw.Reminder.service2.ReminderImpl.internal_static_service2_TaskReminder_descriptor;
+      return sw.Reminder.service2.taskReminderImpl.internal_static_service2_TaskReminder_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return sw.Reminder.service2.ReminderImpl.internal_static_service2_TaskReminder_fieldAccessorTable
+      return sw.Reminder.service2.taskReminderImpl.internal_static_service2_TaskReminder_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               sw.Reminder.service2.TaskReminder.class, sw.Reminder.service2.TaskReminder.Builder.class);
     }
@@ -343,9 +403,11 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      time_ = 0L;
+      dateTime_ = "";
 
       taskName_ = "";
+
+      type_ = 0;
 
       return this;
     }
@@ -353,7 +415,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return sw.Reminder.service2.ReminderImpl.internal_static_service2_TaskReminder_descriptor;
+      return sw.Reminder.service2.taskReminderImpl.internal_static_service2_TaskReminder_descriptor;
     }
 
     @java.lang.Override
@@ -373,8 +435,9 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public sw.Reminder.service2.TaskReminder buildPartial() {
       sw.Reminder.service2.TaskReminder result = new sw.Reminder.service2.TaskReminder(this);
-      result.time_ = time_;
+      result.dateTime_ = dateTime_;
       result.taskName_ = taskName_;
+      result.type_ = type_;
       onBuilt();
       return result;
     }
@@ -423,12 +486,16 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(sw.Reminder.service2.TaskReminder other) {
       if (other == sw.Reminder.service2.TaskReminder.getDefaultInstance()) return this;
-      if (other.getTime() != 0L) {
-        setTime(other.getTime());
+      if (!other.getDateTime().isEmpty()) {
+        dateTime_ = other.dateTime_;
+        onChanged();
       }
       if (!other.getTaskName().isEmpty()) {
         taskName_ = other.taskName_;
         onChanged();
+      }
+      if (other.type_ != 0) {
+        setTypeValue(other.getTypeValue());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -459,28 +526,71 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private long time_ ;
+    private java.lang.Object dateTime_ = "";
     /**
-     * <code>int64 time = 1;</code>
+     * <code>string date_time = 1;</code>
      */
-    public long getTime() {
-      return time_;
+    public java.lang.String getDateTime() {
+      java.lang.Object ref = dateTime_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        dateTime_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
     }
     /**
-     * <code>int64 time = 1;</code>
+     * <code>string date_time = 1;</code>
      */
-    public Builder setTime(long value) {
-      
-      time_ = value;
+    public com.google.protobuf.ByteString
+        getDateTimeBytes() {
+      java.lang.Object ref = dateTime_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        dateTime_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string date_time = 1;</code>
+     */
+    public Builder setDateTime(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      dateTime_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>int64 time = 1;</code>
+     * <code>string date_time = 1;</code>
      */
-    public Builder clearTime() {
+    public Builder clearDateTime() {
       
-      time_ = 0L;
+      dateTime_ = getDefaultInstance().getDateTime();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string date_time = 1;</code>
+     */
+    public Builder setDateTimeBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      dateTime_ = value;
       onChanged();
       return this;
     }
@@ -550,6 +660,51 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       taskName_ = value;
+      onChanged();
+      return this;
+    }
+
+    private int type_ = 0;
+    /**
+     * <code>.service2.Type type = 3;</code>
+     */
+    public int getTypeValue() {
+      return type_;
+    }
+    /**
+     * <code>.service2.Type type = 3;</code>
+     */
+    public Builder setTypeValue(int value) {
+      type_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.service2.Type type = 3;</code>
+     */
+    public sw.Reminder.service2.Type getType() {
+      @SuppressWarnings("deprecation")
+      sw.Reminder.service2.Type result = sw.Reminder.service2.Type.valueOf(type_);
+      return result == null ? sw.Reminder.service2.Type.UNRECOGNIZED : result;
+    }
+    /**
+     * <code>.service2.Type type = 3;</code>
+     */
+    public Builder setType(sw.Reminder.service2.Type value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      
+      type_ = value.getNumber();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.service2.Type type = 3;</code>
+     */
+    public Builder clearType() {
+      
+      type_ = 0;
       onChanged();
       return this;
     }

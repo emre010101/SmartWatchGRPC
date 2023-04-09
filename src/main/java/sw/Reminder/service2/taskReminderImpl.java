@@ -3,8 +3,8 @@
 
 package sw.Reminder.service2;
 
-public final class ReminderImpl {
-  private ReminderImpl() {}
+public final class taskReminderImpl {
+  private taskReminderImpl() {}
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistryLite registry) {
   }
@@ -39,19 +39,19 @@ public final class ReminderImpl {
   static {
     java.lang.String[] descriptorData = {
       "\n\016service2.proto\022\010service2\032\033google/proto" +
-      "buf/empty.proto\"/\n\014TaskReminder\022\014\n\004time\030" +
-      "\001 \001(\003\022\021\n\ttask_name\030\002 \001(\t\"#\n\016ServerRespon" +
-      "se\022\021\n\tconfirmed\030\001 \001(\t\"4\n\014TaskComplete\022\021\n" +
-      "\ttask_name\030\001 \001(\t\022\021\n\tcompleted\030\002 \001(\0102\243\002\n\010" +
-      "Reminder\022E\n\017SetTaskReminder\022\026.service2.T" +
-      "askReminder\032\030.service2.ServerResponse\"\000\022" +
-      "E\n\rcheckReminder\022\026.google.protobuf.Empty" +
-      "\032\030.service2.ServerResponse\"\0000\001\022F\n\020MarkTa" +
-      "skComplete\022\026.service2.TaskComplete\032\030.ser" +
-      "vice2.ServerResponse\"\000\022A\n\013GetTaskList\022\026." +
-      "google.protobuf.Empty\032\026.service2.TaskRem" +
-      "inder\"\0000\001B&\n\024sw.Reminder.service2B\014Remin" +
-      "derImplP\001b\006proto3"
+      "buf/empty.proto\"R\n\014TaskReminder\022\021\n\tdate_" +
+      "time\030\001 \001(\t\022\021\n\ttask_name\030\002 \001(\t\022\034\n\004type\030\003 " +
+      "\001(\0162\016.service2.Type\"#\n\016ServerResponse\022\021\n" +
+      "\tconfirmed\030\001 \001(\t\"!\n\014TaskComplete\022\021\n\ttask" +
+      "_name\030\001 \001(\t**\n\004Type\022\014\n\010STANDART\020\000\022\n\n\006DOC" +
+      "TOR\020\001\022\010\n\004PILL\020\0022\334\001\n\010Reminder\022E\n\017SetTaskR" +
+      "eminder\022\026.service2.TaskReminder\032\030.servic" +
+      "e2.ServerResponse\"\000\022F\n\020MarkTaskComplete\022" +
+      "\026.service2.TaskComplete\032\030.service2.Serve" +
+      "rResponse\"\000\022A\n\013GetTaskList\022\026.google.prot" +
+      "obuf.Empty\032\026.service2.TaskReminder\"\0000\001B*" +
+      "\n\024sw.Reminder.service2B\020taskReminderImpl" +
+      "P\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -71,7 +71,7 @@ public final class ReminderImpl {
     internal_static_service2_TaskReminder_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_service2_TaskReminder_descriptor,
-        new java.lang.String[] { "Time", "TaskName", });
+        new java.lang.String[] { "DateTime", "TaskName", "Type", });
     internal_static_service2_ServerResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_service2_ServerResponse_fieldAccessorTable = new
@@ -83,7 +83,7 @@ public final class ReminderImpl {
     internal_static_service2_TaskComplete_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_service2_TaskComplete_descriptor,
-        new java.lang.String[] { "TaskName", "Completed", });
+        new java.lang.String[] { "TaskName", });
     com.google.protobuf.EmptyProto.getDescriptor();
   }
 

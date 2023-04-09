@@ -3,7 +3,7 @@ import "google/protobuf/empty.proto";
 
 option java_multiple_files = true;
 option java_package = "sw.Reminder.service2";
-option java_outer_classname = "ReminderImpl";
+option java_outer_classname = "taskReminderImpl";
 
 package service2;
 
@@ -12,28 +12,32 @@ service Reminder {
   // Saves when pills need to be taken and others tasks and reminds the user (Unary)
   rpc SetTaskReminder(TaskReminder) returns (ServerResponse) {}
 
-  // Check the reminders whether the time is up or not(Server Streaming)
-  rpc checkReminder(google.protobuf.Empty) returns (stream ServerResponse) {} 
-
   // Tracks completion of a task/event (Unary) //It could be doctor appointment reminder or whatever
   rpc MarkTaskComplete(TaskComplete) returns (ServerResponse) {}
   
-  // Retrieves the list of tasks that have been set on the server (Server Streaming)
+  // Retrieves the list of tasks that have been set on the server and haven't been marked(Server Streaming)
   rpc GetTaskList(google.protobuf.Empty) returns (stream TaskReminder) {}
 }
 
-
+//Change this to save data time instead in64 time!!!!
 // Reminder request and response messages
 message TaskReminder {
-  int64 time = 1;
+  string date_time = 1;
   string task_name = 2;
+  Type type = 3;
 }
 
 message ServerResponse {
 	string confirmed = 1;
 }
 
+//Send the task name to find in database end mark completed
 message TaskComplete {
   string task_name = 1;
-  bool completed = 2;
+}
+
+enum Type {
+	STANDART = 0;
+	DOCTOR = 1;
+	PILL = 2;
 }

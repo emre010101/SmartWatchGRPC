@@ -1,8 +1,10 @@
 package ServerSides;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -14,13 +16,15 @@ import sw.stepCounter.service1.WeekDays;
 public class DataBaseConsulter {
 	
     private static File directory = new File("C:\\Code\\SmartWatchGRPC\\database");
-    private static final String FILE_NAME = directory.getAbsolutePath() + "//stepsDatabase.txt";
+    private static final String STEPS_DATABASE = directory.getAbsolutePath() + "//stepsDatabase.txt";
+    private static File directory2 = new File("C:\\Code\\SmartWatchGRPC\\database");
+    private static final String REMINDER_DATABASE = directory.getAbsolutePath() + "//reminderDatabase.txt";
     
     public static int checkStepsFromStartTime(ZonedDateTime startTime) {
         System.out.println("--ServerSide: DataBaseConsulter.checkStepsFromStartTime() invoked");
         int stepsFromStartTime = 0;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(STEPS_DATABASE))) {
             String line;
 
             // Get the current time
@@ -74,6 +78,18 @@ public class DataBaseConsulter {
 		}
 		return 0;
 	}
+
+	public static String saveReminder(String taskName, String date_time, int type) {
+	    try (BufferedWriter writer = new BufferedWriter(new FileWriter(REMINDER_DATABASE, true))) {
+	        String currentDateTime = ZonedDateTime.now(ZoneId.systemDefault()).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+	        writer.write(taskName + "<-->" + date_time + "<-->" + type + currentDateTime + "\n");
+	    } catch (IOException e) {
+	        System.err.println("Failed to save reminder to file: " + e.getMessage());
+	        return "Not saved: " + taskName;
+	    }
+	    return "Saved: " + taskName;
+	}
+	
 
 
 }

@@ -70,13 +70,13 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return sw.Reminder.service2.ReminderImpl.internal_static_service2_ServerResponse_descriptor;
+    return sw.Reminder.service2.taskReminderImpl.internal_static_service2_ServerResponse_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return sw.Reminder.service2.ReminderImpl.internal_static_service2_ServerResponse_fieldAccessorTable
+    return sw.Reminder.service2.taskReminderImpl.internal_static_service2_ServerResponse_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             sw.Reminder.service2.ServerResponse.class, sw.Reminder.service2.ServerResponse.Builder.class);
   }
@@ -279,13 +279,13 @@ private static final long serialVersionUID = 0L;
       sw.Reminder.service2.ServerResponseOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return sw.Reminder.service2.ReminderImpl.internal_static_service2_ServerResponse_descriptor;
+      return sw.Reminder.service2.taskReminderImpl.internal_static_service2_ServerResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return sw.Reminder.service2.ReminderImpl.internal_static_service2_ServerResponse_fieldAccessorTable
+      return sw.Reminder.service2.taskReminderImpl.internal_static_service2_ServerResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               sw.Reminder.service2.ServerResponse.class, sw.Reminder.service2.ServerResponse.Builder.class);
     }
@@ -316,7 +316,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return sw.Reminder.service2.ReminderImpl.internal_static_service2_ServerResponse_descriptor;
+      return sw.Reminder.service2.taskReminderImpl.internal_static_service2_ServerResponse_descriptor;
     }
 
     @java.lang.Override
