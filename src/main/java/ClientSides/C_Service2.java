@@ -8,6 +8,7 @@ import sw.Reminder.service2.Type;
 import sw.Reminder.service2.ReminderGrpc.ReminderBlockingStub;
 import sw.Reminder.service2.ReminderGrpc.ReminderStub;
 import sw.Reminder.service2.ServerResponse;
+import sw.Reminder.service2.TaskComplete;
 
 public class C_Service2 {
 
@@ -17,7 +18,7 @@ public class C_Service2 {
 	
 	public static void main(String[] args) {
 		managedChannel = ManagedChannelBuilder
-				.forAddress("localhost", 1046)
+				.forAddress("localhost", 1048)
 				.usePlaintext()
 				.build();
 
@@ -25,10 +26,22 @@ public class C_Service2 {
 		blockingStub = ReminderGrpc.newBlockingStub(managedChannel);
 
 		asyncStub = ReminderGrpc.newStub(managedChannel);
+		
+		   //Call the setTaskReminder method
+	    try {
+	        setTaskReminder();
+	        markTask();
+	    } catch (InterruptedException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    } finally {
+	        // Properly shut down the channel when you're done using it
+	        managedChannel.shutdown();
+	    }
 	}
 	
-	public static void setTaskReminder() {
-		String name = "Booster for the brain";
+	public static void setTaskReminder() throws InterruptedException {
+		String name = "Booster for the foot";
 		String time = "2023-04-09T10:50:23.1977575+01:00";
 		TaskReminder req = TaskReminder.newBuilder().setDateTime(time).setTaskName(name).setType(Type.PILL).build();
 		
@@ -36,5 +49,17 @@ public class C_Service2 {
 		System.out.println(
 				"Service message: " + response.getConfirmed()
 				);
+		Thread.sleep(100);
+		//managedChannel.shutdown();
+	}
+	
+	public static void markTask() throws InterruptedException {
+		String name = "Booster for the foot";
+		TaskComplete req = TaskComplete.newBuilder().setTaskName(name).build();
+		ServerResponse response = blockingStub.markTaskComplete(req);
+		System.out.println(
+				"Service message: " + response.getConfirmed()
+				);
+		Thread.sleep(100);
 	}
 }

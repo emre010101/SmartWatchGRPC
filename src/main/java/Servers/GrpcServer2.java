@@ -13,7 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import Server.GrpcServer;
-//import ServerSides.S_Service2;
+import ServerSides.S_Service2;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
@@ -42,7 +42,7 @@ public class GrpcServer2 {
 		try {
 			//Server starting on the port number given
 			Server server2 = ServerBuilder.forPort(port)
-					//.addService(new S_Service2())
+					.addService(new S_Service2())
 					.build()
 					.start();
 			

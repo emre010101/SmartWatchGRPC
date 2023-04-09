@@ -25,8 +25,12 @@ public class S_Service2 extends ReminderImplBase{
 
 	@Override
 	public void markTaskComplete(TaskComplete request, StreamObserver<ServerResponse> responseObserver) {
-		// TODO Auto-generated method stub
-		super.markTaskComplete(request, responseObserver);
+		System.out.println("Receiving the task completed: " + request.getTaskName());
+		String taskName = request.getTaskName();
+		String reply = DataBaseConsulter.markCompleted(taskName);
+		ServerResponse response = ServerResponse.newBuilder().setConfirmed(reply).build();
+		responseObserver.onNext(response);
+		responseObserver.onCompleted();
 	}
 
 	@Override
