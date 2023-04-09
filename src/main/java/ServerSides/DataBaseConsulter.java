@@ -85,7 +85,7 @@ public class DataBaseConsulter {
 	public static String saveReminder(String taskName, String date_time, int type) {
 	    try (BufferedWriter writer = new BufferedWriter(new FileWriter(REMINDER_DATABASE, true))) {
 	        String currentDateTime = ZonedDateTime.now(ZoneId.systemDefault()).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-	        writer.write(taskName + "<->" + date_time + "<->" + type + currentDateTime + "\n");
+	        writer.write(taskName + "<->" + date_time + "<->" + type + "<->" + currentDateTime + "\n");
 	    } catch (IOException e) {
 	        System.err.println("Failed to save reminder to file: " + e.getMessage());
 	        return "Not saved: " + taskName;
@@ -155,16 +155,17 @@ public class DataBaseConsulter {
         return unmarkedReminders;
     }
 	//Testing the DataBaseConsulter Methods
-	/*public static void main(String[] args) {
-		List<String> control = checkUnmarkedReminders();
+	public static void main(String[] args) {
+		/*List<String> control = checkUnmarkedReminders();
 		System.out.println("Printing from the main the unmarkeds");
 		for(String line : control) {
 			System.out.println(line);
 		}
 		System.out.println("AFter");
 		
-		System.out.println(markCompleted("Booster for the foot"));
-	}*/
+		System.out.println(markCompleted("Booster for the foot"));*/
+		saveReminder("Emre", "test", 4);
+	}
 
 	
 

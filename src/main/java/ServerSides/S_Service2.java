@@ -1,5 +1,7 @@
 package ServerSides;
 
+import java.util.List;
+
 import com.google.protobuf.Empty;
 
 import io.grpc.stub.StreamObserver;
@@ -7,6 +9,7 @@ import sw.Reminder.service2.ReminderGrpc.ReminderImplBase;
 import sw.Reminder.service2.ServerResponse;
 import sw.Reminder.service2.TaskComplete;
 import sw.Reminder.service2.TaskReminder;
+
 
 public class S_Service2 extends ReminderImplBase{
 
@@ -35,8 +38,27 @@ public class S_Service2 extends ReminderImplBase{
 
 	@Override
 	public void getTaskList(Empty request, StreamObserver<TaskReminder> responseObserver) {
-		// TODO Auto-generated method stub
-		super.getTaskList(request, responseObserver);
+		System.out.println("Client consulted the getTaskList in serverSide");
+		List<String> unmarkeds = DataBaseConsulter.checkUnmarkedReminders();
+		if(unmarkeds.size()==0) {
+			TaskReminder empty = TaskReminder.newBuilder().setDateTime(null).setTaskName("There is no unmarked reminder in that name").setType(null).build();
+			responseObserver.onNext(empty);
+			responseObserver.onCompleted();
+		}else {
+			for(String line : unmarkeds) {
+				String[] parts = line.split("<->");
+				TaskReminder reply = TaskReminder.newBuilder().setTaskName(parts[0]).setDateTime(parts[1]).setTypeValue(Integer.parseInt(parts[2])).build();
+				responseObserver.onNext(reply);
+				try {
+					Thread.sleep(1500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			System.out.println("Server: getTaskList is completed...");
+			responseObserver.onCompleted();
+		}
 	}
 
 	

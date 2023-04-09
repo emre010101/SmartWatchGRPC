@@ -88,7 +88,7 @@ public class Service1 extends StepCounterImplBase{
 			StepGoalResponse reply = StepGoalResponse.newBuilder().setLeft(left).setMessage(msg).setSuccess(achive).build();
 			responseObserver.onNext(reply);
 			try {
-				Thread.sleep(500);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
