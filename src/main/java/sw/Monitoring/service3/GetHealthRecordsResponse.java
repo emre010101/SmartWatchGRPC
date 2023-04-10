@@ -4,19 +4,18 @@
 package sw.Monitoring.service3;
 
 /**
- * Protobuf type {@code service3.HeartRateRequest}
+ * Protobuf type {@code service3.GetHealthRecordsResponse}
  */
-public  final class HeartRateRequest extends
+public  final class GetHealthRecordsResponse extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:service3.HeartRateRequest)
-    HeartRateRequestOrBuilder {
+    // @@protoc_insertion_point(message_implements:service3.GetHealthRecordsResponse)
+    GetHealthRecordsResponseOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use HeartRateRequest.newBuilder() to construct.
-  private HeartRateRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use GetHealthRecordsResponse.newBuilder() to construct.
+  private GetHealthRecordsResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private HeartRateRequest() {
-    heartRate_ = 0D;
+  private GetHealthRecordsResponse() {
   }
 
   @java.lang.Override
@@ -24,7 +23,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private HeartRateRequest(
+  private GetHealthRecordsResponse(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -43,20 +42,15 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 9: {
-
-            heartRate_ = input.readDouble();
-            break;
-          }
-          case 18: {
-            sw.Monitoring.service3.PatientID.Builder subBuilder = null;
-            if (patientId_ != null) {
-              subBuilder = patientId_.toBuilder();
+          case 10: {
+            sw.Monitoring.service3.UserRecords.Builder subBuilder = null;
+            if (userRecords_ != null) {
+              subBuilder = userRecords_.toBuilder();
             }
-            patientId_ = input.readMessage(sw.Monitoring.service3.PatientID.parser(), extensionRegistry);
+            userRecords_ = input.readMessage(sw.Monitoring.service3.UserRecords.parser(), extensionRegistry);
             if (subBuilder != null) {
-              subBuilder.mergeFrom(patientId_);
-              patientId_ = subBuilder.buildPartial();
+              subBuilder.mergeFrom(userRecords_);
+              userRecords_ = subBuilder.buildPartial();
             }
 
             break;
@@ -82,45 +76,36 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return sw.Monitoring.service3.MonitorImpl.internal_static_service3_HeartRateRequest_descriptor;
+    return sw.Monitoring.service3.MonitorImpl.internal_static_service3_GetHealthRecordsResponse_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return sw.Monitoring.service3.MonitorImpl.internal_static_service3_HeartRateRequest_fieldAccessorTable
+    return sw.Monitoring.service3.MonitorImpl.internal_static_service3_GetHealthRecordsResponse_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            sw.Monitoring.service3.HeartRateRequest.class, sw.Monitoring.service3.HeartRateRequest.Builder.class);
+            sw.Monitoring.service3.GetHealthRecordsResponse.class, sw.Monitoring.service3.GetHealthRecordsResponse.Builder.class);
   }
 
-  public static final int HEART_RATE_FIELD_NUMBER = 1;
-  private double heartRate_;
+  public static final int USER_RECORDS_FIELD_NUMBER = 1;
+  private sw.Monitoring.service3.UserRecords userRecords_;
   /**
-   * <code>double heart_rate = 1;</code>
+   * <code>.service3.UserRecords user_records = 1;</code>
    */
-  public double getHeartRate() {
-    return heartRate_;
-  }
-
-  public static final int PATIENT_ID_FIELD_NUMBER = 2;
-  private sw.Monitoring.service3.PatientID patientId_;
-  /**
-   * <code>.service3.PatientID patient_id = 2;</code>
-   */
-  public boolean hasPatientId() {
-    return patientId_ != null;
+  public boolean hasUserRecords() {
+    return userRecords_ != null;
   }
   /**
-   * <code>.service3.PatientID patient_id = 2;</code>
+   * <code>.service3.UserRecords user_records = 1;</code>
    */
-  public sw.Monitoring.service3.PatientID getPatientId() {
-    return patientId_ == null ? sw.Monitoring.service3.PatientID.getDefaultInstance() : patientId_;
+  public sw.Monitoring.service3.UserRecords getUserRecords() {
+    return userRecords_ == null ? sw.Monitoring.service3.UserRecords.getDefaultInstance() : userRecords_;
   }
   /**
-   * <code>.service3.PatientID patient_id = 2;</code>
+   * <code>.service3.UserRecords user_records = 1;</code>
    */
-  public sw.Monitoring.service3.PatientIDOrBuilder getPatientIdOrBuilder() {
-    return getPatientId();
+  public sw.Monitoring.service3.UserRecordsOrBuilder getUserRecordsOrBuilder() {
+    return getUserRecords();
   }
 
   private byte memoizedIsInitialized = -1;
@@ -137,11 +122,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (heartRate_ != 0D) {
-      output.writeDouble(1, heartRate_);
-    }
-    if (patientId_ != null) {
-      output.writeMessage(2, getPatientId());
+    if (userRecords_ != null) {
+      output.writeMessage(1, getUserRecords());
     }
     unknownFields.writeTo(output);
   }
@@ -152,13 +134,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (heartRate_ != 0D) {
+    if (userRecords_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeDoubleSize(1, heartRate_);
-    }
-    if (patientId_ != null) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(2, getPatientId());
+        .computeMessageSize(1, getUserRecords());
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -170,20 +148,16 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof sw.Monitoring.service3.HeartRateRequest)) {
+    if (!(obj instanceof sw.Monitoring.service3.GetHealthRecordsResponse)) {
       return super.equals(obj);
     }
-    sw.Monitoring.service3.HeartRateRequest other = (sw.Monitoring.service3.HeartRateRequest) obj;
+    sw.Monitoring.service3.GetHealthRecordsResponse other = (sw.Monitoring.service3.GetHealthRecordsResponse) obj;
 
     boolean result = true;
-    result = result && (
-        java.lang.Double.doubleToLongBits(getHeartRate())
-        == java.lang.Double.doubleToLongBits(
-            other.getHeartRate()));
-    result = result && (hasPatientId() == other.hasPatientId());
-    if (hasPatientId()) {
-      result = result && getPatientId()
-          .equals(other.getPatientId());
+    result = result && (hasUserRecords() == other.hasUserRecords());
+    if (hasUserRecords()) {
+      result = result && getUserRecords()
+          .equals(other.getUserRecords());
     }
     result = result && unknownFields.equals(other.unknownFields);
     return result;
@@ -196,81 +170,78 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + HEART_RATE_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        java.lang.Double.doubleToLongBits(getHeartRate()));
-    if (hasPatientId()) {
-      hash = (37 * hash) + PATIENT_ID_FIELD_NUMBER;
-      hash = (53 * hash) + getPatientId().hashCode();
+    if (hasUserRecords()) {
+      hash = (37 * hash) + USER_RECORDS_FIELD_NUMBER;
+      hash = (53 * hash) + getUserRecords().hashCode();
     }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static sw.Monitoring.service3.HeartRateRequest parseFrom(
+  public static sw.Monitoring.service3.GetHealthRecordsResponse parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static sw.Monitoring.service3.HeartRateRequest parseFrom(
+  public static sw.Monitoring.service3.GetHealthRecordsResponse parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static sw.Monitoring.service3.HeartRateRequest parseFrom(
+  public static sw.Monitoring.service3.GetHealthRecordsResponse parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static sw.Monitoring.service3.HeartRateRequest parseFrom(
+  public static sw.Monitoring.service3.GetHealthRecordsResponse parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static sw.Monitoring.service3.HeartRateRequest parseFrom(byte[] data)
+  public static sw.Monitoring.service3.GetHealthRecordsResponse parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static sw.Monitoring.service3.HeartRateRequest parseFrom(
+  public static sw.Monitoring.service3.GetHealthRecordsResponse parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static sw.Monitoring.service3.HeartRateRequest parseFrom(java.io.InputStream input)
+  public static sw.Monitoring.service3.GetHealthRecordsResponse parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static sw.Monitoring.service3.HeartRateRequest parseFrom(
+  public static sw.Monitoring.service3.GetHealthRecordsResponse parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static sw.Monitoring.service3.HeartRateRequest parseDelimitedFrom(java.io.InputStream input)
+  public static sw.Monitoring.service3.GetHealthRecordsResponse parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static sw.Monitoring.service3.HeartRateRequest parseDelimitedFrom(
+  public static sw.Monitoring.service3.GetHealthRecordsResponse parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static sw.Monitoring.service3.HeartRateRequest parseFrom(
+  public static sw.Monitoring.service3.GetHealthRecordsResponse parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static sw.Monitoring.service3.HeartRateRequest parseFrom(
+  public static sw.Monitoring.service3.GetHealthRecordsResponse parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -283,7 +254,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(sw.Monitoring.service3.HeartRateRequest prototype) {
+  public static Builder newBuilder(sw.Monitoring.service3.GetHealthRecordsResponse prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -299,26 +270,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code service3.HeartRateRequest}
+   * Protobuf type {@code service3.GetHealthRecordsResponse}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:service3.HeartRateRequest)
-      sw.Monitoring.service3.HeartRateRequestOrBuilder {
+      // @@protoc_insertion_point(builder_implements:service3.GetHealthRecordsResponse)
+      sw.Monitoring.service3.GetHealthRecordsResponseOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return sw.Monitoring.service3.MonitorImpl.internal_static_service3_HeartRateRequest_descriptor;
+      return sw.Monitoring.service3.MonitorImpl.internal_static_service3_GetHealthRecordsResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return sw.Monitoring.service3.MonitorImpl.internal_static_service3_HeartRateRequest_fieldAccessorTable
+      return sw.Monitoring.service3.MonitorImpl.internal_static_service3_GetHealthRecordsResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              sw.Monitoring.service3.HeartRateRequest.class, sw.Monitoring.service3.HeartRateRequest.Builder.class);
+              sw.Monitoring.service3.GetHealthRecordsResponse.class, sw.Monitoring.service3.GetHealthRecordsResponse.Builder.class);
     }
 
-    // Construct using sw.Monitoring.service3.HeartRateRequest.newBuilder()
+    // Construct using sw.Monitoring.service3.GetHealthRecordsResponse.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -336,13 +307,11 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      heartRate_ = 0D;
-
-      if (patientIdBuilder_ == null) {
-        patientId_ = null;
+      if (userRecordsBuilder_ == null) {
+        userRecords_ = null;
       } else {
-        patientId_ = null;
-        patientIdBuilder_ = null;
+        userRecords_ = null;
+        userRecordsBuilder_ = null;
       }
       return this;
     }
@@ -350,17 +319,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return sw.Monitoring.service3.MonitorImpl.internal_static_service3_HeartRateRequest_descriptor;
+      return sw.Monitoring.service3.MonitorImpl.internal_static_service3_GetHealthRecordsResponse_descriptor;
     }
 
     @java.lang.Override
-    public sw.Monitoring.service3.HeartRateRequest getDefaultInstanceForType() {
-      return sw.Monitoring.service3.HeartRateRequest.getDefaultInstance();
+    public sw.Monitoring.service3.GetHealthRecordsResponse getDefaultInstanceForType() {
+      return sw.Monitoring.service3.GetHealthRecordsResponse.getDefaultInstance();
     }
 
     @java.lang.Override
-    public sw.Monitoring.service3.HeartRateRequest build() {
-      sw.Monitoring.service3.HeartRateRequest result = buildPartial();
+    public sw.Monitoring.service3.GetHealthRecordsResponse build() {
+      sw.Monitoring.service3.GetHealthRecordsResponse result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -368,13 +337,12 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public sw.Monitoring.service3.HeartRateRequest buildPartial() {
-      sw.Monitoring.service3.HeartRateRequest result = new sw.Monitoring.service3.HeartRateRequest(this);
-      result.heartRate_ = heartRate_;
-      if (patientIdBuilder_ == null) {
-        result.patientId_ = patientId_;
+    public sw.Monitoring.service3.GetHealthRecordsResponse buildPartial() {
+      sw.Monitoring.service3.GetHealthRecordsResponse result = new sw.Monitoring.service3.GetHealthRecordsResponse(this);
+      if (userRecordsBuilder_ == null) {
+        result.userRecords_ = userRecords_;
       } else {
-        result.patientId_ = patientIdBuilder_.build();
+        result.userRecords_ = userRecordsBuilder_.build();
       }
       onBuilt();
       return result;
@@ -414,21 +382,18 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof sw.Monitoring.service3.HeartRateRequest) {
-        return mergeFrom((sw.Monitoring.service3.HeartRateRequest)other);
+      if (other instanceof sw.Monitoring.service3.GetHealthRecordsResponse) {
+        return mergeFrom((sw.Monitoring.service3.GetHealthRecordsResponse)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(sw.Monitoring.service3.HeartRateRequest other) {
-      if (other == sw.Monitoring.service3.HeartRateRequest.getDefaultInstance()) return this;
-      if (other.getHeartRate() != 0D) {
-        setHeartRate(other.getHeartRate());
-      }
-      if (other.hasPatientId()) {
-        mergePatientId(other.getPatientId());
+    public Builder mergeFrom(sw.Monitoring.service3.GetHealthRecordsResponse other) {
+      if (other == sw.Monitoring.service3.GetHealthRecordsResponse.getDefaultInstance()) return this;
+      if (other.hasUserRecords()) {
+        mergeUserRecords(other.getUserRecords());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -445,11 +410,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      sw.Monitoring.service3.HeartRateRequest parsedMessage = null;
+      sw.Monitoring.service3.GetHealthRecordsResponse parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (sw.Monitoring.service3.HeartRateRequest) e.getUnfinishedMessage();
+        parsedMessage = (sw.Monitoring.service3.GetHealthRecordsResponse) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -459,147 +424,121 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private double heartRate_ ;
-    /**
-     * <code>double heart_rate = 1;</code>
-     */
-    public double getHeartRate() {
-      return heartRate_;
-    }
-    /**
-     * <code>double heart_rate = 1;</code>
-     */
-    public Builder setHeartRate(double value) {
-      
-      heartRate_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>double heart_rate = 1;</code>
-     */
-    public Builder clearHeartRate() {
-      
-      heartRate_ = 0D;
-      onChanged();
-      return this;
-    }
-
-    private sw.Monitoring.service3.PatientID patientId_ = null;
+    private sw.Monitoring.service3.UserRecords userRecords_ = null;
     private com.google.protobuf.SingleFieldBuilderV3<
-        sw.Monitoring.service3.PatientID, sw.Monitoring.service3.PatientID.Builder, sw.Monitoring.service3.PatientIDOrBuilder> patientIdBuilder_;
+        sw.Monitoring.service3.UserRecords, sw.Monitoring.service3.UserRecords.Builder, sw.Monitoring.service3.UserRecordsOrBuilder> userRecordsBuilder_;
     /**
-     * <code>.service3.PatientID patient_id = 2;</code>
+     * <code>.service3.UserRecords user_records = 1;</code>
      */
-    public boolean hasPatientId() {
-      return patientIdBuilder_ != null || patientId_ != null;
+    public boolean hasUserRecords() {
+      return userRecordsBuilder_ != null || userRecords_ != null;
     }
     /**
-     * <code>.service3.PatientID patient_id = 2;</code>
+     * <code>.service3.UserRecords user_records = 1;</code>
      */
-    public sw.Monitoring.service3.PatientID getPatientId() {
-      if (patientIdBuilder_ == null) {
-        return patientId_ == null ? sw.Monitoring.service3.PatientID.getDefaultInstance() : patientId_;
+    public sw.Monitoring.service3.UserRecords getUserRecords() {
+      if (userRecordsBuilder_ == null) {
+        return userRecords_ == null ? sw.Monitoring.service3.UserRecords.getDefaultInstance() : userRecords_;
       } else {
-        return patientIdBuilder_.getMessage();
+        return userRecordsBuilder_.getMessage();
       }
     }
     /**
-     * <code>.service3.PatientID patient_id = 2;</code>
+     * <code>.service3.UserRecords user_records = 1;</code>
      */
-    public Builder setPatientId(sw.Monitoring.service3.PatientID value) {
-      if (patientIdBuilder_ == null) {
+    public Builder setUserRecords(sw.Monitoring.service3.UserRecords value) {
+      if (userRecordsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
         }
-        patientId_ = value;
+        userRecords_ = value;
         onChanged();
       } else {
-        patientIdBuilder_.setMessage(value);
+        userRecordsBuilder_.setMessage(value);
       }
 
       return this;
     }
     /**
-     * <code>.service3.PatientID patient_id = 2;</code>
+     * <code>.service3.UserRecords user_records = 1;</code>
      */
-    public Builder setPatientId(
-        sw.Monitoring.service3.PatientID.Builder builderForValue) {
-      if (patientIdBuilder_ == null) {
-        patientId_ = builderForValue.build();
+    public Builder setUserRecords(
+        sw.Monitoring.service3.UserRecords.Builder builderForValue) {
+      if (userRecordsBuilder_ == null) {
+        userRecords_ = builderForValue.build();
         onChanged();
       } else {
-        patientIdBuilder_.setMessage(builderForValue.build());
+        userRecordsBuilder_.setMessage(builderForValue.build());
       }
 
       return this;
     }
     /**
-     * <code>.service3.PatientID patient_id = 2;</code>
+     * <code>.service3.UserRecords user_records = 1;</code>
      */
-    public Builder mergePatientId(sw.Monitoring.service3.PatientID value) {
-      if (patientIdBuilder_ == null) {
-        if (patientId_ != null) {
-          patientId_ =
-            sw.Monitoring.service3.PatientID.newBuilder(patientId_).mergeFrom(value).buildPartial();
+    public Builder mergeUserRecords(sw.Monitoring.service3.UserRecords value) {
+      if (userRecordsBuilder_ == null) {
+        if (userRecords_ != null) {
+          userRecords_ =
+            sw.Monitoring.service3.UserRecords.newBuilder(userRecords_).mergeFrom(value).buildPartial();
         } else {
-          patientId_ = value;
+          userRecords_ = value;
         }
         onChanged();
       } else {
-        patientIdBuilder_.mergeFrom(value);
+        userRecordsBuilder_.mergeFrom(value);
       }
 
       return this;
     }
     /**
-     * <code>.service3.PatientID patient_id = 2;</code>
+     * <code>.service3.UserRecords user_records = 1;</code>
      */
-    public Builder clearPatientId() {
-      if (patientIdBuilder_ == null) {
-        patientId_ = null;
+    public Builder clearUserRecords() {
+      if (userRecordsBuilder_ == null) {
+        userRecords_ = null;
         onChanged();
       } else {
-        patientId_ = null;
-        patientIdBuilder_ = null;
+        userRecords_ = null;
+        userRecordsBuilder_ = null;
       }
 
       return this;
     }
     /**
-     * <code>.service3.PatientID patient_id = 2;</code>
+     * <code>.service3.UserRecords user_records = 1;</code>
      */
-    public sw.Monitoring.service3.PatientID.Builder getPatientIdBuilder() {
+    public sw.Monitoring.service3.UserRecords.Builder getUserRecordsBuilder() {
       
       onChanged();
-      return getPatientIdFieldBuilder().getBuilder();
+      return getUserRecordsFieldBuilder().getBuilder();
     }
     /**
-     * <code>.service3.PatientID patient_id = 2;</code>
+     * <code>.service3.UserRecords user_records = 1;</code>
      */
-    public sw.Monitoring.service3.PatientIDOrBuilder getPatientIdOrBuilder() {
-      if (patientIdBuilder_ != null) {
-        return patientIdBuilder_.getMessageOrBuilder();
+    public sw.Monitoring.service3.UserRecordsOrBuilder getUserRecordsOrBuilder() {
+      if (userRecordsBuilder_ != null) {
+        return userRecordsBuilder_.getMessageOrBuilder();
       } else {
-        return patientId_ == null ?
-            sw.Monitoring.service3.PatientID.getDefaultInstance() : patientId_;
+        return userRecords_ == null ?
+            sw.Monitoring.service3.UserRecords.getDefaultInstance() : userRecords_;
       }
     }
     /**
-     * <code>.service3.PatientID patient_id = 2;</code>
+     * <code>.service3.UserRecords user_records = 1;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
-        sw.Monitoring.service3.PatientID, sw.Monitoring.service3.PatientID.Builder, sw.Monitoring.service3.PatientIDOrBuilder> 
-        getPatientIdFieldBuilder() {
-      if (patientIdBuilder_ == null) {
-        patientIdBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            sw.Monitoring.service3.PatientID, sw.Monitoring.service3.PatientID.Builder, sw.Monitoring.service3.PatientIDOrBuilder>(
-                getPatientId(),
+        sw.Monitoring.service3.UserRecords, sw.Monitoring.service3.UserRecords.Builder, sw.Monitoring.service3.UserRecordsOrBuilder> 
+        getUserRecordsFieldBuilder() {
+      if (userRecordsBuilder_ == null) {
+        userRecordsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            sw.Monitoring.service3.UserRecords, sw.Monitoring.service3.UserRecords.Builder, sw.Monitoring.service3.UserRecordsOrBuilder>(
+                getUserRecords(),
                 getParentForChildren(),
                 isClean());
-        patientId_ = null;
+        userRecords_ = null;
       }
-      return patientIdBuilder_;
+      return userRecordsBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(
@@ -614,41 +553,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:service3.HeartRateRequest)
+    // @@protoc_insertion_point(builder_scope:service3.GetHealthRecordsResponse)
   }
 
-  // @@protoc_insertion_point(class_scope:service3.HeartRateRequest)
-  private static final sw.Monitoring.service3.HeartRateRequest DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:service3.GetHealthRecordsResponse)
+  private static final sw.Monitoring.service3.GetHealthRecordsResponse DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new sw.Monitoring.service3.HeartRateRequest();
+    DEFAULT_INSTANCE = new sw.Monitoring.service3.GetHealthRecordsResponse();
   }
 
-  public static sw.Monitoring.service3.HeartRateRequest getDefaultInstance() {
+  public static sw.Monitoring.service3.GetHealthRecordsResponse getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<HeartRateRequest>
-      PARSER = new com.google.protobuf.AbstractParser<HeartRateRequest>() {
+  private static final com.google.protobuf.Parser<GetHealthRecordsResponse>
+      PARSER = new com.google.protobuf.AbstractParser<GetHealthRecordsResponse>() {
     @java.lang.Override
-    public HeartRateRequest parsePartialFrom(
+    public GetHealthRecordsResponse parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new HeartRateRequest(input, extensionRegistry);
+      return new GetHealthRecordsResponse(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<HeartRateRequest> parser() {
+  public static com.google.protobuf.Parser<GetHealthRecordsResponse> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<HeartRateRequest> getParserForType() {
+  public com.google.protobuf.Parser<GetHealthRecordsResponse> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public sw.Monitoring.service3.HeartRateRequest getDefaultInstanceForType() {
+  public sw.Monitoring.service3.GetHealthRecordsResponse getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

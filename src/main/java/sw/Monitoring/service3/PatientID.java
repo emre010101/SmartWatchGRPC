@@ -4,18 +4,19 @@
 package sw.Monitoring.service3;
 
 /**
- * Protobuf type {@code service3.GetHealthRecordsRequest}
+ * Protobuf type {@code service3.PatientID}
  */
-public  final class GetHealthRecordsRequest extends
+public  final class PatientID extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:service3.GetHealthRecordsRequest)
-    GetHealthRecordsRequestOrBuilder {
+    // @@protoc_insertion_point(message_implements:service3.PatientID)
+    PatientIDOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use GetHealthRecordsRequest.newBuilder() to construct.
-  private GetHealthRecordsRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use PatientID.newBuilder() to construct.
+  private PatientID(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private GetHealthRecordsRequest() {
+  private PatientID() {
+    patientId_ = 0;
   }
 
   @java.lang.Override
@@ -23,7 +24,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private GetHealthRecordsRequest(
+  private PatientID(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -42,17 +43,9 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 10: {
-            sw.Monitoring.service3.PatientID.Builder subBuilder = null;
-            if (patientId_ != null) {
-              subBuilder = patientId_.toBuilder();
-            }
-            patientId_ = input.readMessage(sw.Monitoring.service3.PatientID.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(patientId_);
-              patientId_ = subBuilder.buildPartial();
-            }
+          case 8: {
 
+            patientId_ = input.readInt32();
             break;
           }
           default: {
@@ -76,36 +69,24 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return sw.Monitoring.service3.MonitorImpl.internal_static_service3_GetHealthRecordsRequest_descriptor;
+    return sw.Monitoring.service3.MonitorImpl.internal_static_service3_PatientID_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return sw.Monitoring.service3.MonitorImpl.internal_static_service3_GetHealthRecordsRequest_fieldAccessorTable
+    return sw.Monitoring.service3.MonitorImpl.internal_static_service3_PatientID_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            sw.Monitoring.service3.GetHealthRecordsRequest.class, sw.Monitoring.service3.GetHealthRecordsRequest.Builder.class);
+            sw.Monitoring.service3.PatientID.class, sw.Monitoring.service3.PatientID.Builder.class);
   }
 
   public static final int PATIENT_ID_FIELD_NUMBER = 1;
-  private sw.Monitoring.service3.PatientID patientId_;
+  private int patientId_;
   /**
-   * <code>.service3.PatientID patient_id = 1;</code>
+   * <code>int32 patient_id = 1;</code>
    */
-  public boolean hasPatientId() {
-    return patientId_ != null;
-  }
-  /**
-   * <code>.service3.PatientID patient_id = 1;</code>
-   */
-  public sw.Monitoring.service3.PatientID getPatientId() {
-    return patientId_ == null ? sw.Monitoring.service3.PatientID.getDefaultInstance() : patientId_;
-  }
-  /**
-   * <code>.service3.PatientID patient_id = 1;</code>
-   */
-  public sw.Monitoring.service3.PatientIDOrBuilder getPatientIdOrBuilder() {
-    return getPatientId();
+  public int getPatientId() {
+    return patientId_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -122,8 +103,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (patientId_ != null) {
-      output.writeMessage(1, getPatientId());
+    if (patientId_ != 0) {
+      output.writeInt32(1, patientId_);
     }
     unknownFields.writeTo(output);
   }
@@ -134,9 +115,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (patientId_ != null) {
+    if (patientId_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(1, getPatientId());
+        .computeInt32Size(1, patientId_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -148,17 +129,14 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof sw.Monitoring.service3.GetHealthRecordsRequest)) {
+    if (!(obj instanceof sw.Monitoring.service3.PatientID)) {
       return super.equals(obj);
     }
-    sw.Monitoring.service3.GetHealthRecordsRequest other = (sw.Monitoring.service3.GetHealthRecordsRequest) obj;
+    sw.Monitoring.service3.PatientID other = (sw.Monitoring.service3.PatientID) obj;
 
     boolean result = true;
-    result = result && (hasPatientId() == other.hasPatientId());
-    if (hasPatientId()) {
-      result = result && getPatientId()
-          .equals(other.getPatientId());
-    }
+    result = result && (getPatientId()
+        == other.getPatientId());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -170,78 +148,76 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    if (hasPatientId()) {
-      hash = (37 * hash) + PATIENT_ID_FIELD_NUMBER;
-      hash = (53 * hash) + getPatientId().hashCode();
-    }
+    hash = (37 * hash) + PATIENT_ID_FIELD_NUMBER;
+    hash = (53 * hash) + getPatientId();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static sw.Monitoring.service3.GetHealthRecordsRequest parseFrom(
+  public static sw.Monitoring.service3.PatientID parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static sw.Monitoring.service3.GetHealthRecordsRequest parseFrom(
+  public static sw.Monitoring.service3.PatientID parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static sw.Monitoring.service3.GetHealthRecordsRequest parseFrom(
+  public static sw.Monitoring.service3.PatientID parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static sw.Monitoring.service3.GetHealthRecordsRequest parseFrom(
+  public static sw.Monitoring.service3.PatientID parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static sw.Monitoring.service3.GetHealthRecordsRequest parseFrom(byte[] data)
+  public static sw.Monitoring.service3.PatientID parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static sw.Monitoring.service3.GetHealthRecordsRequest parseFrom(
+  public static sw.Monitoring.service3.PatientID parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static sw.Monitoring.service3.GetHealthRecordsRequest parseFrom(java.io.InputStream input)
+  public static sw.Monitoring.service3.PatientID parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static sw.Monitoring.service3.GetHealthRecordsRequest parseFrom(
+  public static sw.Monitoring.service3.PatientID parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static sw.Monitoring.service3.GetHealthRecordsRequest parseDelimitedFrom(java.io.InputStream input)
+  public static sw.Monitoring.service3.PatientID parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static sw.Monitoring.service3.GetHealthRecordsRequest parseDelimitedFrom(
+  public static sw.Monitoring.service3.PatientID parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static sw.Monitoring.service3.GetHealthRecordsRequest parseFrom(
+  public static sw.Monitoring.service3.PatientID parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static sw.Monitoring.service3.GetHealthRecordsRequest parseFrom(
+  public static sw.Monitoring.service3.PatientID parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -254,7 +230,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(sw.Monitoring.service3.GetHealthRecordsRequest prototype) {
+  public static Builder newBuilder(sw.Monitoring.service3.PatientID prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -270,26 +246,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code service3.GetHealthRecordsRequest}
+   * Protobuf type {@code service3.PatientID}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:service3.GetHealthRecordsRequest)
-      sw.Monitoring.service3.GetHealthRecordsRequestOrBuilder {
+      // @@protoc_insertion_point(builder_implements:service3.PatientID)
+      sw.Monitoring.service3.PatientIDOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return sw.Monitoring.service3.MonitorImpl.internal_static_service3_GetHealthRecordsRequest_descriptor;
+      return sw.Monitoring.service3.MonitorImpl.internal_static_service3_PatientID_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return sw.Monitoring.service3.MonitorImpl.internal_static_service3_GetHealthRecordsRequest_fieldAccessorTable
+      return sw.Monitoring.service3.MonitorImpl.internal_static_service3_PatientID_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              sw.Monitoring.service3.GetHealthRecordsRequest.class, sw.Monitoring.service3.GetHealthRecordsRequest.Builder.class);
+              sw.Monitoring.service3.PatientID.class, sw.Monitoring.service3.PatientID.Builder.class);
     }
 
-    // Construct using sw.Monitoring.service3.GetHealthRecordsRequest.newBuilder()
+    // Construct using sw.Monitoring.service3.PatientID.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -307,29 +283,25 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      if (patientIdBuilder_ == null) {
-        patientId_ = null;
-      } else {
-        patientId_ = null;
-        patientIdBuilder_ = null;
-      }
+      patientId_ = 0;
+
       return this;
     }
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return sw.Monitoring.service3.MonitorImpl.internal_static_service3_GetHealthRecordsRequest_descriptor;
+      return sw.Monitoring.service3.MonitorImpl.internal_static_service3_PatientID_descriptor;
     }
 
     @java.lang.Override
-    public sw.Monitoring.service3.GetHealthRecordsRequest getDefaultInstanceForType() {
-      return sw.Monitoring.service3.GetHealthRecordsRequest.getDefaultInstance();
+    public sw.Monitoring.service3.PatientID getDefaultInstanceForType() {
+      return sw.Monitoring.service3.PatientID.getDefaultInstance();
     }
 
     @java.lang.Override
-    public sw.Monitoring.service3.GetHealthRecordsRequest build() {
-      sw.Monitoring.service3.GetHealthRecordsRequest result = buildPartial();
+    public sw.Monitoring.service3.PatientID build() {
+      sw.Monitoring.service3.PatientID result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -337,13 +309,9 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public sw.Monitoring.service3.GetHealthRecordsRequest buildPartial() {
-      sw.Monitoring.service3.GetHealthRecordsRequest result = new sw.Monitoring.service3.GetHealthRecordsRequest(this);
-      if (patientIdBuilder_ == null) {
-        result.patientId_ = patientId_;
-      } else {
-        result.patientId_ = patientIdBuilder_.build();
-      }
+    public sw.Monitoring.service3.PatientID buildPartial() {
+      sw.Monitoring.service3.PatientID result = new sw.Monitoring.service3.PatientID(this);
+      result.patientId_ = patientId_;
       onBuilt();
       return result;
     }
@@ -382,18 +350,18 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof sw.Monitoring.service3.GetHealthRecordsRequest) {
-        return mergeFrom((sw.Monitoring.service3.GetHealthRecordsRequest)other);
+      if (other instanceof sw.Monitoring.service3.PatientID) {
+        return mergeFrom((sw.Monitoring.service3.PatientID)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(sw.Monitoring.service3.GetHealthRecordsRequest other) {
-      if (other == sw.Monitoring.service3.GetHealthRecordsRequest.getDefaultInstance()) return this;
-      if (other.hasPatientId()) {
-        mergePatientId(other.getPatientId());
+    public Builder mergeFrom(sw.Monitoring.service3.PatientID other) {
+      if (other == sw.Monitoring.service3.PatientID.getDefaultInstance()) return this;
+      if (other.getPatientId() != 0) {
+        setPatientId(other.getPatientId());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -410,11 +378,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      sw.Monitoring.service3.GetHealthRecordsRequest parsedMessage = null;
+      sw.Monitoring.service3.PatientID parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (sw.Monitoring.service3.GetHealthRecordsRequest) e.getUnfinishedMessage();
+        parsedMessage = (sw.Monitoring.service3.PatientID) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -424,121 +392,30 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private sw.Monitoring.service3.PatientID patientId_ = null;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        sw.Monitoring.service3.PatientID, sw.Monitoring.service3.PatientID.Builder, sw.Monitoring.service3.PatientIDOrBuilder> patientIdBuilder_;
+    private int patientId_ ;
     /**
-     * <code>.service3.PatientID patient_id = 1;</code>
+     * <code>int32 patient_id = 1;</code>
      */
-    public boolean hasPatientId() {
-      return patientIdBuilder_ != null || patientId_ != null;
+    public int getPatientId() {
+      return patientId_;
     }
     /**
-     * <code>.service3.PatientID patient_id = 1;</code>
+     * <code>int32 patient_id = 1;</code>
      */
-    public sw.Monitoring.service3.PatientID getPatientId() {
-      if (patientIdBuilder_ == null) {
-        return patientId_ == null ? sw.Monitoring.service3.PatientID.getDefaultInstance() : patientId_;
-      } else {
-        return patientIdBuilder_.getMessage();
-      }
-    }
-    /**
-     * <code>.service3.PatientID patient_id = 1;</code>
-     */
-    public Builder setPatientId(sw.Monitoring.service3.PatientID value) {
-      if (patientIdBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        patientId_ = value;
-        onChanged();
-      } else {
-        patientIdBuilder_.setMessage(value);
-      }
-
+    public Builder setPatientId(int value) {
+      
+      patientId_ = value;
+      onChanged();
       return this;
     }
     /**
-     * <code>.service3.PatientID patient_id = 1;</code>
-     */
-    public Builder setPatientId(
-        sw.Monitoring.service3.PatientID.Builder builderForValue) {
-      if (patientIdBuilder_ == null) {
-        patientId_ = builderForValue.build();
-        onChanged();
-      } else {
-        patientIdBuilder_.setMessage(builderForValue.build());
-      }
-
-      return this;
-    }
-    /**
-     * <code>.service3.PatientID patient_id = 1;</code>
-     */
-    public Builder mergePatientId(sw.Monitoring.service3.PatientID value) {
-      if (patientIdBuilder_ == null) {
-        if (patientId_ != null) {
-          patientId_ =
-            sw.Monitoring.service3.PatientID.newBuilder(patientId_).mergeFrom(value).buildPartial();
-        } else {
-          patientId_ = value;
-        }
-        onChanged();
-      } else {
-        patientIdBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.service3.PatientID patient_id = 1;</code>
+     * <code>int32 patient_id = 1;</code>
      */
     public Builder clearPatientId() {
-      if (patientIdBuilder_ == null) {
-        patientId_ = null;
-        onChanged();
-      } else {
-        patientId_ = null;
-        patientIdBuilder_ = null;
-      }
-
-      return this;
-    }
-    /**
-     * <code>.service3.PatientID patient_id = 1;</code>
-     */
-    public sw.Monitoring.service3.PatientID.Builder getPatientIdBuilder() {
       
+      patientId_ = 0;
       onChanged();
-      return getPatientIdFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.service3.PatientID patient_id = 1;</code>
-     */
-    public sw.Monitoring.service3.PatientIDOrBuilder getPatientIdOrBuilder() {
-      if (patientIdBuilder_ != null) {
-        return patientIdBuilder_.getMessageOrBuilder();
-      } else {
-        return patientId_ == null ?
-            sw.Monitoring.service3.PatientID.getDefaultInstance() : patientId_;
-      }
-    }
-    /**
-     * <code>.service3.PatientID patient_id = 1;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        sw.Monitoring.service3.PatientID, sw.Monitoring.service3.PatientID.Builder, sw.Monitoring.service3.PatientIDOrBuilder> 
-        getPatientIdFieldBuilder() {
-      if (patientIdBuilder_ == null) {
-        patientIdBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            sw.Monitoring.service3.PatientID, sw.Monitoring.service3.PatientID.Builder, sw.Monitoring.service3.PatientIDOrBuilder>(
-                getPatientId(),
-                getParentForChildren(),
-                isClean());
-        patientId_ = null;
-      }
-      return patientIdBuilder_;
+      return this;
     }
     @java.lang.Override
     public final Builder setUnknownFields(
@@ -553,41 +430,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:service3.GetHealthRecordsRequest)
+    // @@protoc_insertion_point(builder_scope:service3.PatientID)
   }
 
-  // @@protoc_insertion_point(class_scope:service3.GetHealthRecordsRequest)
-  private static final sw.Monitoring.service3.GetHealthRecordsRequest DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:service3.PatientID)
+  private static final sw.Monitoring.service3.PatientID DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new sw.Monitoring.service3.GetHealthRecordsRequest();
+    DEFAULT_INSTANCE = new sw.Monitoring.service3.PatientID();
   }
 
-  public static sw.Monitoring.service3.GetHealthRecordsRequest getDefaultInstance() {
+  public static sw.Monitoring.service3.PatientID getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<GetHealthRecordsRequest>
-      PARSER = new com.google.protobuf.AbstractParser<GetHealthRecordsRequest>() {
+  private static final com.google.protobuf.Parser<PatientID>
+      PARSER = new com.google.protobuf.AbstractParser<PatientID>() {
     @java.lang.Override
-    public GetHealthRecordsRequest parsePartialFrom(
+    public PatientID parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new GetHealthRecordsRequest(input, extensionRegistry);
+      return new PatientID(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<GetHealthRecordsRequest> parser() {
+  public static com.google.protobuf.Parser<PatientID> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<GetHealthRecordsRequest> getParserForType() {
+  public com.google.protobuf.Parser<PatientID> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public sw.Monitoring.service3.GetHealthRecordsRequest getDefaultInstanceForType() {
+  public sw.Monitoring.service3.PatientID getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

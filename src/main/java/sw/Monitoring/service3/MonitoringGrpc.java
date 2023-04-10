@@ -63,21 +63,21 @@ public final class MonitoringGrpc {
   }
 
   private static volatile io.grpc.MethodDescriptor<sw.Monitoring.service3.GetHealthRecordsRequest,
-      sw.Monitoring.service3.UserRecords> getGetHealthRecordsMethod;
+      sw.Monitoring.service3.GetHealthRecordsResponse> getGetHealthRecordsMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "GetHealthRecords",
       requestType = sw.Monitoring.service3.GetHealthRecordsRequest.class,
-      responseType = sw.Monitoring.service3.UserRecords.class,
+      responseType = sw.Monitoring.service3.GetHealthRecordsResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<sw.Monitoring.service3.GetHealthRecordsRequest,
-      sw.Monitoring.service3.UserRecords> getGetHealthRecordsMethod() {
-    io.grpc.MethodDescriptor<sw.Monitoring.service3.GetHealthRecordsRequest, sw.Monitoring.service3.UserRecords> getGetHealthRecordsMethod;
+      sw.Monitoring.service3.GetHealthRecordsResponse> getGetHealthRecordsMethod() {
+    io.grpc.MethodDescriptor<sw.Monitoring.service3.GetHealthRecordsRequest, sw.Monitoring.service3.GetHealthRecordsResponse> getGetHealthRecordsMethod;
     if ((getGetHealthRecordsMethod = MonitoringGrpc.getGetHealthRecordsMethod) == null) {
       synchronized (MonitoringGrpc.class) {
         if ((getGetHealthRecordsMethod = MonitoringGrpc.getGetHealthRecordsMethod) == null) {
           MonitoringGrpc.getGetHealthRecordsMethod = getGetHealthRecordsMethod = 
-              io.grpc.MethodDescriptor.<sw.Monitoring.service3.GetHealthRecordsRequest, sw.Monitoring.service3.UserRecords>newBuilder()
+              io.grpc.MethodDescriptor.<sw.Monitoring.service3.GetHealthRecordsRequest, sw.Monitoring.service3.GetHealthRecordsResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "service3.Monitoring", "GetHealthRecords"))
@@ -85,7 +85,7 @@ public final class MonitoringGrpc {
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   sw.Monitoring.service3.GetHealthRecordsRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  sw.Monitoring.service3.UserRecords.getDefaultInstance()))
+                  sw.Monitoring.service3.GetHealthRecordsResponse.getDefaultInstance()))
                   .setSchemaDescriptor(new MonitoringMethodDescriptorSupplier("GetHealthRecords"))
                   .build();
           }
@@ -172,7 +172,7 @@ public final class MonitoringGrpc {
      * </pre>
      */
     public void getHealthRecords(sw.Monitoring.service3.GetHealthRecordsRequest request,
-        io.grpc.stub.StreamObserver<sw.Monitoring.service3.UserRecords> responseObserver) {
+        io.grpc.stub.StreamObserver<sw.Monitoring.service3.GetHealthRecordsResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getGetHealthRecordsMethod(), responseObserver);
     }
 
@@ -200,7 +200,7 @@ public final class MonitoringGrpc {
             asyncUnaryCall(
               new MethodHandlers<
                 sw.Monitoring.service3.GetHealthRecordsRequest,
-                sw.Monitoring.service3.UserRecords>(
+                sw.Monitoring.service3.GetHealthRecordsResponse>(
                   this, METHODID_GET_HEALTH_RECORDS)))
           .addMethod(
             getMonitorHeartRateMethod(),
@@ -251,7 +251,7 @@ public final class MonitoringGrpc {
      * </pre>
      */
     public void getHealthRecords(sw.Monitoring.service3.GetHealthRecordsRequest request,
-        io.grpc.stub.StreamObserver<sw.Monitoring.service3.UserRecords> responseObserver) {
+        io.grpc.stub.StreamObserver<sw.Monitoring.service3.GetHealthRecordsResponse> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getGetHealthRecordsMethod(), getCallOptions()), request, responseObserver);
     }
@@ -304,7 +304,7 @@ public final class MonitoringGrpc {
      * Requests health records (Unary)
      * </pre>
      */
-    public sw.Monitoring.service3.UserRecords getHealthRecords(sw.Monitoring.service3.GetHealthRecordsRequest request) {
+    public sw.Monitoring.service3.GetHealthRecordsResponse getHealthRecords(sw.Monitoring.service3.GetHealthRecordsRequest request) {
       return blockingUnaryCall(
           getChannel(), getGetHealthRecordsMethod(), getCallOptions(), request);
     }
@@ -347,7 +347,7 @@ public final class MonitoringGrpc {
      * Requests health records (Unary)
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<sw.Monitoring.service3.UserRecords> getHealthRecords(
+    public com.google.common.util.concurrent.ListenableFuture<sw.Monitoring.service3.GetHealthRecordsResponse> getHealthRecords(
         sw.Monitoring.service3.GetHealthRecordsRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getGetHealthRecordsMethod(), getCallOptions()), request);
@@ -381,7 +381,7 @@ public final class MonitoringGrpc {
           break;
         case METHODID_GET_HEALTH_RECORDS:
           serviceImpl.getHealthRecords((sw.Monitoring.service3.GetHealthRecordsRequest) request,
-              (io.grpc.stub.StreamObserver<sw.Monitoring.service3.UserRecords>) responseObserver);
+              (io.grpc.stub.StreamObserver<sw.Monitoring.service3.GetHealthRecordsResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();

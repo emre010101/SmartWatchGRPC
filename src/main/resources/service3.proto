@@ -13,7 +13,7 @@
 	  rpc SetUserRecords(UserRecords) returns (ServerResponse) {}
 	
 	  // Requests health records (Unary)
-	  rpc GetHealthRecords(GetHealthRecordsRequest) returns (UserRecords) {}
+	  rpc GetHealthRecords(GetHealthRecordsRequest) returns (GetHealthRecordsResponse) {}
 	
 	  // Sends heart rate data from client and receives warnings from server (Bidirectional Streaming)
 	  rpc MonitorHeartRate(stream HeartRateRequest) returns (stream HeartRateWarning) {}
@@ -40,12 +40,20 @@
 	}
 	
 	message GetHealthRecordsRequest {
+		PatientID patient_id = 1;
+	}
+	
+	message GetHealthRecordsResponse {
+    	UserRecords user_records = 1;
+	}
+	
+	message PatientID{
 		int32 patient_id = 1;
 	}
 	
 	message HeartRateRequest {
 	  double heart_rate = 1;
-	  int32 patient_id = 2;
+	  PatientID patient_id = 2;
 	}
 	
 	message HeartRateWarning {
