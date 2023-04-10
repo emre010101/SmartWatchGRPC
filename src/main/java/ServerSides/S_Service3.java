@@ -16,8 +16,8 @@ public class S_Service3 extends MonitoringImplBase{
 	@Override
 	public void setUserRecords(UserRecords request, StreamObserver<ServerResponse> responseObserver) {
 		System.out.println(
-				"Receiving the User Details" + request.getName() + request.getPatientId() + request.getAge()
-				+ request.getAddress() + request.getWeight() + request.getHeight()
+				"Receiving the User Details: " + request.getName() +", " +  request.getPatientId() + ", " + request.getAge()
+				+", " + request.getAddress() + ", " + request.getWeight() + ", " + request.getHeight()
 				);
 	    List<EmergencyContact> contactsList = request.getContactsList();
 	    System.out.println("Emergency Contacts:");
