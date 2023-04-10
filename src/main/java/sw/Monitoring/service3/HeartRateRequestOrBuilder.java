@@ -11,4 +11,9 @@ public interface HeartRateRequestOrBuilder extends
    * <code>double heart_rate = 1;</code>
    */
   double getHeartRate();
+
+  /**
+   * <code>int32 patient_id = 2;</code>
+   */
+  int getPatientId();
 }

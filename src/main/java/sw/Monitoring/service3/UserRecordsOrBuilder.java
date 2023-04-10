@@ -38,31 +38,56 @@ public interface UserRecordsOrBuilder extends
   double getHeight();
 
   /**
-   * <code>repeated string close_contacts = 6;</code>
-   */
-  java.util.List<java.lang.String>
-      getCloseContactsList();
-  /**
-   * <code>repeated string close_contacts = 6;</code>
-   */
-  int getCloseContactsCount();
-  /**
-   * <code>repeated string close_contacts = 6;</code>
-   */
-  java.lang.String getCloseContacts(int index);
-  /**
-   * <code>repeated string close_contacts = 6;</code>
-   */
-  com.google.protobuf.ByteString
-      getCloseContactsBytes(int index);
-
-  /**
-   * <code>string address = 7;</code>
+   * <code>string address = 6;</code>
    */
   java.lang.String getAddress();
   /**
-   * <code>string address = 7;</code>
+   * <code>string address = 6;</code>
    */
   com.google.protobuf.ByteString
       getAddressBytes();
+
+  /**
+   * <pre>
+   *could be more than one emergency contact
+   * </pre>
+   *
+   * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+   */
+  java.util.List<sw.Monitoring.service3.EmergencyContact> 
+      getContactsList();
+  /**
+   * <pre>
+   *could be more than one emergency contact
+   * </pre>
+   *
+   * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+   */
+  sw.Monitoring.service3.EmergencyContact getContacts(int index);
+  /**
+   * <pre>
+   *could be more than one emergency contact
+   * </pre>
+   *
+   * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+   */
+  int getContactsCount();
+  /**
+   * <pre>
+   *could be more than one emergency contact
+   * </pre>
+   *
+   * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+   */
+  java.util.List<? extends sw.Monitoring.service3.EmergencyContactOrBuilder> 
+      getContactsOrBuilderList();
+  /**
+   * <pre>
+   *could be more than one emergency contact
+   * </pre>
+   *
+   * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+   */
+  sw.Monitoring.service3.EmergencyContactOrBuilder getContactsOrBuilder(
+      int index);
 }

@@ -25,8 +25,8 @@ private static final long serialVersionUID = 0L;
     name_ = "";
     weight_ = 0D;
     height_ = 0D;
-    closeContacts_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     address_ = "";
+    contacts_ = java.util.Collections.emptyList();
   }
 
   @java.lang.Override
@@ -81,17 +81,17 @@ private static final long serialVersionUID = 0L;
           }
           case 50: {
             java.lang.String s = input.readStringRequireUtf8();
-            if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
-              closeContacts_ = new com.google.protobuf.LazyStringArrayList();
-              mutable_bitField0_ |= 0x00000020;
-            }
-            closeContacts_.add(s);
+
+            address_ = s;
             break;
           }
           case 58: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            address_ = s;
+            if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+              contacts_ = new java.util.ArrayList<sw.Monitoring.service3.EmergencyContact>();
+              mutable_bitField0_ |= 0x00000040;
+            }
+            contacts_.add(
+                input.readMessage(sw.Monitoring.service3.EmergencyContact.parser(), extensionRegistry));
             break;
           }
           default: {
@@ -109,8 +109,8 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
-        closeContacts_ = closeContacts_.getUnmodifiableView();
+      if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+        contacts_ = java.util.Collections.unmodifiableList(contacts_);
       }
       this.unknownFields = unknownFields.build();
       makeExtensionsImmutable();
@@ -200,39 +200,10 @@ private static final long serialVersionUID = 0L;
     return height_;
   }
 
-  public static final int CLOSE_CONTACTS_FIELD_NUMBER = 6;
-  private com.google.protobuf.LazyStringList closeContacts_;
-  /**
-   * <code>repeated string close_contacts = 6;</code>
-   */
-  public com.google.protobuf.ProtocolStringList
-      getCloseContactsList() {
-    return closeContacts_;
-  }
-  /**
-   * <code>repeated string close_contacts = 6;</code>
-   */
-  public int getCloseContactsCount() {
-    return closeContacts_.size();
-  }
-  /**
-   * <code>repeated string close_contacts = 6;</code>
-   */
-  public java.lang.String getCloseContacts(int index) {
-    return closeContacts_.get(index);
-  }
-  /**
-   * <code>repeated string close_contacts = 6;</code>
-   */
-  public com.google.protobuf.ByteString
-      getCloseContactsBytes(int index) {
-    return closeContacts_.getByteString(index);
-  }
-
-  public static final int ADDRESS_FIELD_NUMBER = 7;
+  public static final int ADDRESS_FIELD_NUMBER = 6;
   private volatile java.lang.Object address_;
   /**
-   * <code>string address = 7;</code>
+   * <code>string address = 6;</code>
    */
   public java.lang.String getAddress() {
     java.lang.Object ref = address_;
@@ -247,7 +218,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string address = 7;</code>
+   * <code>string address = 6;</code>
    */
   public com.google.protobuf.ByteString
       getAddressBytes() {
@@ -261,6 +232,61 @@ private static final long serialVersionUID = 0L;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
+  }
+
+  public static final int CONTACTS_FIELD_NUMBER = 7;
+  private java.util.List<sw.Monitoring.service3.EmergencyContact> contacts_;
+  /**
+   * <pre>
+   *could be more than one emergency contact
+   * </pre>
+   *
+   * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+   */
+  public java.util.List<sw.Monitoring.service3.EmergencyContact> getContactsList() {
+    return contacts_;
+  }
+  /**
+   * <pre>
+   *could be more than one emergency contact
+   * </pre>
+   *
+   * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+   */
+  public java.util.List<? extends sw.Monitoring.service3.EmergencyContactOrBuilder> 
+      getContactsOrBuilderList() {
+    return contacts_;
+  }
+  /**
+   * <pre>
+   *could be more than one emergency contact
+   * </pre>
+   *
+   * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+   */
+  public int getContactsCount() {
+    return contacts_.size();
+  }
+  /**
+   * <pre>
+   *could be more than one emergency contact
+   * </pre>
+   *
+   * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+   */
+  public sw.Monitoring.service3.EmergencyContact getContacts(int index) {
+    return contacts_.get(index);
+  }
+  /**
+   * <pre>
+   *could be more than one emergency contact
+   * </pre>
+   *
+   * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+   */
+  public sw.Monitoring.service3.EmergencyContactOrBuilder getContactsOrBuilder(
+      int index) {
+    return contacts_.get(index);
   }
 
   private byte memoizedIsInitialized = -1;
@@ -292,11 +318,11 @@ private static final long serialVersionUID = 0L;
     if (height_ != 0D) {
       output.writeDouble(5, height_);
     }
-    for (int i = 0; i < closeContacts_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, closeContacts_.getRaw(i));
-    }
     if (!getAddressBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 7, address_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, address_);
+    }
+    for (int i = 0; i < contacts_.size(); i++) {
+      output.writeMessage(7, contacts_.get(i));
     }
     unknownFields.writeTo(output);
   }
@@ -326,16 +352,12 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeDoubleSize(5, height_);
     }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < closeContacts_.size(); i++) {
-        dataSize += computeStringSizeNoTag(closeContacts_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getCloseContactsList().size();
-    }
     if (!getAddressBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, address_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, address_);
+    }
+    for (int i = 0; i < contacts_.size(); i++) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(7, contacts_.get(i));
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -367,10 +389,10 @@ private static final long serialVersionUID = 0L;
         java.lang.Double.doubleToLongBits(getHeight())
         == java.lang.Double.doubleToLongBits(
             other.getHeight()));
-    result = result && getCloseContactsList()
-        .equals(other.getCloseContactsList());
     result = result && getAddress()
         .equals(other.getAddress());
+    result = result && getContactsList()
+        .equals(other.getContactsList());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -394,12 +416,12 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + HEIGHT_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
         java.lang.Double.doubleToLongBits(getHeight()));
-    if (getCloseContactsCount() > 0) {
-      hash = (37 * hash) + CLOSE_CONTACTS_FIELD_NUMBER;
-      hash = (53 * hash) + getCloseContactsList().hashCode();
-    }
     hash = (37 * hash) + ADDRESS_FIELD_NUMBER;
     hash = (53 * hash) + getAddress().hashCode();
+    if (getContactsCount() > 0) {
+      hash = (37 * hash) + CONTACTS_FIELD_NUMBER;
+      hash = (53 * hash) + getContactsList().hashCode();
+    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -532,6 +554,7 @@ private static final long serialVersionUID = 0L;
     private void maybeForceBuilderInitialization() {
       if (com.google.protobuf.GeneratedMessageV3
               .alwaysUseFieldBuilders) {
+        getContactsFieldBuilder();
       }
     }
     @java.lang.Override
@@ -547,10 +570,14 @@ private static final long serialVersionUID = 0L;
 
       height_ = 0D;
 
-      closeContacts_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000020);
       address_ = "";
 
+      if (contactsBuilder_ == null) {
+        contacts_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000040);
+      } else {
+        contactsBuilder_.clear();
+      }
       return this;
     }
 
@@ -584,12 +611,16 @@ private static final long serialVersionUID = 0L;
       result.name_ = name_;
       result.weight_ = weight_;
       result.height_ = height_;
-      if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        closeContacts_ = closeContacts_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000020);
-      }
-      result.closeContacts_ = closeContacts_;
       result.address_ = address_;
+      if (contactsBuilder_ == null) {
+        if (((bitField0_ & 0x00000040) == 0x00000040)) {
+          contacts_ = java.util.Collections.unmodifiableList(contacts_);
+          bitField0_ = (bitField0_ & ~0x00000040);
+        }
+        result.contacts_ = contacts_;
+      } else {
+        result.contacts_ = contactsBuilder_.build();
+      }
       result.bitField0_ = to_bitField0_;
       onBuilt();
       return result;
@@ -655,19 +686,35 @@ private static final long serialVersionUID = 0L;
       if (other.getHeight() != 0D) {
         setHeight(other.getHeight());
       }
-      if (!other.closeContacts_.isEmpty()) {
-        if (closeContacts_.isEmpty()) {
-          closeContacts_ = other.closeContacts_;
-          bitField0_ = (bitField0_ & ~0x00000020);
-        } else {
-          ensureCloseContactsIsMutable();
-          closeContacts_.addAll(other.closeContacts_);
-        }
-        onChanged();
-      }
       if (!other.getAddress().isEmpty()) {
         address_ = other.address_;
         onChanged();
+      }
+      if (contactsBuilder_ == null) {
+        if (!other.contacts_.isEmpty()) {
+          if (contacts_.isEmpty()) {
+            contacts_ = other.contacts_;
+            bitField0_ = (bitField0_ & ~0x00000040);
+          } else {
+            ensureContactsIsMutable();
+            contacts_.addAll(other.contacts_);
+          }
+          onChanged();
+        }
+      } else {
+        if (!other.contacts_.isEmpty()) {
+          if (contactsBuilder_.isEmpty()) {
+            contactsBuilder_.dispose();
+            contactsBuilder_ = null;
+            contacts_ = other.contacts_;
+            bitField0_ = (bitField0_ & ~0x00000040);
+            contactsBuilder_ = 
+              com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                 getContactsFieldBuilder() : null;
+          } else {
+            contactsBuilder_.addAllMessages(other.contacts_);
+          }
+        }
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -872,103 +919,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private com.google.protobuf.LazyStringList closeContacts_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    private void ensureCloseContactsIsMutable() {
-      if (!((bitField0_ & 0x00000020) == 0x00000020)) {
-        closeContacts_ = new com.google.protobuf.LazyStringArrayList(closeContacts_);
-        bitField0_ |= 0x00000020;
-       }
-    }
-    /**
-     * <code>repeated string close_contacts = 6;</code>
-     */
-    public com.google.protobuf.ProtocolStringList
-        getCloseContactsList() {
-      return closeContacts_.getUnmodifiableView();
-    }
-    /**
-     * <code>repeated string close_contacts = 6;</code>
-     */
-    public int getCloseContactsCount() {
-      return closeContacts_.size();
-    }
-    /**
-     * <code>repeated string close_contacts = 6;</code>
-     */
-    public java.lang.String getCloseContacts(int index) {
-      return closeContacts_.get(index);
-    }
-    /**
-     * <code>repeated string close_contacts = 6;</code>
-     */
-    public com.google.protobuf.ByteString
-        getCloseContactsBytes(int index) {
-      return closeContacts_.getByteString(index);
-    }
-    /**
-     * <code>repeated string close_contacts = 6;</code>
-     */
-    public Builder setCloseContacts(
-        int index, java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureCloseContactsIsMutable();
-      closeContacts_.set(index, value);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>repeated string close_contacts = 6;</code>
-     */
-    public Builder addCloseContacts(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureCloseContactsIsMutable();
-      closeContacts_.add(value);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>repeated string close_contacts = 6;</code>
-     */
-    public Builder addAllCloseContacts(
-        java.lang.Iterable<java.lang.String> values) {
-      ensureCloseContactsIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(
-          values, closeContacts_);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>repeated string close_contacts = 6;</code>
-     */
-    public Builder clearCloseContacts() {
-      closeContacts_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000020);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>repeated string close_contacts = 6;</code>
-     */
-    public Builder addCloseContactsBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      ensureCloseContactsIsMutable();
-      closeContacts_.add(value);
-      onChanged();
-      return this;
-    }
-
     private java.lang.Object address_ = "";
     /**
-     * <code>string address = 7;</code>
+     * <code>string address = 6;</code>
      */
     public java.lang.String getAddress() {
       java.lang.Object ref = address_;
@@ -983,7 +936,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string address = 7;</code>
+     * <code>string address = 6;</code>
      */
     public com.google.protobuf.ByteString
         getAddressBytes() {
@@ -999,7 +952,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string address = 7;</code>
+     * <code>string address = 6;</code>
      */
     public Builder setAddress(
         java.lang.String value) {
@@ -1012,7 +965,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string address = 7;</code>
+     * <code>string address = 6;</code>
      */
     public Builder clearAddress() {
       
@@ -1021,7 +974,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string address = 7;</code>
+     * <code>string address = 6;</code>
      */
     public Builder setAddressBytes(
         com.google.protobuf.ByteString value) {
@@ -1033,6 +986,318 @@ private static final long serialVersionUID = 0L;
       address_ = value;
       onChanged();
       return this;
+    }
+
+    private java.util.List<sw.Monitoring.service3.EmergencyContact> contacts_ =
+      java.util.Collections.emptyList();
+    private void ensureContactsIsMutable() {
+      if (!((bitField0_ & 0x00000040) == 0x00000040)) {
+        contacts_ = new java.util.ArrayList<sw.Monitoring.service3.EmergencyContact>(contacts_);
+        bitField0_ |= 0x00000040;
+       }
+    }
+
+    private com.google.protobuf.RepeatedFieldBuilderV3<
+        sw.Monitoring.service3.EmergencyContact, sw.Monitoring.service3.EmergencyContact.Builder, sw.Monitoring.service3.EmergencyContactOrBuilder> contactsBuilder_;
+
+    /**
+     * <pre>
+     *could be more than one emergency contact
+     * </pre>
+     *
+     * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+     */
+    public java.util.List<sw.Monitoring.service3.EmergencyContact> getContactsList() {
+      if (contactsBuilder_ == null) {
+        return java.util.Collections.unmodifiableList(contacts_);
+      } else {
+        return contactsBuilder_.getMessageList();
+      }
+    }
+    /**
+     * <pre>
+     *could be more than one emergency contact
+     * </pre>
+     *
+     * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+     */
+    public int getContactsCount() {
+      if (contactsBuilder_ == null) {
+        return contacts_.size();
+      } else {
+        return contactsBuilder_.getCount();
+      }
+    }
+    /**
+     * <pre>
+     *could be more than one emergency contact
+     * </pre>
+     *
+     * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+     */
+    public sw.Monitoring.service3.EmergencyContact getContacts(int index) {
+      if (contactsBuilder_ == null) {
+        return contacts_.get(index);
+      } else {
+        return contactsBuilder_.getMessage(index);
+      }
+    }
+    /**
+     * <pre>
+     *could be more than one emergency contact
+     * </pre>
+     *
+     * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+     */
+    public Builder setContacts(
+        int index, sw.Monitoring.service3.EmergencyContact value) {
+      if (contactsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureContactsIsMutable();
+        contacts_.set(index, value);
+        onChanged();
+      } else {
+        contactsBuilder_.setMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     *could be more than one emergency contact
+     * </pre>
+     *
+     * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+     */
+    public Builder setContacts(
+        int index, sw.Monitoring.service3.EmergencyContact.Builder builderForValue) {
+      if (contactsBuilder_ == null) {
+        ensureContactsIsMutable();
+        contacts_.set(index, builderForValue.build());
+        onChanged();
+      } else {
+        contactsBuilder_.setMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     *could be more than one emergency contact
+     * </pre>
+     *
+     * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+     */
+    public Builder addContacts(sw.Monitoring.service3.EmergencyContact value) {
+      if (contactsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureContactsIsMutable();
+        contacts_.add(value);
+        onChanged();
+      } else {
+        contactsBuilder_.addMessage(value);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     *could be more than one emergency contact
+     * </pre>
+     *
+     * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+     */
+    public Builder addContacts(
+        int index, sw.Monitoring.service3.EmergencyContact value) {
+      if (contactsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureContactsIsMutable();
+        contacts_.add(index, value);
+        onChanged();
+      } else {
+        contactsBuilder_.addMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     *could be more than one emergency contact
+     * </pre>
+     *
+     * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+     */
+    public Builder addContacts(
+        sw.Monitoring.service3.EmergencyContact.Builder builderForValue) {
+      if (contactsBuilder_ == null) {
+        ensureContactsIsMutable();
+        contacts_.add(builderForValue.build());
+        onChanged();
+      } else {
+        contactsBuilder_.addMessage(builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     *could be more than one emergency contact
+     * </pre>
+     *
+     * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+     */
+    public Builder addContacts(
+        int index, sw.Monitoring.service3.EmergencyContact.Builder builderForValue) {
+      if (contactsBuilder_ == null) {
+        ensureContactsIsMutable();
+        contacts_.add(index, builderForValue.build());
+        onChanged();
+      } else {
+        contactsBuilder_.addMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     *could be more than one emergency contact
+     * </pre>
+     *
+     * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+     */
+    public Builder addAllContacts(
+        java.lang.Iterable<? extends sw.Monitoring.service3.EmergencyContact> values) {
+      if (contactsBuilder_ == null) {
+        ensureContactsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, contacts_);
+        onChanged();
+      } else {
+        contactsBuilder_.addAllMessages(values);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     *could be more than one emergency contact
+     * </pre>
+     *
+     * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+     */
+    public Builder clearContacts() {
+      if (contactsBuilder_ == null) {
+        contacts_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000040);
+        onChanged();
+      } else {
+        contactsBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     *could be more than one emergency contact
+     * </pre>
+     *
+     * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+     */
+    public Builder removeContacts(int index) {
+      if (contactsBuilder_ == null) {
+        ensureContactsIsMutable();
+        contacts_.remove(index);
+        onChanged();
+      } else {
+        contactsBuilder_.remove(index);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     *could be more than one emergency contact
+     * </pre>
+     *
+     * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+     */
+    public sw.Monitoring.service3.EmergencyContact.Builder getContactsBuilder(
+        int index) {
+      return getContactsFieldBuilder().getBuilder(index);
+    }
+    /**
+     * <pre>
+     *could be more than one emergency contact
+     * </pre>
+     *
+     * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+     */
+    public sw.Monitoring.service3.EmergencyContactOrBuilder getContactsOrBuilder(
+        int index) {
+      if (contactsBuilder_ == null) {
+        return contacts_.get(index);  } else {
+        return contactsBuilder_.getMessageOrBuilder(index);
+      }
+    }
+    /**
+     * <pre>
+     *could be more than one emergency contact
+     * </pre>
+     *
+     * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+     */
+    public java.util.List<? extends sw.Monitoring.service3.EmergencyContactOrBuilder> 
+         getContactsOrBuilderList() {
+      if (contactsBuilder_ != null) {
+        return contactsBuilder_.getMessageOrBuilderList();
+      } else {
+        return java.util.Collections.unmodifiableList(contacts_);
+      }
+    }
+    /**
+     * <pre>
+     *could be more than one emergency contact
+     * </pre>
+     *
+     * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+     */
+    public sw.Monitoring.service3.EmergencyContact.Builder addContactsBuilder() {
+      return getContactsFieldBuilder().addBuilder(
+          sw.Monitoring.service3.EmergencyContact.getDefaultInstance());
+    }
+    /**
+     * <pre>
+     *could be more than one emergency contact
+     * </pre>
+     *
+     * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+     */
+    public sw.Monitoring.service3.EmergencyContact.Builder addContactsBuilder(
+        int index) {
+      return getContactsFieldBuilder().addBuilder(
+          index, sw.Monitoring.service3.EmergencyContact.getDefaultInstance());
+    }
+    /**
+     * <pre>
+     *could be more than one emergency contact
+     * </pre>
+     *
+     * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+     */
+    public java.util.List<sw.Monitoring.service3.EmergencyContact.Builder> 
+         getContactsBuilderList() {
+      return getContactsFieldBuilder().getBuilderList();
+    }
+    private com.google.protobuf.RepeatedFieldBuilderV3<
+        sw.Monitoring.service3.EmergencyContact, sw.Monitoring.service3.EmergencyContact.Builder, sw.Monitoring.service3.EmergencyContactOrBuilder> 
+        getContactsFieldBuilder() {
+      if (contactsBuilder_ == null) {
+        contactsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+            sw.Monitoring.service3.EmergencyContact, sw.Monitoring.service3.EmergencyContact.Builder, sw.Monitoring.service3.EmergencyContactOrBuilder>(
+                contacts_,
+                ((bitField0_ & 0x00000040) == 0x00000040),
+                getParentForChildren(),
+                isClean());
+        contacts_ = null;
+      }
+      return contactsBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

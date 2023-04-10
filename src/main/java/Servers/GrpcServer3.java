@@ -13,11 +13,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import Server.GrpcServer;
-import ServerSides.S_Service1;
+import ServerSides.S_Service3;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
-public class GrpcServer1 {
+public class GrpcServer3 {
 	
 	private static final Logger logger = LogManager.getLogger(GrpcServer.class);
 	//
@@ -26,7 +26,7 @@ public class GrpcServer1 {
 	
 	public static void main(String[] args) {
 		//Creating the instance of the Server
-		GrpcServer1 server = new GrpcServer1();
+		GrpcServer3 server = new GrpcServer3();
 		
 		//Properties for required registering the server
 		Properties prop = server.getProperties();
@@ -41,15 +41,15 @@ public class GrpcServer1 {
 		//Using try and catch on starting a server
 		try {
 			//Server starting on the port number given
-			Server server1 = ServerBuilder.forPort(port)
-					.addService(new S_Service1())
+			Server server2 = ServerBuilder.forPort(port)	
+					.addService(new S_Service3())
 					.build()
 					.start();
 			
 			//To trace any failures
 			logger.info("Server started listening on: " + port);
 			//To avoid instance start and termination
-			server1.awaitTermination();
+			server2.awaitTermination();
 			
 		}catch(IOException | InterruptedException e) {
 			e.printStackTrace();
@@ -62,7 +62,7 @@ public class GrpcServer1 {
 		
 		Properties prop = null;		
 		
-		 try (InputStream input = new FileInputStream("src/main/resources/service1.properties")) {
+		 try (InputStream input = new FileInputStream("src/main/resources/service3.properties")) {
 
 	            prop = new Properties();
 
@@ -70,7 +70,7 @@ public class GrpcServer1 {
 	            prop.load(input);
 
 	            // get the property value and print it out
-	            System.out.println("StepCounter Service properties ...");
+	            System.out.println("TaskReminder Service properties ...");
 	            System.out.println("\t service_type: " + prop.getProperty("service_type"));
 	            System.out.println("\t service_name: " +prop.getProperty("service_name"));
 	            System.out.println("\t service_description: " +prop.getProperty("service_description"));

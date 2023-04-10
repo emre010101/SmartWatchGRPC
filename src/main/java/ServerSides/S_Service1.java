@@ -16,7 +16,7 @@ import sw.stepCounter.service1.StepsRequest;
 import sw.stepCounter.service1.WeekDays;
 
 
-public class Service1 extends StepCounterImplBase{
+public class S_Service1 extends StepCounterImplBase{
 	
 	/*This method will send the steps to database which will write to text file */
 	@Override

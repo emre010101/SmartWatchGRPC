@@ -13,6 +13,8 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import sw.Monitoring.service3.EmergencyContact;
+import sw.Monitoring.service3.UserRecords;
 import sw.stepCounter.service1.WeekDays;
 
 public class DataBaseConsulter {
@@ -21,6 +23,11 @@ public class DataBaseConsulter {
     private static final String STEPS_DATABASE = directory.getAbsolutePath() + "//stepsDatabase.txt";
     private static File directory2 = new File("C:\\Code\\SmartWatchGRPC\\database");
     private static final String REMINDER_DATABASE = directory2.getAbsolutePath() + "//reminderDatabase.txt";
+    private static File directory3 = new File("C:\\Code\\SmartWatchGRPC\\database");
+    private static final String MONITORING_DATABASE = directory2.getAbsolutePath() + "//monitoringDatabase.txt";
+    
+    
+    /*------------------------------------SERVICE 1 IMPLEMENTATIONS---------------------------------------*/
     
     public static int checkStepsFromStartTime(ZonedDateTime startTime) {
         System.out.println("--ServerSide: DataBaseConsulter.checkStepsFromStartTime() invoked");
@@ -82,6 +89,8 @@ public class DataBaseConsulter {
 		return 0;
 	}
 
+	/*------------------------------------SERVICE 2 IMPLEMENTATIONS---------------------------------------*/
+	
 	public static String saveReminder(String taskName, String date_time, int type) {
 	    try (BufferedWriter writer = new BufferedWriter(new FileWriter(REMINDER_DATABASE, true))) {
 	        String currentDateTime = ZonedDateTime.now(ZoneId.systemDefault()).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
@@ -164,8 +173,28 @@ public class DataBaseConsulter {
 		System.out.println("AFter");
 		
 		System.out.println(markCompleted("Booster for the foot"));*/
-		saveReminder("Emre", "test", 4);
+		//saveReminder("Emre", "test", 4);
 	}
+	
+	/*------------------------------------SERVICE 3 IMPLEMENTATIONS---------------------------------------*/
+	
+	/*Save users send from client side to the database*/
+	public static String saveUser(UserRecords request) {
+	    try (BufferedWriter writer = new BufferedWriter(new FileWriter(MONITORING_DATABASE, true))) {
+	        String userRecordLine = request.getPatientId() + "<->" + request.getName() + "<->" + request.getAge() + "<->" +
+	                                request.getWeight() + "<->" + request.getHeight() + "<->" + request.getAddress();
+	
+	        for (EmergencyContact contact : request.getContactsList()) {
+	            userRecordLine += "<->" + contact.getName() + "<->" + contact.getPhone();
+	        }
+	        writer.write(userRecordLine + "\n");
+	        return request.getPatientId() + "<->" + request.getName() + "<->saved to database";
+	    } catch (IOException e) {
+	        System.err.println("Failed to save user record to file: " + e.getMessage());
+	        return request.getPatientId() + "<->" + request.getName() + "<->it could not be saved";
+	    }
+	}
+
 
 	
 

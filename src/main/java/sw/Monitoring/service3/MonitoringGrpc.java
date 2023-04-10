@@ -69,7 +69,7 @@ public final class MonitoringGrpc {
       fullMethodName = SERVICE_NAME + '/' + "GetHealthRecords",
       requestType = sw.Monitoring.service3.GetHealthRecordsRequest.class,
       responseType = sw.Monitoring.service3.UserRecords.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<sw.Monitoring.service3.GetHealthRecordsRequest,
       sw.Monitoring.service3.UserRecords> getGetHealthRecordsMethod() {
     io.grpc.MethodDescriptor<sw.Monitoring.service3.GetHealthRecordsRequest, sw.Monitoring.service3.UserRecords> getGetHealthRecordsMethod;
@@ -78,7 +78,7 @@ public final class MonitoringGrpc {
         if ((getGetHealthRecordsMethod = MonitoringGrpc.getGetHealthRecordsMethod) == null) {
           MonitoringGrpc.getGetHealthRecordsMethod = getGetHealthRecordsMethod = 
               io.grpc.MethodDescriptor.<sw.Monitoring.service3.GetHealthRecordsRequest, sw.Monitoring.service3.UserRecords>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "service3.Monitoring", "GetHealthRecords"))
               .setSampledToLocalTracing(true)
@@ -168,7 +168,7 @@ public final class MonitoringGrpc {
 
     /**
      * <pre>
-     * Requests health records (Server Streaming)
+     * Requests health records (Unary)
      * </pre>
      */
     public void getHealthRecords(sw.Monitoring.service3.GetHealthRecordsRequest request,
@@ -197,7 +197,7 @@ public final class MonitoringGrpc {
                   this, METHODID_SET_USER_RECORDS)))
           .addMethod(
             getGetHealthRecordsMethod(),
-            asyncServerStreamingCall(
+            asyncUnaryCall(
               new MethodHandlers<
                 sw.Monitoring.service3.GetHealthRecordsRequest,
                 sw.Monitoring.service3.UserRecords>(
@@ -247,12 +247,12 @@ public final class MonitoringGrpc {
 
     /**
      * <pre>
-     * Requests health records (Server Streaming)
+     * Requests health records (Unary)
      * </pre>
      */
     public void getHealthRecords(sw.Monitoring.service3.GetHealthRecordsRequest request,
         io.grpc.stub.StreamObserver<sw.Monitoring.service3.UserRecords> responseObserver) {
-      asyncServerStreamingCall(
+      asyncUnaryCall(
           getChannel().newCall(getGetHealthRecordsMethod(), getCallOptions()), request, responseObserver);
     }
 
@@ -301,12 +301,11 @@ public final class MonitoringGrpc {
 
     /**
      * <pre>
-     * Requests health records (Server Streaming)
+     * Requests health records (Unary)
      * </pre>
      */
-    public java.util.Iterator<sw.Monitoring.service3.UserRecords> getHealthRecords(
-        sw.Monitoring.service3.GetHealthRecordsRequest request) {
-      return blockingServerStreamingCall(
+    public sw.Monitoring.service3.UserRecords getHealthRecords(sw.Monitoring.service3.GetHealthRecordsRequest request) {
+      return blockingUnaryCall(
           getChannel(), getGetHealthRecordsMethod(), getCallOptions(), request);
     }
   }
@@ -341,6 +340,17 @@ public final class MonitoringGrpc {
         sw.Monitoring.service3.UserRecords request) {
       return futureUnaryCall(
           getChannel().newCall(getSetUserRecordsMethod(), getCallOptions()), request);
+    }
+
+    /**
+     * <pre>
+     * Requests health records (Unary)
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<sw.Monitoring.service3.UserRecords> getHealthRecords(
+        sw.Monitoring.service3.GetHealthRecordsRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getGetHealthRecordsMethod(), getCallOptions()), request);
     }
   }
 
