@@ -2,12 +2,15 @@ package ClientSides;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.stub.StreamObserver;
 import sw.Monitoring.service3.EmergencyContact;
 import sw.Monitoring.service3.GetHealthRecordsRequest;
 import sw.Monitoring.service3.GetHealthRecordsResponse;
+import sw.Monitoring.service3.HeartRateRequest;
 import sw.Monitoring.service3.MonitoringGrpc;
 import sw.Monitoring.service3.MonitoringGrpc.MonitoringBlockingStub;
 import sw.Monitoring.service3.MonitoringGrpc.MonitoringStub;
@@ -22,7 +25,7 @@ public class C_Service3 {
 	private static ManagedChannel managedChannel;
 
 	public static void main(String[] args) throws InterruptedException {
-		managedChannel = ManagedChannelBuilder.forAddress("localhost", 1077).usePlaintext().build();
+		managedChannel = ManagedChannelBuilder.forAddress("localhost", 1081).usePlaintext().build();
 
 		// stubs -- generate from proto
 		blockingStub = MonitoringGrpc.newBlockingStub(managedChannel);
@@ -33,6 +36,7 @@ public class C_Service3 {
 		try {
 			saveUserCredientials();
 			lookForUser();
+			sendHearRate();
 		} finally {
 			Thread.sleep(500);
 			managedChannel.shutdown();
@@ -40,15 +44,15 @@ public class C_Service3 {
 	}
 
 	public static void saveUserCredientials() {
-		int p_id = 14;
-		int p_age = 30;
+		int p_id = 15;
+		int p_age = 40;
 		String nam = "Lenoarda Diacaprio";
 		double we = 45.65;
 		double he = 1.85;
 		String add = "27B Mounjoy Street, Dublin 1";
-		String conName = "William";
+		String conName = "Ruben";
 		String conPhone = "98956565";
-		String conName2 = "Rohid";
+		String conName2 = "LEo";
 		String conPhone2 = "088746513165";
 		EmergencyContact emergContact1 = EmergencyContact.newBuilder().setName(conName).setPhone(conPhone).build();
 		EmergencyContact emergContact2 = EmergencyContact.newBuilder().setName(conName2).setPhone(conPhone2).build();
@@ -86,6 +90,38 @@ public class C_Service3 {
 		for (EmergencyContact contact : contactsList) {
 			System.out.println("Name: " + contact.getName() + ", Phone: " + contact.getPhone());
 			}
+	}
+	
+	public static void sendHearRate() {
+		HeartRateStreamingResponse response = new HeartRateStreamingResponse();
+		StreamObserver<HeartRateRequest> requestStreamObserver = asyncStub.monitorHeartRate(response);
+		
+		for(int i=0; i<20; i++) {
+			try {
+				PatientID patient_id = PatientID.newBuilder().setPatientId(2).build();
+				HeartRateRequest request = HeartRateRequest.newBuilder()
+								.setPatientId(patient_id)
+								.setHeartRate(ThreadLocalRandom.current().nextDouble(50, 180))
+								.build();
+				requestStreamObserver.onNext(request);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}catch(RuntimeException e) {
+				e.printStackTrace();
+			}
+				
+		}requestStreamObserver.onCompleted();
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }

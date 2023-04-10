@@ -20,10 +20,12 @@ public class HeartRateStreamingRequest implements StreamObserver<HeartRateReques
 	    UserRecords currentPatient = DataBaseConsulter.lookForUser(patientID);
 	    int currentPatientAge = 35; // Default age
 	    int maxHeartRate = 220 - currentPatientAge; // Default maxHeartRate
+	    String userFound = "Not found";
 	    
 	    if (!currentPatient.getName().equals("User not found")) { // If the user exists
 	        currentPatientAge = currentPatient.getAge();
 	        maxHeartRate = 220 - currentPatientAge;
+	        userFound = currentPatient.getName();
 	    }
 	    
 	    double lowerTargetHR = 0.5 * maxHeartRate;
@@ -44,7 +46,7 @@ public class HeartRateStreamingRequest implements StreamObserver<HeartRateReques
 	    	resp = "Heart rate is outside the target range.";
 	    }
 	    
-	    HeartRateWarning reply = HeartRateWarning.newBuilder().setMessage(resp).build();
+	    HeartRateWarning reply = HeartRateWarning.newBuilder().setMessage(resp + "\n for the user: " + userFound).build();
 	    this.heartRateObserver.onNext(reply);
 	}
 
