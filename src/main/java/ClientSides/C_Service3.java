@@ -1,8 +1,12 @@
 package ClientSides;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -23,8 +27,10 @@ public class C_Service3 {
 	private static MonitoringBlockingStub blockingStub;
 	private static MonitoringStub asyncStub;
 	private static ManagedChannel managedChannel;
+	//to make it constantly running the send heart rate
+	private static AtomicBoolean sendHeartRateFlag = new AtomicBoolean(true);
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException, IOException {
 		managedChannel = ManagedChannelBuilder.forAddress("localhost", 1081).usePlaintext().build();
 
 		// stubs -- generate from proto
@@ -32,25 +38,54 @@ public class C_Service3 {
 
 		asyncStub = MonitoringGrpc.newStub(managedChannel);
 
-		// Call the setTaskReminder method
 		try {
-			saveUserCredientials();
-			lookForUser();
-			sendHearRate();
-		} finally {
-			Thread.sleep(500);
-			managedChannel.shutdown();
-		}
+            saveUserCredientials();
+            lookForUser();
+
+            // Run sendHearRate in a separate thread in order to be able to invoke other methods when ever we want.
+            Thread sendHeartRateThread = new Thread(() -> {
+                sendHearRate();
+            });
+            sendHeartRateThread.start();
+
+            // CLI implementation
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            String command;
+
+            System.out.println("Commands: \n1. saveUserCredientials\n2. lookForUser\n3. stopSendHeartRate\n4. exit");
+            while ((command = reader.readLine()) != null) {
+                switch (command.toLowerCase()) {
+                    case "saveusercreidential":
+                        saveUserCredientials();
+                        break;
+                    case "lookforuser":
+                        lookForUser();
+                        break;
+                    case "stopsendheartrate":
+                        stopSendHeartRate();
+                        break;
+                    case "exit":
+                        sendHeartRateFlag.set(false);
+                        managedChannel.shutdown();
+                        System.exit(0);
+                    default:
+                        System.out.println("Invalid command. Try again.");
+                }
+            }
+        } finally {
+            Thread.sleep(500);
+            managedChannel.shutdown();
+        }
 	}
 
 	public static void saveUserCredientials() {
-		int p_id = 15;
-		int p_age = 40;
-		String nam = "Lenoarda Diacaprio";
+		int p_id = 16;
+		int p_age = 35;
+		String nam = "Holosco Diacaprio";
 		double we = 45.65;
 		double he = 1.85;
 		String add = "27B Mounjoy Street, Dublin 1";
-		String conName = "Ruben";
+		String conName = "Ayse";
 		String conPhone = "98956565";
 		String conName2 = "LEo";
 		String conPhone2 = "088746513165";
@@ -68,7 +103,7 @@ public class C_Service3 {
 		System.out.println("Server message : " + response.getConfirmed());
 
 		try {
-			Thread.sleep(100);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -92,11 +127,16 @@ public class C_Service3 {
 			}
 	}
 	
+	//to change the global variable to false to stop send heart rate
+	public static void stopSendHeartRate() {
+	    sendHeartRateFlag.set(false);
+	}
+	
 	public static void sendHearRate() {
 		HeartRateStreamingResponse response = new HeartRateStreamingResponse();
 		StreamObserver<HeartRateRequest> requestStreamObserver = asyncStub.monitorHeartRate(response);
 		
-		for(int i=0; i<20; i++) {
+		while (sendHeartRateFlag.get()) { 
 			try {
 				PatientID patient_id = PatientID.newBuilder().setPatientId(2).build();
 				HeartRateRequest request = HeartRateRequest.newBuilder()
@@ -105,7 +145,7 @@ public class C_Service3 {
 								.build();
 				requestStreamObserver.onNext(request);
 				try {
-					Thread.sleep(500);
+					Thread.sleep(750);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -20,7 +20,7 @@ service StepCounter {
   rpc GetAverageHourlySteps(HourlyStepRequest) returns (HourlyStepCount) {}
 
 //convert to serverStreaming
-  // Sets a daily step goal and tracks progress towards that goal (Unary)
+  // Sets a daily step goal and tracks progress towards that goal 
   rpc SetStepGoal(StepGoal) returns (stream StepGoalResponse) {}
 }
 
