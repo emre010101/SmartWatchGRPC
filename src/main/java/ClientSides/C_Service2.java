@@ -60,7 +60,6 @@ public class C_Service2 {
 	
 private static void discoverReminderService(String service_type) {
 		
-		
 		try {
 			// Create a JmDNS instance
 			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
@@ -82,22 +81,18 @@ private static void discoverReminderService(String service_type) {
 					System.out.println("\t name: " + event.getName());
 					System.out.println("\t description/properties: " + serviceinfo.getNiceTextString());
 					System.out.println("\t host: " + serviceinfo.getHostAddresses()[0]);
-				
 					
 				}
 				
 				@Override
 				public void serviceRemoved(ServiceEvent event) {
 					System.out.println("Reminder Service removed: " + event.getInfo());
-
-					
+	
 				}
 				
 				@Override
 				public void serviceAdded(ServiceEvent event) {
-					System.out.println("Reminder Service added: " + event.getInfo());
-
-					
+					System.out.println("Reminder Service added: " + event.getInfo());	
 				}
 			});
 			
@@ -112,9 +107,7 @@ private static void discoverReminderService(String service_type) {
 			System.out.println(e.getMessage());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
-		
-		
+		}	
 	}
 	
 	public static void setTaskReminder() throws InterruptedException {

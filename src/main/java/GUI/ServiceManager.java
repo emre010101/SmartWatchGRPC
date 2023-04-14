@@ -143,9 +143,11 @@ public class ServiceManager {
 	    asyncStubService2 = ReminderGrpc.newStub(reminderChannel);
 	}
 
-	private void initializeService3Channel() {
-	    String monitoringHost = MonitoringServiceInfo.getHostAddresses()[0];
-	    int monitoringPort = MonitoringServiceInfo.getPort();
+	static void initializeMonitoringChannel() {
+	    /*String monitoringHost = MonitoringServiceInfo.getHostAddresses()[0];
+	    int monitoringPort = MonitoringServiceInfo.getPort();*/
+		String monitoringHost = "localhost";
+		int monitoringPort = 1081;
 	    ManagedChannel monitoringChannel = ManagedChannelBuilder
 	            .forAddress(monitoringHost, monitoringPort)
 	            .usePlaintext()
@@ -154,30 +156,31 @@ public class ServiceManager {
 	    asyncStubService3 = MonitoringGrpc.newStub(monitoringChannel);
 	}
 	
-	static void shutdownStepServiceChannel() {
-	    if (blockingStubService1.getChannel() != null) {
-	    	((ManagedChannel) blockingStubService1.getChannel()).shutdown();
-	    }
-	    if (asyncStubService1.getChannel() != null) {
-	    	((ManagedChannel) asyncStubService1.getChannel()).shutdown();
-	    }
+	static void shutdownChannel(int channelnumber) {
+		if(channelnumber == 1 || channelnumber == 0 ) {
+		    if (blockingStubService1.getChannel() != null) {
+		    	((ManagedChannel) blockingStubService1.getChannel()).shutdown();
+		    }
+		    if (asyncStubService1.getChannel() != null) {
+		    	((ManagedChannel) asyncStubService1.getChannel()).shutdown();
+		    }
+		}
+		if(channelnumber == 2 || channelnumber == 0)  {
+		    if (blockingStubService2.getChannel() != null) {
+		    	((ManagedChannel) blockingStubService2.getChannel()).shutdown();
+		    }
+		    if (asyncStubService2.getChannel() != null) {
+		    	((ManagedChannel) asyncStubService2.getChannel()).shutdown();
+		    }
+		}
+		if(channelnumber == 3 || channelnumber == 0)  {
+		    if (blockingStubService3.getChannel() != null) {
+		    	((ManagedChannel) blockingStubService3.getChannel()).shutdown();
+		    }
+		    if (asyncStubService3.getChannel() != null) {
+		    	((ManagedChannel) asyncStubService3.getChannel()).shutdown();
+		    }
+		}
 	}
 
-	private void shutdownReminderServiceChannel() {
-	    if (blockingStubService2.getChannel() != null) {
-	    	((ManagedChannel) blockingStubService2.getChannel()).shutdown();
-	    }
-	    if (asyncStubService2.getChannel() != null) {
-	    	((ManagedChannel) asyncStubService2.getChannel()).shutdown();
-	    }
-	}
-
-	private void shutdownMonitoringServiceChannel() {
-	    if (blockingStubService3.getChannel() != null) {
-	    	((ManagedChannel) blockingStubService3.getChannel()).shutdown();
-	    }
-	    if (asyncStubService3.getChannel() != null) {
-	    	((ManagedChannel) asyncStubService3.getChannel()).shutdown();
-	    }
-	}
 }
