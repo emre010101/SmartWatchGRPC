@@ -8,6 +8,7 @@ import sw.stepCounter.service1.StepCount;
 public class StepStreamObserver implements StreamObserver<StepCount>{
 
 	private CountDownLatch latch;
+	private int stepCount;
 	
 	
 	public StepStreamObserver(CountDownLatch latch) {
@@ -19,6 +20,7 @@ public class StepStreamObserver implements StreamObserver<StepCount>{
 		System.out.println(
 				"The steps have been made : " + step.getCount()
 				);
+		this.stepCount = step.getCount();
 		
 	}
 
@@ -36,5 +38,15 @@ public class StepStreamObserver implements StreamObserver<StepCount>{
 		this.latch.countDown();
 		
 	}
+
+	public int getStepCount() {
+		return stepCount;
+	}
+
+	public void setStepCount(int stepCount) {
+		this.stepCount = stepCount;
+	}
+	
+	
 	
 }

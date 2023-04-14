@@ -49,7 +49,7 @@ public class S_Service1 extends StepCounterImplBase{
 		}else if(result<500) {
 			msg = "You can walk more";
 		}else if(result<1000) {
-			msg = "Get you ass up";
+			msg = "Get your ass up";
 		}else if(result<1500) {
 			msg = "Not too bad";
 		}else if(result<2000){
@@ -88,7 +88,7 @@ public class S_Service1 extends StepCounterImplBase{
 			StepGoalResponse reply = StepGoalResponse.newBuilder().setLeft(left).setMessage(msg).setSuccess(achive).build();
 			responseObserver.onNext(reply);
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

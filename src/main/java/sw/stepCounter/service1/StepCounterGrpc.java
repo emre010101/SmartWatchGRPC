@@ -222,7 +222,7 @@ public final class StepCounterGrpc {
     /**
      * <pre>
      *convert to serverStreaming
-     * Sets a daily step goal and tracks progress towards that goal (Unary)
+     * Sets a daily step goal and tracks progress towards that goal 
      * </pre>
      */
     public void setStepGoal(sw.stepCounter.service1.StepGoal request,
@@ -322,7 +322,7 @@ public final class StepCounterGrpc {
     /**
      * <pre>
      *convert to serverStreaming
-     * Sets a daily step goal and tracks progress towards that goal (Unary)
+     * Sets a daily step goal and tracks progress towards that goal 
      * </pre>
      */
     public void setStepGoal(sw.stepCounter.service1.StepGoal request,
@@ -377,7 +377,7 @@ public final class StepCounterGrpc {
     /**
      * <pre>
      *convert to serverStreaming
-     * Sets a daily step goal and tracks progress towards that goal (Unary)
+     * Sets a daily step goal and tracks progress towards that goal 
      * </pre>
      */
     public java.util.Iterator<sw.stepCounter.service1.StepGoalResponse> setStepGoal(

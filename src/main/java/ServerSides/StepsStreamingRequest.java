@@ -27,19 +27,20 @@ public class StepsStreamingRequest implements StreamObserver<StepsRequest>{
 	
 	
 	
-	public StepsStreamingRequest(StreamObserver<StepCount> stepsStreamObserver) {
+	public StepsStreamingRequest(StreamObserver<StepCount> stepSStreamObserver) {
 		System.out.println("ServerSide: receiving the steps... ");
-		this.stepsStreamObserver = stepsStreamObserver;
+		this.stepsStreamObserver = stepSStreamObserver;
 		
-		 // Create a ScheduledExecutorService to save total steps in every 10 minutes
+		 // Create a ScheduledExecutorService to save total steps in every 5 minutes
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-        executor.scheduleAtFixedRate(this::saveTotalStepsToFile, 0, 1, TimeUnit.MINUTES);
+        executor.scheduleAtFixedRate(this::saveTotalStepsToFile, 0, 5, TimeUnit.MINUTES);
 	}
 
 	/*It observes the client messages*/
 	@Override
 	public void onNext(StepsRequest stepRequest) {
 		{
+			System.out.println("Server received " + stepRequest.getSteps() + " steps...");
 			steps = stepRequest.getSteps();
 			//System.out.println("ServerSide received: " + steps);
 			totalSteps += steps;
@@ -59,9 +60,9 @@ public class StepsStreamingRequest implements StreamObserver<StepsRequest>{
 		
 		StepCount stepCount = StepCount.newBuilder().setCount(runTimeSteps).build();
 		saveTotalStepsToFile();
-		this.stepsStreamObserver.onNext(stepCount);
-		System.out.println("ServeSide: server completes ... ");
-		this.stepsStreamObserver.onCompleted();
+		stepsStreamObserver.onNext(stepCount);
+		System.out.println("ServerSide: server completes ... ");
+		stepsStreamObserver.onCompleted();
 	}
 
 

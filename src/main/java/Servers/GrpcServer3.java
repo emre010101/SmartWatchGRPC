@@ -9,17 +9,11 @@ import java.util.Properties;
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import Server.GrpcServer;
 import ServerSides.S_Service3;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
 public class GrpcServer3 {
-	
-	private static final Logger logger = LogManager.getLogger(GrpcServer.class);
 	//
 	private JmDNS jmdns;
 
@@ -45,9 +39,7 @@ public class GrpcServer3 {
 					.addService(new S_Service3())
 					.build()
 					.start();
-			
-			//To trace any failures
-			logger.info("Server started listening on: " + port);
+
 			//To avoid instance start and termination
 			server2.awaitTermination();
 			

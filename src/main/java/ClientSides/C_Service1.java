@@ -2,6 +2,9 @@ package ClientSides;
 
 import com.google.protobuf.Empty;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
@@ -9,8 +12,13 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceEvent;
+import javax.jmdns.ServiceInfo;
+import javax.jmdns.ServiceListener;
+
+/*import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;*/
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -30,32 +38,89 @@ public class C_Service1 {
 	private static StepCounterBlockingStub blockingStub;
 	private static StepCounterStub asyncStub;
 	private static ManagedChannel managedChannel;
-	private static final Logger logger = LogManager.getLogger(C_Service1.class);
+	//private static final Logger logger = LogManager.getLogger(C_Service1.class);
 	private static ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();;
 	private static AtomicBoolean isStreaming = new AtomicBoolean(false);
+	private static ServiceInfo stepInfo;
+	
+	/*private static void discoverStepService(String service_type) {
+		try {
+			// Create a JmDNS instance
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+				
+			jmdns.addServiceListener(service_type, new ServiceListener() {
+				
+				@Override
+				public void serviceResolved(ServiceEvent event) {
+					System.out.println("Step Service resolved: " + event.getInfo());
+
+					stepInfo = event.getInfo();
+
+					int port = stepInfo.getPort();
+					
+					System.out.println("resolving " + service_type + " with properties ...");
+					System.out.println("\t port: " + port);
+					System.out.println("\t type:"+ event.getType());
+					System.out.println("\t name: " + event.getName());
+					System.out.println("\t description/properties: " + stepInfo.getNiceTextString());
+					System.out.println("\t host: " + stepInfo.getHostAddresses()[0]);
+				
+				}
+				
+				@Override
+				public void serviceRemoved(ServiceEvent event) {
+					System.out.println("Step Service removed: " + event.getInfo());
+
+					
+				}
+				
+				@Override
+				public void serviceAdded(ServiceEvent event) {
+					System.out.println("Step Service added: " + event.getInfo());	
+				}
+			});
+			
+			// Wait a bit
+			Thread.sleep(2000);
+			
+			jmdns.close();
+
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}*/
 	
 	public static void main(String[] args) {
-		System.setProperty("java.util.logging.config.file", "src/main/resources/logging.properties");
+		//System.setProperty("java.util.logging.config.file", "src/main/resources/logging.properties");
+		
+		/*String step_service_type = "steps._tcp.local.";
+		discoverStepService(step_service_type);
+		
+		String host = stepInfo.getHostAddresses()[0];
+		int port = stepInfo.getPort();
+		
+		ManagedChannel channel = ManagedChannelBuilder
+				.forAddress(host, port)
+				.usePlaintext()
+				.build();*/
 		
 		managedChannel = ManagedChannelBuilder
-				.forAddress("localhost", 1029)
+				.forAddress("localhost", 1031)
 				.usePlaintext()
 				.build();
-
 		//stubs -- generate from proto
 		blockingStub = StepCounterGrpc.newBlockingStub(managedChannel);
 
 		asyncStub = StepCounterGrpc.newStub(managedChannel);
 		
-	/*	try {
-			lastHour();
-			stepStreamingRequest();
-			//Thread.sleep(100);
-			//lastHour();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+
 		
 		Scanner scanner = new Scanner(System.in);
 	    String input;
@@ -68,7 +133,7 @@ public class C_Service1 {
 	        if (input.equalsIgnoreCase("start") && !isRunning) {
 	            try {
 	                lastHour();
-	                //getAverage();
+	                getAverage();
 	                startStepStreamingRequest();
 	                //stepStreamingRequest();
 	                
@@ -96,29 +161,6 @@ public class C_Service1 {
 
 	
 	
-	/*public static void stepStreamingRequest() throws InterruptedException 
-		System.out.println("-- Client side stepStreamingRequest Invoked");
-		CountDownLatch latch = new CountDownLatch(2);
-		StreamObserver<StepsRequest> streamObserver = asyncStub.sendSteps(new StepStreamObserver(latch));
-		boolean run = true;
-		try {
-			for (int i = 0; i < 50; i++) {
-				StepsRequest stepsRequest = StepsRequest.newBuilder().setSteps(25).build();
-				streamObserver.onNext(stepsRequest);
-				Thread.sleep(500);
-				System.out.printf("Test %s : ", i);
-			}
-			
-		streamObserver.onCompleted();
-		//Thread.sleep(1000);
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {			
-			e.printStackTrace();
-		}
-		latch.await();
-	}*/
-	
 	public static void stepStreamingRequest() throws InterruptedException {
 	    //System.out.println("-- Client side stepStreamingRequest Invoked");
 	    CountDownLatch latch = new CountDownLatch(2);
@@ -131,7 +173,7 @@ public class C_Service1 {
 	            try {
 	                StepsRequest stepsRequest = StepsRequest.newBuilder().setSteps(25).build();
 	                streamObserver.onNext(stepsRequest);
-	                System.out.println("Sent 25 steps");
+	                System.out.println("ClientSide: sent 25 steps");
 	            } catch (Exception e) {
 	                e.printStackTrace();
 	            }
@@ -157,8 +199,8 @@ public class C_Service1 {
 		System.out.println("--ClientSide : lastHour() invoked");
 		try {
 			StepCount stepCount = blockingStub.getLastHourSteps(Empty.getDefaultInstance());
-			logger.info("The steps taken in the last hour : " + stepCount.getCount());
-			//System.out.println("Test in lasthour: " + stepCount.getCount());
+			//logger.info("The steps taken in the last hour : " + stepCount.getCount());
+			System.out.println("Test in lasthour: " + stepCount.getCount());
 			Thread.sleep(1000);
 		} catch (Exception e) {
 			e.printStackTrace();
