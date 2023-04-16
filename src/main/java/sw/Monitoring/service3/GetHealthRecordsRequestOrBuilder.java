@@ -8,15 +8,19 @@ public interface GetHealthRecordsRequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>.service3.PatientID patient_id = 1;</code>
+   * <code>int32 patient_id = 1;</code>
    */
-  boolean hasPatientId();
+  int getPatientId();
+
   /**
-   * <code>.service3.PatientID patient_id = 1;</code>
+   * <code>string name = 2;</code>
    */
-  sw.Monitoring.service3.PatientID getPatientId();
+  java.lang.String getName();
   /**
-   * <code>.service3.PatientID patient_id = 1;</code>
+   * <code>string name = 2;</code>
    */
-  sw.Monitoring.service3.PatientIDOrBuilder getPatientIdOrBuilder();
+  com.google.protobuf.ByteString
+      getNameBytes();
+
+  public sw.Monitoring.service3.GetHealthRecordsRequest.ModeCase getModeCase();
 }

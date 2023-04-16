@@ -48,17 +48,15 @@ private static final long serialVersionUID = 0L;
             heartRate_ = input.readDouble();
             break;
           }
-          case 18: {
-            sw.Monitoring.service3.PatientID.Builder subBuilder = null;
-            if (patientId_ != null) {
-              subBuilder = patientId_.toBuilder();
-            }
-            patientId_ = input.readMessage(sw.Monitoring.service3.PatientID.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(patientId_);
-              patientId_ = subBuilder.buildPartial();
-            }
-
+          case 16: {
+            modeCase_ = 2;
+            mode_ = input.readInt32();
+            break;
+          }
+          case 26: {
+            java.lang.String s = input.readStringRequireUtf8();
+            modeCase_ = 3;
+            mode_ = s;
             break;
           }
           default: {
@@ -93,6 +91,44 @@ private static final long serialVersionUID = 0L;
             sw.Monitoring.service3.HeartRateRequest.class, sw.Monitoring.service3.HeartRateRequest.Builder.class);
   }
 
+  private int modeCase_ = 0;
+  private java.lang.Object mode_;
+  public enum ModeCase
+      implements com.google.protobuf.Internal.EnumLite {
+    PATIENT_ID(2),
+    NAME(3),
+    MODE_NOT_SET(0);
+    private final int value;
+    private ModeCase(int value) {
+      this.value = value;
+    }
+    /**
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static ModeCase valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static ModeCase forNumber(int value) {
+      switch (value) {
+        case 2: return PATIENT_ID;
+        case 3: return NAME;
+        case 0: return MODE_NOT_SET;
+        default: return null;
+      }
+    }
+    public int getNumber() {
+      return this.value;
+    }
+  };
+
+  public ModeCase
+  getModeCase() {
+    return ModeCase.forNumber(
+        modeCase_);
+  }
+
   public static final int HEART_RATE_FIELD_NUMBER = 1;
   private double heartRate_;
   /**
@@ -103,24 +139,57 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int PATIENT_ID_FIELD_NUMBER = 2;
-  private sw.Monitoring.service3.PatientID patientId_;
   /**
-   * <code>.service3.PatientID patient_id = 2;</code>
+   * <code>int32 patient_id = 2;</code>
    */
-  public boolean hasPatientId() {
-    return patientId_ != null;
+  public int getPatientId() {
+    if (modeCase_ == 2) {
+      return (java.lang.Integer) mode_;
+    }
+    return 0;
+  }
+
+  public static final int NAME_FIELD_NUMBER = 3;
+  /**
+   * <code>string name = 3;</code>
+   */
+  public java.lang.String getName() {
+    java.lang.Object ref = "";
+    if (modeCase_ == 3) {
+      ref = mode_;
+    }
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      if (modeCase_ == 3) {
+        mode_ = s;
+      }
+      return s;
+    }
   }
   /**
-   * <code>.service3.PatientID patient_id = 2;</code>
+   * <code>string name = 3;</code>
    */
-  public sw.Monitoring.service3.PatientID getPatientId() {
-    return patientId_ == null ? sw.Monitoring.service3.PatientID.getDefaultInstance() : patientId_;
-  }
-  /**
-   * <code>.service3.PatientID patient_id = 2;</code>
-   */
-  public sw.Monitoring.service3.PatientIDOrBuilder getPatientIdOrBuilder() {
-    return getPatientId();
+  public com.google.protobuf.ByteString
+      getNameBytes() {
+    java.lang.Object ref = "";
+    if (modeCase_ == 3) {
+      ref = mode_;
+    }
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      if (modeCase_ == 3) {
+        mode_ = b;
+      }
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
   private byte memoizedIsInitialized = -1;
@@ -140,8 +209,12 @@ private static final long serialVersionUID = 0L;
     if (heartRate_ != 0D) {
       output.writeDouble(1, heartRate_);
     }
-    if (patientId_ != null) {
-      output.writeMessage(2, getPatientId());
+    if (modeCase_ == 2) {
+      output.writeInt32(
+          2, (int)((java.lang.Integer) mode_));
+    }
+    if (modeCase_ == 3) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, mode_);
     }
     unknownFields.writeTo(output);
   }
@@ -156,9 +229,13 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeDoubleSize(1, heartRate_);
     }
-    if (patientId_ != null) {
+    if (modeCase_ == 2) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(2, getPatientId());
+        .computeInt32Size(
+            2, (int)((java.lang.Integer) mode_));
+    }
+    if (modeCase_ == 3) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, mode_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -180,10 +257,20 @@ private static final long serialVersionUID = 0L;
         java.lang.Double.doubleToLongBits(getHeartRate())
         == java.lang.Double.doubleToLongBits(
             other.getHeartRate()));
-    result = result && (hasPatientId() == other.hasPatientId());
-    if (hasPatientId()) {
-      result = result && getPatientId()
-          .equals(other.getPatientId());
+    result = result && getModeCase().equals(
+        other.getModeCase());
+    if (!result) return false;
+    switch (modeCase_) {
+      case 2:
+        result = result && (getPatientId()
+            == other.getPatientId());
+        break;
+      case 3:
+        result = result && getName()
+            .equals(other.getName());
+        break;
+      case 0:
+      default:
     }
     result = result && unknownFields.equals(other.unknownFields);
     return result;
@@ -199,9 +286,17 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + HEART_RATE_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
         java.lang.Double.doubleToLongBits(getHeartRate()));
-    if (hasPatientId()) {
-      hash = (37 * hash) + PATIENT_ID_FIELD_NUMBER;
-      hash = (53 * hash) + getPatientId().hashCode();
+    switch (modeCase_) {
+      case 2:
+        hash = (37 * hash) + PATIENT_ID_FIELD_NUMBER;
+        hash = (53 * hash) + getPatientId();
+        break;
+      case 3:
+        hash = (37 * hash) + NAME_FIELD_NUMBER;
+        hash = (53 * hash) + getName().hashCode();
+        break;
+      case 0:
+      default:
     }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
@@ -338,12 +433,8 @@ private static final long serialVersionUID = 0L;
       super.clear();
       heartRate_ = 0D;
 
-      if (patientIdBuilder_ == null) {
-        patientId_ = null;
-      } else {
-        patientId_ = null;
-        patientIdBuilder_ = null;
-      }
+      modeCase_ = 0;
+      mode_ = null;
       return this;
     }
 
@@ -371,11 +462,13 @@ private static final long serialVersionUID = 0L;
     public sw.Monitoring.service3.HeartRateRequest buildPartial() {
       sw.Monitoring.service3.HeartRateRequest result = new sw.Monitoring.service3.HeartRateRequest(this);
       result.heartRate_ = heartRate_;
-      if (patientIdBuilder_ == null) {
-        result.patientId_ = patientId_;
-      } else {
-        result.patientId_ = patientIdBuilder_.build();
+      if (modeCase_ == 2) {
+        result.mode_ = mode_;
       }
+      if (modeCase_ == 3) {
+        result.mode_ = mode_;
+      }
+      result.modeCase_ = modeCase_;
       onBuilt();
       return result;
     }
@@ -427,8 +520,20 @@ private static final long serialVersionUID = 0L;
       if (other.getHeartRate() != 0D) {
         setHeartRate(other.getHeartRate());
       }
-      if (other.hasPatientId()) {
-        mergePatientId(other.getPatientId());
+      switch (other.getModeCase()) {
+        case PATIENT_ID: {
+          setPatientId(other.getPatientId());
+          break;
+        }
+        case NAME: {
+          modeCase_ = 3;
+          mode_ = other.mode_;
+          onChanged();
+          break;
+        }
+        case MODE_NOT_SET: {
+          break;
+        }
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -458,6 +563,21 @@ private static final long serialVersionUID = 0L;
       }
       return this;
     }
+    private int modeCase_ = 0;
+    private java.lang.Object mode_;
+    public ModeCase
+        getModeCase() {
+      return ModeCase.forNumber(
+          modeCase_);
+    }
+
+    public Builder clearMode() {
+      modeCase_ = 0;
+      mode_ = null;
+      onChanged();
+      return this;
+    }
+
 
     private double heartRate_ ;
     /**
@@ -485,121 +605,114 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private sw.Monitoring.service3.PatientID patientId_ = null;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        sw.Monitoring.service3.PatientID, sw.Monitoring.service3.PatientID.Builder, sw.Monitoring.service3.PatientIDOrBuilder> patientIdBuilder_;
     /**
-     * <code>.service3.PatientID patient_id = 2;</code>
+     * <code>int32 patient_id = 2;</code>
      */
-    public boolean hasPatientId() {
-      return patientIdBuilder_ != null || patientId_ != null;
+    public int getPatientId() {
+      if (modeCase_ == 2) {
+        return (java.lang.Integer) mode_;
+      }
+      return 0;
     }
     /**
-     * <code>.service3.PatientID patient_id = 2;</code>
+     * <code>int32 patient_id = 2;</code>
      */
-    public sw.Monitoring.service3.PatientID getPatientId() {
-      if (patientIdBuilder_ == null) {
-        return patientId_ == null ? sw.Monitoring.service3.PatientID.getDefaultInstance() : patientId_;
-      } else {
-        return patientIdBuilder_.getMessage();
-      }
-    }
-    /**
-     * <code>.service3.PatientID patient_id = 2;</code>
-     */
-    public Builder setPatientId(sw.Monitoring.service3.PatientID value) {
-      if (patientIdBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        patientId_ = value;
-        onChanged();
-      } else {
-        patientIdBuilder_.setMessage(value);
-      }
-
+    public Builder setPatientId(int value) {
+      modeCase_ = 2;
+      mode_ = value;
+      onChanged();
       return this;
     }
     /**
-     * <code>.service3.PatientID patient_id = 2;</code>
-     */
-    public Builder setPatientId(
-        sw.Monitoring.service3.PatientID.Builder builderForValue) {
-      if (patientIdBuilder_ == null) {
-        patientId_ = builderForValue.build();
-        onChanged();
-      } else {
-        patientIdBuilder_.setMessage(builderForValue.build());
-      }
-
-      return this;
-    }
-    /**
-     * <code>.service3.PatientID patient_id = 2;</code>
-     */
-    public Builder mergePatientId(sw.Monitoring.service3.PatientID value) {
-      if (patientIdBuilder_ == null) {
-        if (patientId_ != null) {
-          patientId_ =
-            sw.Monitoring.service3.PatientID.newBuilder(patientId_).mergeFrom(value).buildPartial();
-        } else {
-          patientId_ = value;
-        }
-        onChanged();
-      } else {
-        patientIdBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.service3.PatientID patient_id = 2;</code>
+     * <code>int32 patient_id = 2;</code>
      */
     public Builder clearPatientId() {
-      if (patientIdBuilder_ == null) {
-        patientId_ = null;
+      if (modeCase_ == 2) {
+        modeCase_ = 0;
+        mode_ = null;
         onChanged();
-      } else {
-        patientId_ = null;
-        patientIdBuilder_ = null;
       }
+      return this;
+    }
 
+    /**
+     * <code>string name = 3;</code>
+     */
+    public java.lang.String getName() {
+      java.lang.Object ref = "";
+      if (modeCase_ == 3) {
+        ref = mode_;
+      }
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (modeCase_ == 3) {
+          mode_ = s;
+        }
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string name = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = "";
+      if (modeCase_ == 3) {
+        ref = mode_;
+      }
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        if (modeCase_ == 3) {
+          mode_ = b;
+        }
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string name = 3;</code>
+     */
+    public Builder setName(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  modeCase_ = 3;
+      mode_ = value;
+      onChanged();
       return this;
     }
     /**
-     * <code>.service3.PatientID patient_id = 2;</code>
+     * <code>string name = 3;</code>
      */
-    public sw.Monitoring.service3.PatientID.Builder getPatientIdBuilder() {
-      
+    public Builder clearName() {
+      if (modeCase_ == 3) {
+        modeCase_ = 0;
+        mode_ = null;
+        onChanged();
+      }
+      return this;
+    }
+    /**
+     * <code>string name = 3;</code>
+     */
+    public Builder setNameBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      modeCase_ = 3;
+      mode_ = value;
       onChanged();
-      return getPatientIdFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.service3.PatientID patient_id = 2;</code>
-     */
-    public sw.Monitoring.service3.PatientIDOrBuilder getPatientIdOrBuilder() {
-      if (patientIdBuilder_ != null) {
-        return patientIdBuilder_.getMessageOrBuilder();
-      } else {
-        return patientId_ == null ?
-            sw.Monitoring.service3.PatientID.getDefaultInstance() : patientId_;
-      }
-    }
-    /**
-     * <code>.service3.PatientID patient_id = 2;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        sw.Monitoring.service3.PatientID, sw.Monitoring.service3.PatientID.Builder, sw.Monitoring.service3.PatientIDOrBuilder> 
-        getPatientIdFieldBuilder() {
-      if (patientIdBuilder_ == null) {
-        patientIdBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            sw.Monitoring.service3.PatientID, sw.Monitoring.service3.PatientID.Builder, sw.Monitoring.service3.PatientIDOrBuilder>(
-                getPatientId(),
-                getParentForChildren(),
-                isClean());
-        patientId_ = null;
-      }
-      return patientIdBuilder_;
+      return this;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

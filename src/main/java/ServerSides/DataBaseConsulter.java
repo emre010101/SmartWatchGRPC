@@ -183,19 +183,43 @@ public class DataBaseConsulter {
 	
 	/*Save users send from client side to the database*/
 	public static String saveUser(UserRecords request) {
+		int patient_id = findLast();
 	    try (BufferedWriter writer = new BufferedWriter(new FileWriter(MONITORING_DATABASE, true))) {
-	        String userRecordLine = request.getPatientId() + "<->" + request.getName() + "<->" + request.getAge() + "<->" +
+	        String userRecordLine = patient_id + "<->" + request.getName() + "<->" + request.getAge() + "<->" +
 	                                request.getWeight() + "<->" + request.getHeight() + "<->" + request.getAddress();
 	
 	        for (EmergencyContact contact : request.getContactsList()) {
 	            userRecordLine += "<->" + contact.getName() + "<->" + contact.getPhone();
 	        }
 	        writer.write(userRecordLine + "\n");
-	        return request.getPatientId() + "<->" + request.getName() + "<->saved to database";
+	        return patient_id + "<->" + request.getName() + "<->saved to database";
 	    } catch (IOException e) {
 	        System.err.println("Failed to save user record to file: " + e.getMessage());
-	        return request.getPatientId() + "<->" + request.getName() + "<->it could not be saved";
+	        return patient_id + "<->" + request.getName() + "<->it could not be saved";
 	    }
+	}
+	
+	/*Helper method:
+	 * It will check the database what was the last id number has been used and it will return +1 to use in saveUser method*/
+	private static int findLast() {
+	    int lastId = 0;
+	    try (BufferedReader reader = new BufferedReader(new FileReader(MONITORING_DATABASE))) {
+	        String line;
+	        while ((line = reader.readLine()) != null) {
+	            String[] parts = line.split("<->");
+	            if (parts.length >= 6) {
+	                int currentId = Integer.parseInt(parts[0]);
+	                if (currentId > lastId) {
+	                    lastId = currentId;
+	                }
+	            } else {
+	                System.out.println("Invalid database entry for patientId: " + parts[0] + ". Not enough fields in the entry.");
+	            }
+	        }
+	    } catch (IOException e) {
+	        System.err.println("Failed to read user records from file: " + e.getMessage());
+	    }
+	    return lastId + 1;
 	}
 
 	//@SuppressWarnings("unlikely-arg-type")
@@ -209,7 +233,7 @@ public class DataBaseConsulter {
 	            if (parts.length >= 6) {
 		            if (Integer.parseInt(parts[0]) == patientId) {
 		                UserRecords.Builder userBuilder = UserRecords.newBuilder()
-		                        .setPatientId(Integer.parseInt(parts[0]))
+		                        //.setPatientId(Integer.parseInt(parts[0]))
 		                        .setName(parts[1])
 		                        .setAge(Integer.parseInt(parts[2]))
 		                        .setWeight(Double.parseDouble(parts[3]))
@@ -227,8 +251,6 @@ public class DataBaseConsulter {
 		                        System.err.println("Invalid database entry for patientId: " + patientId + ". Missing phone number for emergency contact.");
 		                    }
 		                }
-	
-	
 		                return userBuilder.build();
 		            }
 	            }else {
@@ -245,6 +267,49 @@ public class DataBaseConsulter {
 
 	    return notFoundUser;
 	}
+
+	public static UserRecords lookForUser(String patientName) {
+	    try (BufferedReader reader = new BufferedReader(new FileReader(MONITORING_DATABASE))) {
+	        String line;
+	        while ((line = reader.readLine()) != null) {
+	            String[] parts = line.split("<->");
+	            if (parts.length >= 6) {
+	                if (parts[1].equals(patientName)) {
+	                    UserRecords.Builder userBuilder = UserRecords.newBuilder()
+	                            .setName(parts[1])
+	                            .setAge(Integer.parseInt(parts[2]))
+	                            .setWeight(Double.parseDouble(parts[3]))
+	                            .setHeight(Double.parseDouble(parts[4]))
+	                            .setAddress(parts[5]);
+
+	                    for (int i = 6; i < parts.length; i += 2) {
+	                        if (i + 1 < parts.length) {
+	                            EmergencyContact contact = EmergencyContact.newBuilder()
+	                                    .setName(parts[i])
+	                                    .setPhone(parts[i + 1])
+	                                    .build();
+	                            userBuilder.addContacts(contact);
+	                        } else {
+	                            System.err.println("Invalid database entry for patientName: " + patientName + ". Missing phone number for emergency contact.");
+	                        }
+	                    }
+	                    return userBuilder.build();
+	                }
+	            } else {
+	                System.out.println("Invalid database entry for patientId: " + parts[0] + ". Not enough fields in the entry.");
+	            }
+	        }
+	    } catch (IOException e) {
+	        System.err.println("Failed to read user records from file: " + e.getMessage());
+	    }
+
+	    UserRecords notFoundUser = UserRecords.newBuilder()
+	            .setName("User not found")
+	            .build();
+
+	    return notFoundUser;
+	}
+
 
 
 	

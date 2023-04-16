@@ -21,13 +21,12 @@
 	
 	// Monitoring request and response messages
 	message UserRecords {
-		int32 patient_id = 1;
-		int32 age = 2;
-		string name = 3;
-		double weight = 4;
-		double height = 5;
-		string address = 6;
-		repeated EmergencyContact Contacts = 7; //could be more than one emergency contact
+		int32 age = 1;
+		string name = 2;
+		double weight = 3;
+		double height = 4;
+		string address = 5;
+		repeated EmergencyContact Contacts = 6; //could be more than one emergency contact
 	}
 	
 	message EmergencyContact {
@@ -40,20 +39,22 @@
 	}
 	
 	message GetHealthRecordsRequest {
-		PatientID patient_id = 1;
+		oneof mode{
+			int32 patient_id = 1;
+			string name = 2;
+			}
 	}
 	
 	message GetHealthRecordsResponse {
     	UserRecords user_records = 1;
 	}
 	
-	message PatientID{
-		int32 patient_id = 1;
-	}
-	
 	message HeartRateRequest {
 	  double heart_rate = 1;
-	  PatientID patient_id = 2;
+		oneof mode{
+		int32 patient_id = 2;
+		string name = 3;
+		}
 	}
 	
 	message HeartRateWarning {

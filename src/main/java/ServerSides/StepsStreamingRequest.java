@@ -40,9 +40,8 @@ public class StepsStreamingRequest implements StreamObserver<StepsRequest>{
 	@Override
 	public void onNext(StepsRequest stepRequest) {
 		{
-			System.out.println("Server received " + stepRequest.getSteps() + " steps...");
+			System.out.println("ServerSide received " + stepRequest.getSteps() + " steps...");
 			steps = stepRequest.getSteps();
-			//System.out.println("ServerSide received: " + steps);
 			totalSteps += steps;
 			runTimeSteps += steps;
 		}
@@ -50,7 +49,12 @@ public class StepsStreamingRequest implements StreamObserver<StepsRequest>{
 
 	@Override
 	public void onError(Throwable t) {
-		// TODO Auto-generated method stub
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -63,17 +67,13 @@ public class StepsStreamingRequest implements StreamObserver<StepsRequest>{
 		stepsStreamObserver.onNext(stepCount);
 		System.out.println("ServerSide: server completes ... ");
 		stepsStreamObserver.onCompleted();
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-
-
-	/*private void saveTotalStepsToFile() {
-	    try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
-	        writer.write(LocalDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME) + "->" + totalSteps + "\n");
-	        totalSteps = 0; // Reset the total steps counter
-	    } catch (IOException e) {
-	        System.err.println("Failed to save total steps to file: " + e.getMessage());
-	    }
-	}*/
 	
 	private void saveTotalStepsToFile() {
 	    try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {

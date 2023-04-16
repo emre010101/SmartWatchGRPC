@@ -16,8 +16,25 @@ public class HeartRateStreamingRequest implements StreamObserver<HeartRateReques
 	@Override
 	public void onNext(HeartRateRequest heartRateRequest) {
 	    double heartRate = heartRateRequest.getHeartRate();
-	    int patientID = heartRateRequest.getPatientId().getPatientId();
-	    UserRecords currentPatient = DataBaseConsulter.lookForUser(patientID);
+	    UserRecords currentPatient = null;
+	    
+	    try {
+	    	switch(heartRateRequest.getModeCase()) {
+	    	
+	    	case PATIENT_ID:
+	    	    int patientID = heartRateRequest.getPatientId();
+	    	    currentPatient = DataBaseConsulter.lookForUser(patientID);
+
+	    	case NAME:
+	    		String patientName = heartRateRequest.getName();
+	    		currentPatient = DataBaseConsulter.lookForUser(patientName);
+	    	}
+	
+	    }catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	    int currentPatientAge = 35; // Default age
 	    int maxHeartRate = 220 - currentPatientAge; // Default maxHeartRate
 	    String userFound = "Not found";

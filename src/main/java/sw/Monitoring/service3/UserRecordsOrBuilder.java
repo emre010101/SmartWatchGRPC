@@ -8,41 +8,36 @@ public interface UserRecordsOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>int32 patient_id = 1;</code>
-   */
-  int getPatientId();
-
-  /**
-   * <code>int32 age = 2;</code>
+   * <code>int32 age = 1;</code>
    */
   int getAge();
 
   /**
-   * <code>string name = 3;</code>
+   * <code>string name = 2;</code>
    */
   java.lang.String getName();
   /**
-   * <code>string name = 3;</code>
+   * <code>string name = 2;</code>
    */
   com.google.protobuf.ByteString
       getNameBytes();
 
   /**
-   * <code>double weight = 4;</code>
+   * <code>double weight = 3;</code>
    */
   double getWeight();
 
   /**
-   * <code>double height = 5;</code>
+   * <code>double height = 4;</code>
    */
   double getHeight();
 
   /**
-   * <code>string address = 6;</code>
+   * <code>string address = 5;</code>
    */
   java.lang.String getAddress();
   /**
-   * <code>string address = 6;</code>
+   * <code>string address = 5;</code>
    */
   com.google.protobuf.ByteString
       getAddressBytes();
@@ -52,7 +47,7 @@ public interface UserRecordsOrBuilder extends
    *could be more than one emergency contact
    * </pre>
    *
-   * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+   * <code>repeated .service3.EmergencyContact Contacts = 6;</code>
    */
   java.util.List<sw.Monitoring.service3.EmergencyContact> 
       getContactsList();
@@ -61,7 +56,7 @@ public interface UserRecordsOrBuilder extends
    *could be more than one emergency contact
    * </pre>
    *
-   * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+   * <code>repeated .service3.EmergencyContact Contacts = 6;</code>
    */
   sw.Monitoring.service3.EmergencyContact getContacts(int index);
   /**
@@ -69,7 +64,7 @@ public interface UserRecordsOrBuilder extends
    *could be more than one emergency contact
    * </pre>
    *
-   * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+   * <code>repeated .service3.EmergencyContact Contacts = 6;</code>
    */
   int getContactsCount();
   /**
@@ -77,7 +72,7 @@ public interface UserRecordsOrBuilder extends
    *could be more than one emergency contact
    * </pre>
    *
-   * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+   * <code>repeated .service3.EmergencyContact Contacts = 6;</code>
    */
   java.util.List<? extends sw.Monitoring.service3.EmergencyContactOrBuilder> 
       getContactsOrBuilderList();
@@ -86,7 +81,7 @@ public interface UserRecordsOrBuilder extends
    *could be more than one emergency contact
    * </pre>
    *
-   * <code>repeated .service3.EmergencyContact Contacts = 7;</code>
+   * <code>repeated .service3.EmergencyContact Contacts = 6;</code>
    */
   sw.Monitoring.service3.EmergencyContactOrBuilder getContactsOrBuilder(
       int index);

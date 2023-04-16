@@ -13,15 +13,19 @@ public interface HeartRateRequestOrBuilder extends
   double getHeartRate();
 
   /**
-   * <code>.service3.PatientID patient_id = 2;</code>
+   * <code>int32 patient_id = 2;</code>
    */
-  boolean hasPatientId();
+  int getPatientId();
+
   /**
-   * <code>.service3.PatientID patient_id = 2;</code>
+   * <code>string name = 3;</code>
    */
-  sw.Monitoring.service3.PatientID getPatientId();
+  java.lang.String getName();
   /**
-   * <code>.service3.PatientID patient_id = 2;</code>
+   * <code>string name = 3;</code>
    */
-  sw.Monitoring.service3.PatientIDOrBuilder getPatientIdOrBuilder();
+  com.google.protobuf.ByteString
+      getNameBytes();
+
+  public sw.Monitoring.service3.HeartRateRequest.ModeCase getModeCase();
 }

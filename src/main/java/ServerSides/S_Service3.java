@@ -18,7 +18,7 @@ public class S_Service3 extends MonitoringImplBase{
 	@Override
 	public void setUserRecords(UserRecords request, StreamObserver<ServerResponse> responseObserver) {
 		System.out.println(
-				"Receiving the User Details: " + request.getName() +", " +  request.getPatientId() + ", " + request.getAge()
+				"Receiving the User Details: " + request.getName() +", " +  /*request.getPatientId() +*/ request.getAge()
 				+", " + request.getAddress() + ", " + request.getWeight() + ", " + request.getHeight()
 				);
 	    List<EmergencyContact> contactsList = request.getContactsList();
@@ -34,12 +34,32 @@ public class S_Service3 extends MonitoringImplBase{
 
 	
 
+	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void getHealthRecords(GetHealthRecordsRequest request,
 			StreamObserver<GetHealthRecordsResponse> responseObserver) {
-		int patientId = request.getPatientId().getPatientId();
-		System.out.println("Receiving the patiend id to be retrivied: " + patientId);
-		UserRecords reply = DataBaseConsulter.lookForUser(patientId);
+		UserRecords reply = null;
+		try {
+			//Check which credential has been sent by the client.
+			switch(request.getModeCase()) {
+			case PATIENT_ID:
+				System.out.println("ServerSide: receiving the patientID to consult the database -> "
+						+ request.getPatientId());
+				int patientId = request.getPatientId();
+				reply = DataBaseConsulter.lookForUser(patientId);
+				break;
+			
+			case NAME:
+				System.out.println("ServerSide: receiving the patientName to consult the database -> "
+						+ request.getName());
+				String patientName = request.getName();
+				reply = DataBaseConsulter.lookForUser(patientName);
+				break;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		// Create a GetHealthRecordsResponse and set the user_records field
 	    GetHealthRecordsResponse response = GetHealthRecordsResponse.newBuilder()
@@ -51,7 +71,6 @@ public class S_Service3 extends MonitoringImplBase{
 	    responseObserver.onCompleted();
 		
 	}
-
 
 
 	@Override

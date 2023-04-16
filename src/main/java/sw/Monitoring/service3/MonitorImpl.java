@@ -40,11 +40,6 @@ public final class MonitorImpl {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_service3_GetHealthRecordsResponse_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_service3_PatientID_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_service3_PatientID_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_service3_HeartRateRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -64,28 +59,27 @@ public final class MonitorImpl {
   static {
     java.lang.String[] descriptorData = {
       "\n\016service3.proto\022\010service3\032\033google/proto" +
-      "buf/empty.proto\"\233\001\n\013UserRecords\022\022\n\npatie" +
-      "nt_id\030\001 \001(\005\022\013\n\003age\030\002 \001(\005\022\014\n\004name\030\003 \001(\t\022\016" +
-      "\n\006weight\030\004 \001(\001\022\016\n\006height\030\005 \001(\001\022\017\n\007addres" +
-      "s\030\006 \001(\t\022,\n\010Contacts\030\007 \003(\0132\032.service3.Eme" +
-      "rgencyContact\"/\n\020EmergencyContact\022\014\n\004nam" +
-      "e\030\001 \001(\t\022\r\n\005phone\030\002 \001(\t\"#\n\016ServerResponse" +
-      "\022\021\n\tconfirmed\030\001 \001(\t\"B\n\027GetHealthRecordsR" +
-      "equest\022\'\n\npatient_id\030\001 \001(\0132\023.service3.Pa" +
-      "tientID\"G\n\030GetHealthRecordsResponse\022+\n\014u" +
-      "ser_records\030\001 \001(\0132\025.service3.UserRecords" +
-      "\"\037\n\tPatientID\022\022\n\npatient_id\030\001 \001(\005\"O\n\020Hea" +
-      "rtRateRequest\022\022\n\nheart_rate\030\001 \001(\001\022\'\n\npat" +
-      "ient_id\030\002 \001(\0132\023.service3.PatientID\"#\n\020He" +
-      "artRateWarning\022\017\n\007message\030\001 \001(\t2\200\002\n\nMoni" +
-      "toring\022C\n\016SetUserRecords\022\025.service3.User" +
-      "Records\032\030.service3.ServerResponse\"\000\022[\n\020G" +
-      "etHealthRecords\022!.service3.GetHealthReco" +
-      "rdsRequest\032\".service3.GetHealthRecordsRe" +
-      "sponse\"\000\022P\n\020MonitorHeartRate\022\032.service3." +
-      "HeartRateRequest\032\032.service3.HeartRateWar" +
-      "ning\"\000(\0010\001B\'\n\026sw.Monitoring.service3B\013Mo" +
-      "nitorImplP\001b\006proto3"
+      "buf/empty.proto\"\207\001\n\013UserRecords\022\013\n\003age\030\001" +
+      " \001(\005\022\014\n\004name\030\002 \001(\t\022\016\n\006weight\030\003 \001(\001\022\016\n\006he" +
+      "ight\030\004 \001(\001\022\017\n\007address\030\005 \001(\t\022,\n\010Contacts\030" +
+      "\006 \003(\0132\032.service3.EmergencyContact\"/\n\020Eme" +
+      "rgencyContact\022\014\n\004name\030\001 \001(\t\022\r\n\005phone\030\002 \001" +
+      "(\t\"#\n\016ServerResponse\022\021\n\tconfirmed\030\001 \001(\t\"" +
+      "G\n\027GetHealthRecordsRequest\022\024\n\npatient_id" +
+      "\030\001 \001(\005H\000\022\016\n\004name\030\002 \001(\tH\000B\006\n\004mode\"G\n\030GetH" +
+      "ealthRecordsResponse\022+\n\014user_records\030\001 \001" +
+      "(\0132\025.service3.UserRecords\"T\n\020HeartRateRe" +
+      "quest\022\022\n\nheart_rate\030\001 \001(\001\022\024\n\npatient_id\030" +
+      "\002 \001(\005H\000\022\016\n\004name\030\003 \001(\tH\000B\006\n\004mode\"#\n\020Heart" +
+      "RateWarning\022\017\n\007message\030\001 \001(\t2\200\002\n\nMonitor" +
+      "ing\022C\n\016SetUserRecords\022\025.service3.UserRec" +
+      "ords\032\030.service3.ServerResponse\"\000\022[\n\020GetH" +
+      "ealthRecords\022!.service3.GetHealthRecords" +
+      "Request\032\".service3.GetHealthRecordsRespo" +
+      "nse\"\000\022P\n\020MonitorHeartRate\022\032.service3.Hea" +
+      "rtRateRequest\032\032.service3.HeartRateWarnin" +
+      "g\"\000(\0010\001B\'\n\026sw.Monitoring.service3B\013Monit" +
+      "orImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -105,7 +99,7 @@ public final class MonitorImpl {
     internal_static_service3_UserRecords_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_service3_UserRecords_descriptor,
-        new java.lang.String[] { "PatientId", "Age", "Name", "Weight", "Height", "Address", "Contacts", });
+        new java.lang.String[] { "Age", "Name", "Weight", "Height", "Address", "Contacts", });
     internal_static_service3_EmergencyContact_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_service3_EmergencyContact_fieldAccessorTable = new
@@ -123,27 +117,21 @@ public final class MonitorImpl {
     internal_static_service3_GetHealthRecordsRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_service3_GetHealthRecordsRequest_descriptor,
-        new java.lang.String[] { "PatientId", });
+        new java.lang.String[] { "PatientId", "Name", "Mode", });
     internal_static_service3_GetHealthRecordsResponse_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_service3_GetHealthRecordsResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_service3_GetHealthRecordsResponse_descriptor,
         new java.lang.String[] { "UserRecords", });
-    internal_static_service3_PatientID_descriptor =
-      getDescriptor().getMessageTypes().get(5);
-    internal_static_service3_PatientID_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_service3_PatientID_descriptor,
-        new java.lang.String[] { "PatientId", });
     internal_static_service3_HeartRateRequest_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_service3_HeartRateRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_service3_HeartRateRequest_descriptor,
-        new java.lang.String[] { "HeartRate", "PatientId", });
+        new java.lang.String[] { "HeartRate", "PatientId", "Name", "Mode", });
     internal_static_service3_HeartRateWarning_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_service3_HeartRateWarning_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_service3_HeartRateWarning_descriptor,

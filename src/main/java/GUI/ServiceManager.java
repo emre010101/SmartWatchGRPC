@@ -33,7 +33,7 @@ public class ServiceManager {
 	static MonitoringBlockingStub blockingStubService3;
 	static MonitoringStub asyncStubService3;
 
-	private static String service_type1 = "steps._tcp.local.";
+	/*private static String service_type1 = "steps._tcp.local.";
 	private static String service_type2 = "reminder._tcp.local.";
 	private static String service_type3 = "monitoring._tcp.local.";
 	
@@ -42,7 +42,7 @@ public class ServiceManager {
 	private static ServiceInfo MonitoringServiceInfo;
 	
 	private JmDNS jmdns;
-	
+	*/
 	void discoverServices() throws IOException {
 		/*System.out.println("discoverServices invoked");
 		try {
@@ -103,9 +103,11 @@ public class ServiceManager {
 	
 	static void initializeStepServiceChannel() {
 		//service_type1 = "steps._tcp.local.";
+		String reminderHost = "localhost"; 
+		int reminderPort = 1031;
 		System.out.println("Initializing the step service in gui");
 	    ManagedChannel stepChannel = ManagedChannelBuilder
-	    		.forAddress("localhost", 1031)
+	    		.forAddress(reminderHost, reminderPort)
 	    		.build();
 	    
 	    blockingStubService1 = StepCounterGrpc.newBlockingStub(stepChannel);
@@ -147,7 +149,7 @@ public class ServiceManager {
 	    /*String monitoringHost = MonitoringServiceInfo.getHostAddresses()[0];
 	    int monitoringPort = MonitoringServiceInfo.getPort();*/
 		String monitoringHost = "localhost";
-		int monitoringPort = 1081;
+		int monitoringPort = 1082;
 	    ManagedChannel monitoringChannel = ManagedChannelBuilder
 	            .forAddress(monitoringHost, monitoringPort)
 	            .usePlaintext()

@@ -9,21 +9,28 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.geometry.Pos;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 
 import java.util.HashMap;
 
 public class MonitoringServiceGUI {
 
-    public static HashMap<String, Object> createMonitoringServiceLayout(Button backButton) {
-        HashMap<String, Object> controls = new HashMap<>();
+	public static HashMap<String, Object> createMonitoringServiceLayout(Button backButton) {
+	    HashMap<String, Object> controls = new HashMap<>();
 
-        VBox layoutMonitoring = new VBox(10);
-        layoutMonitoring.setPadding(new Insets(20, 20, 20, 20));
+	    VBox layoutMonitoring = new VBox(10);
+	    layoutMonitoring.setPadding(new Insets(20, 20, 20, 20));
 
-        // Patient ID
-        Label patientIdLabel = new Label("Patient ID:");
-        TextField patientIdField = new TextField();
-
+	    // Title and back button
+	    Label title = new Label("Monitoring Service");
+	    title.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+	    HBox titleHBox = new HBox(10);
+	    titleHBox.getChildren().addAll(backButton, title);
+	    
         // Age
         Label ageLabel = new Label("Age:");
         TextField ageField = new TextField();
@@ -58,6 +65,8 @@ public class MonitoringServiceGUI {
 
         Label contact2PhoneLabel = new Label("Phone 2:");
         TextField contact2PhoneField = new TextField();
+        
+        Label emergency = new Label("Emergency Contacts:");
 
         // Server response area
         Label serverResponseLabel = new Label("Server Response:");
@@ -65,31 +74,52 @@ public class MonitoringServiceGUI {
         serverResponseArea.setPrefWidth(250);
         serverResponseArea.setEditable(false);
         serverResponseArea.setWrapText(true);
-
+        
         // Buttons
         Button saveUserCredentialsBtn = new Button("Save User Credentials");
         Button lookForUserBtn = new Button("Look for User");
         Button sendHeartRateBtn = new Button("Send Heart Rate");
+        Button stopBtn = new Button("Stop");
+
 
         // Add elements to layout
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.addRow(0, patientIdLabel, patientIdField);
-        grid.addRow(1, ageLabel, ageField);
-        grid.addRow(2, nameLabel, nameField);
-        grid.addRow(3, weightLabel, weightField);
-        grid.addRow(4, heightLabel, heightField);
-        grid.addRow(5, addressLabel, addressField);
-        grid.addRow(6, contact1NameLabel, contact1NameField);
-        grid.addRow(7, contact1PhoneLabel, contact1PhoneField);
-        grid.addRow(8, contact2NameLabel, contact2NameField);
-        grid.addRow(9, contact2PhoneLabel, contact2PhoneField);
+        grid.addRow(0, ageLabel, ageField, nameLabel, nameField);
+        grid.addRow(1, weightLabel, weightField, heightLabel, heightField);
+        grid.addRow(3, addressLabel, addressField);
+        grid.addRow(4, emergency);
+        grid.addRow(5, contact1NameLabel, contact1NameField, contact1PhoneLabel, contact1PhoneField);
+        grid.addRow(6, contact2NameLabel, contact2NameField, contact2PhoneLabel, contact2PhoneField);
 
-        HBox buttons = new HBox(10, saveUserCredentialsBtn, lookForUserBtn, sendHeartRateBtn);
-        layoutMonitoring.getChildren().addAll(backButton, grid, buttons, serverResponseLabel, serverResponseArea);
+        // Look for user elements
+        TextField lookForUserNameField = new TextField();
+        lookForUserNameField.setPromptText("Name or Patient-ID");
 
-        controls.put("patientIdField", patientIdField);
+        VBox lookForUserVBox = new VBox(10);
+        lookForUserVBox.getChildren().addAll(lookForUserNameField, lookForUserBtn);
+
+
+       /* HBox lookForUserHBox = new HBox(10);
+        lookForUserHBox.setAlignment(Pos.BASELINE_RIGHT);
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        lookForUserHBox.getChildren().addAll(spacer, lookForUserLabel, lookForUserNameField, lookForUserBtn);*/
+
+        // Heart rate elements
+        Label heartRateLabel1 = new Label("Min Heart Rate:");
+        TextField heartRateField1 = new TextField();
+
+        Label heartRateLabel2 = new Label("Max Heart Rate:");
+        TextField heartRateField2 = new TextField();
+
+        HBox heartRateHBox = new HBox(10);
+        heartRateHBox.getChildren().addAll(heartRateLabel1, heartRateField1, heartRateLabel2, heartRateField2, sendHeartRateBtn, stopBtn);
+
+        // Add elements to layout
+        layoutMonitoring.getChildren().addAll(titleHBox, grid, saveUserCredentialsBtn, lookForUserVBox, heartRateHBox, serverResponseLabel, serverResponseArea);
+
         controls.put("ageField", ageField);
         controls.put("nameField", nameField);
         controls.put("weightField", weightField);
@@ -104,8 +134,13 @@ public class MonitoringServiceGUI {
         controls.put("sendHeartRateBtn", sendHeartRateBtn);
         controls.put("serverResponseArea", serverResponseArea);
         controls.put("layoutMonitoring", layoutMonitoring);
-
+        controls.put("lookForUserNameField", lookForUserNameField);
+        controls.put("heartRateField1", heartRateField1);
+        controls.put("heartRateField2", heartRateField2);
+        controls.put("stopheart", stopBtn);
+        
         return controls;
-        }
+    }
+
 
 }
