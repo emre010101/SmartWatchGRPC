@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.google.protobuf.Empty;
+import javafx.collections.FXCollections;
+
 
 import ClientSides.StepStreamObserver;
 import javafx.scene.control.TextField;
@@ -184,10 +186,15 @@ public class Main extends Application {
 		setStepGoalButton.setOnAction(e -> {
 			// setStepGoal();
 		});
+		
+		TextField averageStepsPerMinuteField = new TextField();
+		TextField stepGoalField = new TextField();
+		ComboBox<String> averageHourlyStepsComboBox = new ComboBox<>(FXCollections.observableArrayList("Last day", "Last 5 days", "Last 10 days"));
 
-		VBox layoutStep = StepServiceGUI.createStepServiceLayout(buttonBackStep, startStep, stopStep,
-				getLastHourStepsButton, getAverageHourlyStepsButton, setStepGoalButton, StepServerResponseArea);
-		SceneStep = new Scene(layoutStep, 500, 500);
+
+		VBox stepServiceLayout = StepServiceGUI.createStepServiceLayout(buttonBackStep, startStep, stopStep, getLastHourStepsButton, getAverageHourlyStepsButton, setStepGoalButton, StepServerResponseArea, averageStepsPerMinuteField, stepGoalField, averageHourlyStepsComboBox);
+
+		SceneStep = new Scene(stepServiceLayout, 500, 500);
 
 		// -----------------------------------------------Reminder Service
 		// Layout------------------------------------------------------------------------------------
@@ -364,7 +371,7 @@ public class Main extends Application {
 
 	}
 
-	// ----------------------------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------------------------------
 	// ----------------------------------------------------------------------------------------------------
 	
 	public void startExecutorService() {
@@ -378,7 +385,9 @@ public class Main extends Application {
 			scheduledExecutorService.shutdown();
 		}
 	}
-	/*---------------------------------------------------Step Service Client Side Methods---------------------------------------------------------------------------*/
+	/*---------------------------------------------------Step Service Client Side Methods------------------------------------------------------------*/
+	// ----------------------------------------------------------------------------------------------------------------
+
 	private void startSendingSteps(int averageStep) {
 		shutdownExecutorService(); //Just in case shutting down every time before starting
 		startExecutorService();
@@ -394,9 +403,9 @@ public class Main extends Application {
 		shutdownExecutorService();
 		requestStreamObserverStep.onCompleted();
 		try {
-			Thread.sleep(1500);
+			Thread.sleep(15000);
 		} catch (InterruptedException e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
 	
@@ -405,7 +414,7 @@ public class Main extends Application {
 			@Override
 			public void onNext(StepCount value) {
 				Platform.runLater(() -> {
-					MonitoringServerResponseArea.appendText(Integer.toString(value.getCount()));
+					StepServerResponseArea.appendText(Integer.toString(value.getCount()));
 				});	
 			}
 			@Override
@@ -421,7 +430,7 @@ public class Main extends Application {
 			@Override
 			public void onCompleted() {
 				Platform.runLater(() -> {
-					MonitoringServerResponseArea.appendText("Server Completes...");
+					StepServerResponseArea.appendText("Server Completes...");
 				});
 			}
 			
@@ -433,7 +442,7 @@ public class Main extends Application {
 			StepsRequest stepsRequest = StepsRequest.newBuilder().setSteps(stepAverageinMinute).build();
 			streamObserver.onNext(stepsRequest);
 			Platform.runLater(() ->{
-				MonitoringServerResponseArea.appendText(stepAverageinMinute + "sent");
+				StepServerResponseArea.appendText(stepAverageinMinute + ": steps sent" +"\n");
 			});
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -445,7 +454,9 @@ public class Main extends Application {
 		try {
 			StepCount stepCount = ServiceManager.blockingStubService1.getLastHourSteps(Empty.getDefaultInstance());
 			System.out.println("Test in lasthour: " + stepCount.getCount());
-			StepServerResponseArea.appendText("The steps taken in the last hour: " + stepCount.getCount() + "\n");
+			Platform.runLater(() ->{
+				StepServerResponseArea.appendText("The steps taken in the last hour: " + stepCount.getCount() + "\n");
+			});
 			Thread.sleep(1000);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -485,16 +496,18 @@ public class Main extends Application {
 
 		HourlyStepRequest req = HourlyStepRequest.newBuilder().setWeekDays(week).build();
 		HourlyStepCount response = ServiceManager.blockingStubService1.getAverageHourlySteps(req);
-		String serverMmessage = "For the period: " + response.getWeekDays() + "\n" + "Average steps: "
+		String serverMessage = "For the period: " + response.getWeekDays() + "\n" + "Average steps: "
 				+ response.getAverageSteps() + "\n" + "Message: " + response.getMessage();
-		StepServerResponseArea.appendText(serverMmessage);
+		Platform.runLater(() -> {
+			StepServerResponseArea.appendText(serverMessage);
+		});
 	}
 	/*--------------------------------------------------Reminder Service Client Side Methods----------------------------------------------------------------------------*/
 	// ----------------------------------------------------------------------------------------------------
 	// ----------------------------------------------------------------------------------------------------
 
 	public static void setTaskReminder(DatePicker datePicker, TextField taskNameField, ComboBox<Type> typeComboBox,
-			Spinner<Integer> hourSpinner, Spinner<Integer> minuteSpinner) throws InterruptedException {
+		Spinner<Integer> hourSpinner, Spinner<Integer> minuteSpinner) throws InterruptedException {
 		LocalDate date = datePicker.getValue();
 		LocalTime time = LocalTime.of(hourSpinner.getValue(), minuteSpinner.getValue());
 		LocalDateTime dateTime = LocalDateTime.of(date, time);
@@ -513,7 +526,6 @@ public class Main extends Application {
 			ReminderServerResponseArea.appendText("Server message: " + response.getConfirmed() + "\n");
 
 		});
-		Thread.sleep(150);
 	}
 
 	public static void markTask(TaskReminder task) throws InterruptedException {
@@ -525,7 +537,6 @@ public class Main extends Application {
 			ReminderServerResponseArea.appendText("Server message: " + response.getConfirmed());
 
 		});
-		Thread.sleep(100);
 	}
 
 	public static void getUndoneTasks(ListView<TaskReminder> taskListView) {
