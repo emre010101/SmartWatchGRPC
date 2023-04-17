@@ -108,6 +108,7 @@ public class ServiceManager {
 		System.out.println("Initializing the step service in gui");
 	    ManagedChannel stepChannel = ManagedChannelBuilder
 	    		.forAddress(reminderHost, reminderPort)
+	    		.usePlaintext()
 	    		.build();
 	    
 	    blockingStubService1 = StepCounterGrpc.newBlockingStub(stepChannel);

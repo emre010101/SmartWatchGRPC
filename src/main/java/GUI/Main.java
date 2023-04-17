@@ -77,8 +77,8 @@ public class Main extends Application {
     private StreamObserver<StepsRequest> requestStreamObserverStep;
 
 
-	static TextArea serverMessageArea = new TextArea();
-	static TextArea serverResponseArea = new TextArea();
+	static TextArea StepServerResponseArea = new TextArea();
+	static TextArea ReminderServerResponseArea = new TextArea();
 	static TextArea MonitoringServerResponseArea = new TextArea();
 
 	public static void main(String[] args) throws IOException {
@@ -115,13 +115,6 @@ public class Main extends Application {
 		buttonBackReminder = new Button("Back to main");
 		buttonBackMonitoring = new Button("Back to main");
 
-		// -------------------Initialising----------------------------Reminder PAge
-		// Layout---------------------------
-		setTaskReminderButton = new Button("setTaskReminder");
-		markTaskCompleteButton = new Button("Mark Complete");
-		getUnmarkedTasksButton = new Button("Get Remaning Tasks");
-		HashMap<String, Object> reminderControls = ReminderServiceGUI.createReminderServiceLayout(buttonBackReminder,
-				setTaskReminderButton, markTaskCompleteButton, getUnmarkedTasksButton, serverMessageArea);
 
 		// ---------------------------------------------------------Event
 		// Listeners-----------------------------------
@@ -160,8 +153,8 @@ public class Main extends Application {
 		SceneMain = new Scene(layoutMain, 500, 500);
 
 		// Add TextArea for displaying server messages
-		serverMessageArea.setPrefSize(300, 200);
-		serverMessageArea.setEditable(false);
+		/*serverMessageArea.setPrefSize(300, 200);
+		serverMessageArea.setEditable(false);*/
 
 		// ------------------------------------------------Step Service
 		// Layout------------------------------------------------------------------------------------------------------
@@ -193,11 +186,17 @@ public class Main extends Application {
 		});
 
 		VBox layoutStep = StepServiceGUI.createStepServiceLayout(buttonBackStep, startStep, stopStep,
-				getLastHourStepsButton, getAverageHourlyStepsButton, setStepGoalButton, serverMessageArea);
+				getLastHourStepsButton, getAverageHourlyStepsButton, setStepGoalButton, StepServerResponseArea);
 		SceneStep = new Scene(layoutStep, 500, 500);
 
 		// -----------------------------------------------Reminder Service
 		// Layout------------------------------------------------------------------------------------
+
+		setTaskReminderButton = new Button("setTaskReminder");
+		markTaskCompleteButton = new Button("Mark Complete");
+		getUnmarkedTasksButton = new Button("Get Remaning Tasks");
+		HashMap<String, Object> reminderControls = ReminderServiceGUI.createReminderServiceLayout(buttonBackReminder,
+				setTaskReminderButton, markTaskCompleteButton, getUnmarkedTasksButton, ReminderServerResponseArea);
 
 		setTaskReminderButton.setOnAction(e -> {
 			try {
@@ -223,7 +222,7 @@ public class Main extends Application {
 				}
 			} else {
 				// Display a message to the user to select a task
-				serverResponseArea.appendText("Please select a task to mark as complete.\n");
+				ReminderServerResponseArea.appendText("Please select a task to mark as complete.\n");
 			}
 		});
 
@@ -239,10 +238,10 @@ public class Main extends Application {
 		 * SceneReminder = new Scene(layoutReminder, 400, 400);
 		 */
 		VBox layoutReminder = (VBox) reminderControls.get("layoutReminder");
-		serverResponseArea = (TextArea) reminderControls.get("serverResponseArea");
+		ReminderServerResponseArea = (TextArea) reminderControls.get("serverResponseArea");
 
 		// Create a new HBox to wrap layoutReminder and serverResponseArea
-		HBox mainLayout = new HBox(10, layoutReminder, serverResponseArea);
+		HBox mainLayout = new HBox(10, layoutReminder, ReminderServerResponseArea);
 
 		SceneReminder = new Scene(mainLayout, 800, 600);
 
@@ -388,7 +387,7 @@ public class Main extends Application {
 
 		scheduledExecutorService.scheduleAtFixedRate(() -> {
 			stepStreamingRequest(averageStep, requestStreamObserverStep);
-		}, 0, 60, TimeUnit.SECONDS);
+		}, 0, 45, TimeUnit.SECONDS);
 	}
 	
 	private void stopSendingSteps() {
@@ -441,61 +440,12 @@ public class Main extends Application {
 		}
 	}
 
-	/*public static void stepStreamingRequest(int stepAverageinMinute) throws InterruptedException {
-		StreamObserver<StepCount> responseObserver = new StreamObserver<StepCount>() {
-
-			@Override
-			public void onNext(StepCount step) {
-				// int steps = step.getCount();
-				// String ssteps = Parse.
-
-				Platform.runLater(() -> {
-					MonitoringServerResponseArea.appendText(Integer.toString(step.getCount()));
-				});
-			}
-
-			@Override
-			public void onError(Throwable t) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onCompleted() {
-				Platform.runLater(() -> {
-					MonitoringServerResponseArea.appendText("Server Completes...");
-				});
-
-			}
-
-		};
-		StreamObserver<StepsRequest> streamObserver = ServiceManager.asyncStubService1.sendSteps(responseObserver);
-
-		try {
-			StepsRequest stepsRequest = StepsRequest.newBuilder().setSteps(stepAverageinMinute).build();
-			streamObserver.onNext(stepsRequest);
-			Platform.runLater(() ->{
-				MonitoringServerResponseArea.appendText(stepAverageinMinute + "sent");
-			});
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		try {
-			Thread.sleep(15000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}*/
-
 	public static void lastHour() {
 		System.out.println("--ClientSide : lastHour() invoked");
 		try {
 			StepCount stepCount = ServiceManager.blockingStubService1.getLastHourSteps(Empty.getDefaultInstance());
 			System.out.println("Test in lasthour: " + stepCount.getCount());
-			serverMessageArea.appendText("The steps taken in the last hour: " + stepCount.getCount() + "\n");
+			StepServerResponseArea.appendText("The steps taken in the last hour: " + stepCount.getCount() + "\n");
 			Thread.sleep(1000);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -535,8 +485,9 @@ public class Main extends Application {
 
 		HourlyStepRequest req = HourlyStepRequest.newBuilder().setWeekDays(week).build();
 		HourlyStepCount response = ServiceManager.blockingStubService1.getAverageHourlySteps(req);
-		System.out.println("For the period: " + response.getWeekDays() + "\n" + "Average steps: "
-				+ response.getAverageSteps() + "\n" + "Message: " + response.getMessage());
+		String serverMmessage = "For the period: " + response.getWeekDays() + "\n" + "Average steps: "
+				+ response.getAverageSteps() + "\n" + "Message: " + response.getMessage();
+		StepServerResponseArea.appendText(serverMmessage);
 	}
 	/*--------------------------------------------------Reminder Service Client Side Methods----------------------------------------------------------------------------*/
 	// ----------------------------------------------------------------------------------------------------
@@ -559,7 +510,7 @@ public class Main extends Application {
 		Platform.runLater(() -> {
 
 			taskListView.getItems().add(req);
-			serverResponseArea.appendText("Server message: " + response.getConfirmed() + "\n");
+			ReminderServerResponseArea.appendText("Server message: " + response.getConfirmed() + "\n");
 
 		});
 		Thread.sleep(150);
@@ -571,7 +522,7 @@ public class Main extends Application {
 		sw.Reminder.service2.ServerResponse response = ServiceManager.blockingStubService2.markTaskComplete(req);
 		System.out.println("Service message: " + response.getConfirmed());
 		Platform.runLater(() -> {
-			serverResponseArea.appendText("Server message: " + response.getConfirmed());
+			ReminderServerResponseArea.appendText("Server message: " + response.getConfirmed());
 
 		});
 		Thread.sleep(100);
@@ -604,7 +555,6 @@ public class Main extends Application {
 	}
 
 	/*------------------------------------------Monitoring Service Client Side Methods--------------------------------------------------*/
-	// ----------------------------------------------------------------------------------------------------
 	// ----------------------------------------------------------------------------------------------------
 
 	public static void saveUserCredentials(int p_age, String nam, double we, double he, String add,
@@ -668,12 +618,6 @@ public class Main extends Application {
 		}
 	}
 
-	/*public void startSendHeartRate(int heart1, int heart2, String patientName) {
-		shutdownExecutorService();
-		startExecutorService();
-		scheduledExecutorService.scheduleAtFixedRate(() -> sendHeartRate(heart1, heart2, patientName), 0, 5,
-				TimeUnit.SECONDS);
-	}*/
 	public void startSendHeartRate(int heart1, int heart2, String patientName) {
 	    shutdownExecutorService();
 	    startExecutorService();
@@ -734,53 +678,4 @@ public class Main extends Application {
 	    
 	}
 
-	/*public static void sendHeartRate(int heart1, int heart2, String patientName	) {
-		// HeartRateStreamingResponse response = new HeartRateStreamingResponse();
-		StreamObserver<HeartRateWarning> responseObserver = new StreamObserver<HeartRateWarning>() {
-
-			@Override
-			public void onNext(HeartRateWarning heartRateWarning) {
-				Platform.runLater(() -> {
-					MonitoringServerResponseArea.appendText("ServerResponse: " + heartRateWarning.getMessage());
-				});
-			}
-
-			@Override
-			public void onError(Throwable t) {
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-
-			@Override
-			public void onCompleted() {
-				Platform.runLater(() -> {
-					MonitoringServerResponseArea.appendText("Server Completes...");
-				});
-
-			}
-
-		};
-		StreamObserver<HeartRateRequest> requestStreamObserver = ServiceManager.asyncStubService3
-				.monitorHeartRate(responseObserver);
-
-		try {
-			HeartRateRequest request = HeartRateRequest.newBuilder().setName(patientName)
-					.setHeartRate(ThreadLocalRandom.current().nextDouble(heart1, heart2)).build();
-			requestStreamObserver.onNext(request);
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-		}
-		requestStreamObserver.onCompleted();
-		try {
-			Thread.sleep(1500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	*/
 }
