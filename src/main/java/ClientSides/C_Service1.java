@@ -38,89 +38,23 @@ public class C_Service1 {
 	private static StepCounterBlockingStub blockingStub;
 	private static StepCounterStub asyncStub;
 	private static ManagedChannel managedChannel;
-	//private static final Logger logger = LogManager.getLogger(C_Service1.class);
 	private static ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();;
 	private static AtomicBoolean isStreaming = new AtomicBoolean(false);
-	private static ServiceInfo stepInfo;
-	
-	/*private static void discoverStepService(String service_type) {
-		try {
-			// Create a JmDNS instance
-			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
-				
-			jmdns.addServiceListener(service_type, new ServiceListener() {
-				
-				@Override
-				public void serviceResolved(ServiceEvent event) {
-					System.out.println("Step Service resolved: " + event.getInfo());
-
-					stepInfo = event.getInfo();
-
-					int port = stepInfo.getPort();
-					
-					System.out.println("resolving " + service_type + " with properties ...");
-					System.out.println("\t port: " + port);
-					System.out.println("\t type:"+ event.getType());
-					System.out.println("\t name: " + event.getName());
-					System.out.println("\t description/properties: " + stepInfo.getNiceTextString());
-					System.out.println("\t host: " + stepInfo.getHostAddresses()[0]);
-				
-				}
-				
-				@Override
-				public void serviceRemoved(ServiceEvent event) {
-					System.out.println("Step Service removed: " + event.getInfo());
-
-					
-				}
-				
-				@Override
-				public void serviceAdded(ServiceEvent event) {
-					System.out.println("Step Service added: " + event.getInfo());	
-				}
-			});
-			
-			// Wait a bit
-			Thread.sleep(2000);
-			
-			jmdns.close();
-
-		} catch (UnknownHostException e) {
-			System.out.println(e.getMessage());
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-	}*/
+	static int port;
+	static String resolvedIP;
+	static String host = "_steps._tcp.local.";
 	
 	public static void main(String[] args) {
-		//System.setProperty("java.util.logging.config.file", "src/main/resources/logging.properties");
 		
-		/*String step_service_type = "steps._tcp.local.";
-		discoverStepService(step_service_type);
-		
-		String host = stepInfo.getHostAddresses()[0];
-		int port = stepInfo.getPort();
-		
-		ManagedChannel channel = ManagedChannelBuilder
-				.forAddress(host, port)
-				.usePlaintext()
-				.build();*/
+		discoverStepService();
 		
 		managedChannel = ManagedChannelBuilder
-				.forAddress("localhost", 1031)
+				.forAddress(resolvedIP, port)
 				.usePlaintext()
 				.build();
-		//stubs -- generate from proto
 		blockingStub = StepCounterGrpc.newBlockingStub(managedChannel);
 
 		asyncStub = StepCounterGrpc.newStub(managedChannel);
-		
-
 		
 		Scanner scanner = new Scanner(System.in);
 	    String input;
@@ -159,8 +93,46 @@ public class C_Service1 {
 	    }
 	}
 
+	private static void discoverStepService() {
+		try {
+			// Create a JmDNS instance
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+				
+			jmdns.addServiceListener(host, new SampleListener());
+			
+			// Wait a bit
+			Thread.sleep(15000);
+			
+			jmdns.close();
+
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+	private static class SampleListener implements ServiceListener {
+		public void serviceAdded(ServiceEvent event) {
+			System.out.println("Service added: " + event.getInfo());
+		}
+		public void serviceRemoved(ServiceEvent event) {
+			System.out.println("Service removed: " + event.getInfo());
+		}
+		@SuppressWarnings("deprecation")
+		public void serviceResolved(ServiceEvent event) {
+					System.out.println("Service resolved: " + event.getInfo());
+			
+                    ServiceInfo info = event.getInfo();
+                    port = info.getPort();
+                    resolvedIP = info.getHostAddress();                    
+                    System.out.println("IP Resolved - " + resolvedIP + ":" + port);
+		}
+	}
 	
-	
+
 	public static void stepStreamingRequest() throws InterruptedException {
 	    //System.out.println("-- Client side stepStreamingRequest Invoked");
 	    CountDownLatch latch = new CountDownLatch(2);

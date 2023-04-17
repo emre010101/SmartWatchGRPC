@@ -32,7 +32,7 @@ public class StepServiceGUI {
 
         // Group get average hourly steps button and the drop-down list together
         HBox getAverageHourlyStepsGroup = new HBox(10);
-        getAverageHourlyStepsGroup.getChildren().addAll(getAverageHourlyStepsButton, new Label("Average hourly steps:"), averageHourlyStepsComboBox);
+        getAverageHourlyStepsGroup.getChildren().addAll(getAverageHourlyStepsButton, new Label("Average daily steps:"), averageHourlyStepsComboBox);
 
         // Add the groups to the grid
         buttonGrid.add(startStopGroup, 0, 0, 2, 1);

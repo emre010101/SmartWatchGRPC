@@ -9,7 +9,6 @@ import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
-
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import sw.Monitoring.service3.MonitoringGrpc;
@@ -33,81 +32,70 @@ public class ServiceManager {
 	static MonitoringBlockingStub blockingStubService3;
 	static MonitoringStub asyncStubService3;
 
-	/*private static String service_type1 = "steps._tcp.local.";
+	private static String service_type1 = "_steps._tcp.local.";
 	private static String service_type2 = "reminder._tcp.local.";
 	private static String service_type3 = "monitoring._tcp.local.";
 	
-	private static ServiceInfo StepServiceInfo;
-	private static ServiceInfo ReminderServiceInfo;
-	private static ServiceInfo MonitoringServiceInfo;
+	private static int port;
+	private static String resolvedIP;
 	
-	private JmDNS jmdns;
-	*/
-	void discoverServices() throws IOException {
-		/*System.out.println("discoverServices invoked");
+	public static void discover(String serviceName) {
+		if(serviceName.equals("stepService")) {
+			discoverService(service_type1);
+			initializeStepsServiceChannel();
+		}else if(serviceName.equals("reminderingService")) {
+			discoverService(service_type2);
+			initializeReminderingServiceChannel();
+		}else if(serviceName.equals("monitoringService")) {
+			discoverService(service_type3);
+			initializeMonitoringServiceChannel();
+		}else {
+			AlertBox.display("error", "Service name does not match!!!");
+		}
+	}
+	private static void discoverService(String serviceType) {
 		try {
-			discoverService(service_type1, info -> StepServiceInfo = info);
-			discoverService(service_type2, info -> ReminderServiceInfo = info);
-			discoverService(service_type3, info -> MonitoringServiceInfo = info);
+			// Create a JmDNS instance
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+				
+			jmdns.addServiceListener(serviceType, new SampleListener());
+			
+			// Wait a bit
+			Thread.sleep(20000);
+			
+			//jmdns.close();
+
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}	
+	}
+	private static class SampleListener implements ServiceListener {
+		public void serviceAdded(ServiceEvent event) {
+			System.out.println("Service added: " + event.getInfo());
 		}
+		public void serviceRemoved(ServiceEvent event) {
+			System.out.println("Service removed: " + event.getInfo());
+		}
+		@SuppressWarnings("deprecation")
+		public void serviceResolved(ServiceEvent event) {
+					System.out.println("Service resolved: " + event.getInfo());
 	
-
-	   /* try {
-	        Thread.sleep(3000); // Use a longer sleep duration to give enough time for the services to be discovered
-	    } catch (InterruptedException e) {
-	        e.printStackTrace();
-	    }
-	    
-	    jmdns.close(); // Close the JmDNS instance after the services are discovered
-	    
-	    System.out.println("Test: " + StepServiceInfo.getPort());*/
-	}
-
-	private static void discoverService(String serviceType, Consumer<ServiceInfo> serviceInfoUpdater) throws InterruptedException {
-	    try {
-	    	System.out.println("discover service is invoked");
-	        JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
-
-	        jmdns.addServiceListener(serviceType, new ServiceListener() {
-	            @Override
-	            public void serviceResolved(ServiceEvent event) {
-	                System.out.println("Service resolved: " + event.getInfo());
-	                serviceInfoUpdater.accept(event.getInfo());
-	            }
-
-	            @Override
-	            public void serviceRemoved(ServiceEvent event) {
-	                System.out.println("Service removed: " + event.getInfo());
-	            }
-
-	            @Override
-	            public void serviceAdded(ServiceEvent event) {
-	                System.out.println("Service added: " + event.getInfo());
-	                jmdns.requestServiceInfo(event.getType(), event.getName(), 1); // Add this line to request service info
-	            }
-	        });
-
-	        Thread.sleep(500);
-
-	        jmdns.close();
-	    } catch (UnknownHostException e) {
-	        System.out.println(e.getMessage());
-	    } catch (IOException e) {
-	        System.out.println(e.getMessage());
-	    }
-	    System.out.println("Begin: ");
+                    ServiceInfo info = event.getInfo();
+                    port = info.getPort();
+                    resolvedIP = info.getHostAddress();                    
+                    System.out.println("IP Resolved - " + resolvedIP + ":" + port);
+		}
 	}
 	
-	static void initializeStepServiceChannel() {
-		//service_type1 = "steps._tcp.local.";
-		String reminderHost = "localhost"; 
-		int reminderPort = 1031;
+	static void initializeStepsServiceChannel() {
 		System.out.println("Initializing the step service in gui");
 	    ManagedChannel stepChannel = ManagedChannelBuilder
-	    		.forAddress(reminderHost, reminderPort)
+	    		.forAddress(resolvedIP, port)
 	    		.usePlaintext()
 	    		.build();
 	    
@@ -133,7 +121,7 @@ public class ServiceManager {
 		}*/
 	}
 
-	static void initializeReminderServiceChannel() {
+	static void initializeReminderingServiceChannel() {
 		String reminderHost = "localhost"; 
 		int reminderPort = 1050;
 	   /* String reminderHost = ReminderServiceInfo.getHostAddresses()[0];
@@ -146,7 +134,7 @@ public class ServiceManager {
 	    asyncStubService2 = ReminderGrpc.newStub(reminderChannel);
 	}
 
-	static void initializeMonitoringChannel() {
+	static void initializeMonitoringServiceChannel() {
 	    /*String monitoringHost = MonitoringServiceInfo.getHostAddresses()[0];
 	    int monitoringPort = MonitoringServiceInfo.getPort();*/
 		String monitoringHost = "localhost";
@@ -159,31 +147,38 @@ public class ServiceManager {
 	    asyncStubService3 = MonitoringGrpc.newStub(monitoringChannel);
 	}
 	
-	static void shutdownChannel(int channelnumber) {
-		if(channelnumber == 1 || channelnumber == 0 ) {
-		    if (blockingStubService1.getChannel() != null) {
-		    	((ManagedChannel) blockingStubService1.getChannel()).shutdown();
-		    }
-		    if (asyncStubService1.getChannel() != null) {
-		    	((ManagedChannel) asyncStubService1.getChannel()).shutdown();
-		    }
-		}
-		if(channelnumber == 2 || channelnumber == 0)  {
-		    if (blockingStubService2.getChannel() != null) {
-		    	((ManagedChannel) blockingStubService2.getChannel()).shutdown();
-		    }
-		    if (asyncStubService2.getChannel() != null) {
-		    	((ManagedChannel) asyncStubService2.getChannel()).shutdown();
-		    }
-		}
-		if(channelnumber == 3 || channelnumber == 0)  {
-		    if (blockingStubService3.getChannel() != null) {
-		    	((ManagedChannel) blockingStubService3.getChannel()).shutdown();
-		    }
-		    if (asyncStubService3.getChannel() != null) {
-		    	((ManagedChannel) asyncStubService3.getChannel()).shutdown();
-		    }
-		}
+	static void shutdownStepChannel() {
+	    if (blockingStubService1.getChannel() != null || asyncStubService1.getChannel() != null) {
+	        if (blockingStubService1.getChannel() != null) {
+	            ((ManagedChannel) blockingStubService1.getChannel()).shutdown();
+	        }
+	        if (asyncStubService1.getChannel() != null) {
+	            ((ManagedChannel) asyncStubService1.getChannel()).shutdown();
+	        }
+	    }
 	}
+	
+	static void shutdownReminderChannel() {
+	    if (blockingStubService2.getChannel() != null || asyncStubService2.getChannel() != null) {
+	        if (blockingStubService2.getChannel() != null) {
+	            ((ManagedChannel) blockingStubService2.getChannel()).shutdown();
+	        }
+	        if (asyncStubService2.getChannel() != null) {
+	            ((ManagedChannel) asyncStubService2.getChannel()).shutdown();
+	        }
+	    }
+	}
+	
+	static void shutdownMonitoringChannel() {
+	    if (blockingStubService3.getChannel() != null || asyncStubService3.getChannel() != null) {
+	        if (blockingStubService3.getChannel() != null) {
+	            ((ManagedChannel) blockingStubService3.getChannel()).shutdown();
+	        }
+	        if (asyncStubService3.getChannel() != null) {
+	            ((ManagedChannel) asyncStubService3.getChannel()).shutdown();
+	        }
+	    }
+	}
+
 
 }

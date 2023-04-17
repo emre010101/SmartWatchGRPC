@@ -32,7 +32,6 @@ public class S_Service3 extends MonitoringImplBase{
 	    responseObserver.onCompleted();
 	}
 
-	
 
 	@SuppressWarnings("incomplete-switch")
 	@Override
@@ -71,7 +70,6 @@ public class S_Service3 extends MonitoringImplBase{
 	    responseObserver.onCompleted();
 		
 	}
-
 
 	@Override
 	public StreamObserver<HeartRateRequest> monitorHeartRate(StreamObserver<HeartRateWarning> responseObserver) {

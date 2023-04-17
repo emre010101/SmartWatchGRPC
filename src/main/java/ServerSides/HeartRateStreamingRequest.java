@@ -13,6 +13,7 @@ public class HeartRateStreamingRequest implements StreamObserver<HeartRateReques
 		this.heartRateObserver = heartRateObserver;
 	}
 
+	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void onNext(HeartRateRequest heartRateRequest) {
 	    double heartRate = heartRateRequest.getHeartRate();
@@ -31,7 +32,6 @@ public class HeartRateStreamingRequest implements StreamObserver<HeartRateReques
 	    	}
 	
 	    }catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -63,15 +63,18 @@ public class HeartRateStreamingRequest implements StreamObserver<HeartRateReques
 	    	resp = "Heart rate is outside the target range.";
 	    }
 	    
-	    HeartRateWarning reply = HeartRateWarning.newBuilder().setMessage(resp + "\n for the user: " + userFound).build();
+	    HeartRateWarning reply = HeartRateWarning.newBuilder().setMessage(resp + "\n User: " + userFound).build();
 	    this.heartRateObserver.onNext(reply);
 	}
 
 
 	@Override
 	public void onError(Throwable t) {
-		// TODO Auto-generated method stub
-		
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

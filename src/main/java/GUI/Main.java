@@ -3,18 +3,13 @@ package GUI;
 import com.google.protobuf.Empty;
 import sw.Monitoring.service3.HeartRateWarning;
 
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.google.protobuf.Empty;
 import javafx.collections.FXCollections;
 
-
-import ClientSides.StepStreamObserver;
 import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.util.*;
@@ -31,23 +26,21 @@ import sw.Monitoring.service3.GetHealthRecordsResponse;
 import sw.Monitoring.service3.HeartRateRequest;
 import sw.Monitoring.service3.UserRecords;
 import sw.Monitoring.service3.ServerResponse;
-
-//import sw.Reminder.service2.ServerResponse;
 import sw.Reminder.service2.TaskComplete;
 import sw.Reminder.service2.TaskReminder;
 import sw.Reminder.service2.Type;
 import sw.stepCounter.service1.HourlyStepCount;
 import sw.stepCounter.service1.HourlyStepRequest;
 import sw.stepCounter.service1.StepCount;
+import sw.stepCounter.service1.StepGoal;
 import sw.stepCounter.service1.StepsRequest;
 import sw.stepCounter.service1.WeekDays;
+import sw.stepCounter.service1.StepGoalResponse;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 
@@ -59,6 +52,7 @@ public class Main extends Application {
 	// Stage and Scenes
 	Stage window;
 	Scene SceneMain, SceneStep, SceneReminder, SceneMonitoring;
+    Map<Scene, String> sceneIds = new HashMap<>(); //For identifying the scene is being shut down
 
 	// Main Buttons
 	Button button1, button2, button3, button4;
@@ -72,12 +66,10 @@ public class Main extends Application {
 	// Monitoring Buttons
 	Button buttonBackMonitoring, saveUserCredentialsBtn, lookForUser, sendHeartRate, stopHeart;
 
-	private static ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 	private ScheduledExecutorService scheduledExecutorService;
 	private static ListView<TaskReminder> taskListView;
-    private StreamObserver<HeartRateRequest> requestStreamObserverHeart;
-    private StreamObserver<StepsRequest> requestStreamObserverStep;
-
+	private StreamObserver<HeartRateRequest> requestStreamObserverHeart;
+	private StreamObserver<StepsRequest> requestStreamObserverStep;
 
 	static TextArea StepServerResponseArea = new TextArea();
 	static TextArea ReminderServerResponseArea = new TextArea();
@@ -90,9 +82,15 @@ public class Main extends Application {
 		launch(args); // it sets up the javafx in application class
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
+        // Set IDs for your scenes
+        sceneIds.put(SceneMain, "SceneMain");
+        sceneIds.put(SceneStep, "SceneStep");
+        sceneIds.put(SceneReminder, "SceneReminder");
+        sceneIds.put(SceneMonitoring, "SceneMonitoring");
 		// -----------------------------------Main Page
 		// Layout---------------------------------------------------
 		window = primaryStage;
@@ -100,11 +98,6 @@ public class Main extends Application {
 		/*
 		 * window.setWidth(500); window.setHeight(500);
 		 */
-
-		window.setOnCloseRequest(e -> {
-			e.consume();
-			closeProgram();
-		});
 
 		Label labelMain = new Label("Welcome to Smart Watch!");
 
@@ -117,34 +110,40 @@ public class Main extends Application {
 		buttonBackReminder = new Button("Back to main");
 		buttonBackMonitoring = new Button("Back to main");
 
-
 		// ---------------------------------------------------------Event
 		// Listeners-----------------------------------
 
 		// Main Page and main Buttons
 
 		buttonBackStep.setOnAction(e -> {
-			ServiceManager.shutdownChannel(1);
+			System.out.println(sceneIds.get(window.getScene()));
+			ServiceManager.shutdownStepChannel();
 			window.setScene(SceneMain);
 		});
-		buttonBackReminder.setOnAction(e -> window.setScene(SceneMain));
-		buttonBackMonitoring.setOnAction(e -> window.setScene(SceneMain));
+		buttonBackReminder.setOnAction(e -> {
+			ServiceManager.shutdownReminderChannel();
+			window.setScene(SceneMain);
+		});
+		buttonBackMonitoring.setOnAction(e -> {
+			ServiceManager.shutdownMonitoringChannel();
+			window.setScene(SceneMain);
+		});
 
 		/*
 		 * use of lambda to use event listener Since Even Listener interface only have
 		 * one method "handle" lambda can be used.
 		 */
 		button1.setOnAction(e -> {
-			ServiceManager.initializeStepServiceChannel();
+			ServiceManager.discover("stepService");
 			window.setScene(SceneStep);
 		});
 
 		button2.setOnAction(e -> {
-			ServiceManager.initializeReminderServiceChannel();
+			ServiceManager.discover("reminderingService");
 			window.setScene(SceneReminder);
 		});
 		button3.setOnAction(e -> {
-			ServiceManager.initializeMonitoringChannel();
+			ServiceManager.discover("monitoringService");
 			window.setScene(SceneMonitoring);
 		});
 		button4.setOnAction(e -> window.setScene(SceneMain));
@@ -154,45 +153,47 @@ public class Main extends Application {
 		layoutMain.getChildren().addAll(labelMain, button1, button2, button3);
 		SceneMain = new Scene(layoutMain, 500, 500);
 
-		// Add TextArea for displaying server messages
-		/*serverMessageArea.setPrefSize(300, 200);
-		serverMessageArea.setEditable(false);*/
 
 		// ------------------------------------------------Step Service
 		// Layout------------------------------------------------------------------------------------------------------
 		startStep = new Button("Start");
 		stopStep = new Button("Stop");
 		getLastHourStepsButton = new Button("Get Last Hour Steps");
-		getAverageHourlyStepsButton = new Button("Get Average Hourly Steps");
+		getAverageHourlyStepsButton = new Button("Get Average Daily Steps");
 		setStepGoalButton = new Button("Set Step Goal");
-		
-		startStep.setOnAction(e -> {
+		TextField averageStepsPerMinuteField = new TextField();
+		TextField stepGoalField = new TextField();
+		ComboBox<String> averageDailyStepsComboBox = new ComboBox<>(
+				FXCollections.observableArrayList("Last day", "Last 5 days", "Last 10 days", "Last 30 days"));
+
+		VBox stepServiceLayout = StepServiceGUI.createStepServiceLayout(buttonBackStep, startStep, stopStep,
+				getLastHourStepsButton, getAverageHourlyStepsButton, setStepGoalButton, StepServerResponseArea,
+				averageStepsPerMinuteField, stepGoalField, averageDailyStepsComboBox);
+
+		startStep.setOnAction(event -> {
 			try {
-				startSendingSteps(25);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				int typedStepPerMinute = Integer.parseInt(averageStepsPerMinuteField.getText());
+				startSendingSteps(typedStepPerMinute);
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
 			}
 		});
 
 		stopStep.setOnAction(e -> stopSendingSteps());
-		
+
 		getLastHourStepsButton.setOnAction(e -> lastHour());
 
 		getAverageHourlyStepsButton.setOnAction(e -> {
-			getAverage();	
+			// System.out.println(averageHourlyStepsComboBox);
+			String period = averageDailyStepsComboBox.getValue();
+			// System.out.println("TEST: " + period);
+			getAverage(period);
 		});
 
 		setStepGoalButton.setOnAction(e -> {
-			// setStepGoal();
+			int stepGoal = Integer.parseInt(stepGoalField.getText());
+			setStepGoal(stepGoal);
 		});
-		
-		TextField averageStepsPerMinuteField = new TextField();
-		TextField stepGoalField = new TextField();
-		ComboBox<String> averageHourlyStepsComboBox = new ComboBox<>(FXCollections.observableArrayList("Last day", "Last 5 days", "Last 10 days"));
-
-
-		VBox stepServiceLayout = StepServiceGUI.createStepServiceLayout(buttonBackStep, startStep, stopStep, getLastHourStepsButton, getAverageHourlyStepsButton, setStepGoalButton, StepServerResponseArea, averageStepsPerMinuteField, stepGoalField, averageHourlyStepsComboBox);
 
 		SceneStep = new Scene(stepServiceLayout, 500, 500);
 
@@ -340,16 +341,26 @@ public class Main extends Application {
 			try {
 				stopSendingHeartRate();
 			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});// sendHeartRateFlag.set(false));
+
+		// ----------------------------------------------------------------------------------------
+		window.setOnCloseRequest(e -> {
+			e.consume();
+			closeProgram();
+		});
 
 		window.setScene(SceneMain);
 		window.setTitle("WELCOME");
 		window.show();
 
 	}
+
+	// ----------------------------------------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------------------------------
 
 	private boolean isDigit(String lokforUser) {
 		try {
@@ -361,19 +372,14 @@ public class Main extends Application {
 	}
 
 	private void closeProgram() {
-
-		Boolean answer = ConfirmBox.display("Closing", "Are you sure, want to close?");
-		if (answer) {
-			Platform.runLater(() -> {
-				window.close();
-			});
-		}
-
+	    Boolean answer = ConfirmBox.display("Closing", "Are you sure, want to close?");
+	    if (answer) {
+	        Platform.runLater(() -> {
+	            window.close();
+	        });
+	    }
 	}
 
-	// ----------------------------------------------------------------------------------------------------------------
-	// ----------------------------------------------------------------------------------------------------
-	
 	public void startExecutorService() {
 		if (scheduledExecutorService == null || scheduledExecutorService.isShutdown()) {
 			scheduledExecutorService = Executors.newScheduledThreadPool(1);
@@ -385,77 +391,88 @@ public class Main extends Application {
 			scheduledExecutorService.shutdown();
 		}
 	}
+
 	/*---------------------------------------------------Step Service Client Side Methods------------------------------------------------------------*/
 	// ----------------------------------------------------------------------------------------------------------------
 
 	private void startSendingSteps(int averageStep) {
-		shutdownExecutorService(); //Just in case shutting down every time before starting
+		shutdownExecutorService(); // Just in case shutting down every time before starting
 		startExecutorService();
 		StreamObserver<StepCount> responseObserver = createResponseObserverforStep();
 		requestStreamObserverStep = ServiceManager.asyncStubService1.sendSteps(responseObserver);
-
 		scheduledExecutorService.scheduleAtFixedRate(() -> {
 			stepStreamingRequest(averageStep, requestStreamObserverStep);
-		}, 0, 45, TimeUnit.SECONDS);
+		}, 0, 60, TimeUnit.SECONDS);
 	}
-	
+
 	private void stopSendingSteps() {
 		shutdownExecutorService();
 		requestStreamObserverStep.onCompleted();
 		try {
-			Thread.sleep(15000);
+			Thread.sleep(10000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	private StreamObserver<StepCount> createResponseObserverforStep(){
+
+	/*
+	 * Stream Observed is separated from the main method to avoid creating each time
+	 * method is invoked instead it will be invoked one and with using the same
+	 * instance multiple requests will be sent
+	 */
+	private StreamObserver<StepCount> createResponseObserverforStep() {
 		return new StreamObserver<StepCount>() {
 			@Override
 			public void onNext(StepCount value) {
 				Platform.runLater(() -> {
-					StepServerResponseArea.appendText(Integer.toString(value.getCount()));
-				});	
+					int step = value.getCount();
+					StepServerResponseArea.appendText("\n" + Integer.toString(step));
+				});
 			}
+
 			@Override
 			public void onError(Throwable t) {
 				try {
 					Thread.sleep(1500);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}	
+				}
 			}
 
 			@Override
 			public void onCompleted() {
 				Platform.runLater(() -> {
-					StepServerResponseArea.appendText("Server Completes...");
+					StepServerResponseArea.appendText("CS: Server Completes...");
 				});
 			}
-			
+
 		};
 	}
-	
+
+	/*
+	 * Using scheduleded scheduler thos ,ethod will be invoked the sent steps
+	 * periodically with the amount of steps typed by the user
+	 */
 	public static void stepStreamingRequest(int stepAverageinMinute, StreamObserver<StepsRequest> streamObserver) {
 		try {
 			StepsRequest stepsRequest = StepsRequest.newBuilder().setSteps(stepAverageinMinute).build();
 			streamObserver.onNext(stepsRequest);
-			Platform.runLater(() ->{
-				StepServerResponseArea.appendText(stepAverageinMinute + ": steps sent" +"\n");
+			Platform.runLater(() -> {
+				StepServerResponseArea.appendText(stepAverageinMinute + ": steps sent" + "\n");
 			});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	/* The steps have been made in the last hour will be collected */
 	public static void lastHour() {
-		System.out.println("--ClientSide : lastHour() invoked");
+		System.out.println("CS: lastHour() invoked");
 		try {
 			StepCount stepCount = ServiceManager.blockingStubService1.getLastHourSteps(Empty.getDefaultInstance());
 			System.out.println("Test in lasthour: " + stepCount.getCount());
-			Platform.runLater(() ->{
-				StepServerResponseArea.appendText("The steps taken in the last hour: " + stepCount.getCount() + "\n");
+			Platform.runLater(() -> {
+				StepServerResponseArea.appendText("\n"+"The steps taken in the last hour: " + stepCount.getCount() + "\n");
 			});
 			Thread.sleep(1000);
 		} catch (Exception e) {
@@ -464,43 +481,65 @@ public class Main extends Application {
 		// ServiceManager.shutdownStepServiceChannel();
 	}
 
-	public static void getAverage() {
-		System.out.println("getAverage invoked!!");
+	/* User can choose the period want to see for steps he/she has done */
+	public static void getAverage(String period) {
+		System.out.println("CS: getAverage() invoked!");
 		WeekDays week = null;
-		/*Scanner sc = new Scanner(System.in);
-		System.out.println("Please type from which day to now want to see the daily average"
-				+ "/n last day, last 5 day, last 10 day, last 30 Day");
 
-		while (true) {
-			String period = sc.nextLine();
-			if (period.equalsIgnoreCase("last day")) {
-				week = WeekDays.LAST_DAY;
-				break;
-			} else if (period.equalsIgnoreCase("last 5 day")) {
-				week = WeekDays.LAST_5_DAYS;
-				break;
-			} else if (period.equalsIgnoreCase("last 10 day")) {
-				week = WeekDays.LAST_10_DAYS;
-				break;
-			} else if (period.equalsIgnoreCase("last 30 day")) {
-				week = WeekDays.LAST_30_DAYS;
-				break;
-			} else {
-				System.out.println("Please type valid period!!");
-			}
+		if (period.equalsIgnoreCase("last day")) {
+			week = WeekDays.LAST_DAY;
+		} else if (period.equalsIgnoreCase("last 5 days")) {
+			week = WeekDays.LAST_5_DAYS;
+		} else if (period.equalsIgnoreCase("last 10 days")) {
+			week = WeekDays.LAST_10_DAYS;
+		} else if (period.equalsIgnoreCase("last 30 days")) {
+			week = WeekDays.LAST_30_DAYS;
+		} else {
+			week = WeekDays.LAST_5_DAYS;
 		}
-		sc.close();*/
-		week = WeekDays.LAST_30_DAYS;
-
-		// WeekDays.LAST_DAY
 
 		HourlyStepRequest req = HourlyStepRequest.newBuilder().setWeekDays(week).build();
 		HourlyStepCount response = ServiceManager.blockingStubService1.getAverageHourlySteps(req);
-		String serverMessage = "For the period: " + response.getWeekDays() + "\n" + "Average steps: "
+		String serverMessage = "\n" + "For the period: " + response.getWeekDays() + "\n" + "Average steps: "
 				+ response.getAverageSteps() + "\n" + "Message: " + response.getMessage();
 		Platform.runLater(() -> {
 			StepServerResponseArea.appendText(serverMessage);
 		});
+	}
+
+	public static void setStepGoal(int goal) {
+		System.out.println("CS: setStepGoal is invoked!!");
+		StepGoal req = StepGoal.newBuilder().setGoal(goal).build();
+		StreamObserver<StepGoalResponse> responseObserver = new StreamObserver<StepGoalResponse>() {
+
+			@Override
+			public void onNext(StepGoalResponse value) {
+				System.out.println(value.getLeft());
+				System.out.println(value.getMessage());
+				System.out.println(value.getSuccess());
+				Platform.runLater(() -> {
+					StepServerResponseArea.appendText("\n" + "Completed: " + value.getSuccess() + " || " + "Left: "
+							+ value.getLeft() + "\n" + value.getMessage());
+				});
+			}
+
+			@Override
+			public void onError(Throwable t) {
+				try {
+					Thread.sleep(1500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void onCompleted() {
+				Platform.runLater(() -> {
+					StepServerResponseArea.appendText("CS: setStepGaol Completed..");
+				});
+			}
+		};
+		ServiceManager.asyncStubService1.setStepGoal(req, responseObserver);
 	}
 	/*--------------------------------------------------Reminder Service Client Side Methods----------------------------------------------------------------------------*/
 	// ----------------------------------------------------------------------------------------------------
@@ -553,13 +592,17 @@ public class Main extends Application {
 
 			@Override
 			public void onError(Throwable t) {
-				// TODO Auto-generated method stub
+				try {
+					Thread.sleep(1500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 
 			}
 
 			@Override
 			public void onCompleted() {
-				// TODO Auto-generated method stub
+				System.out.println("Server completes..");
 			}
 		};
 		ServiceManager.asyncStubService2.getTaskList(null, responseObserver);
@@ -578,13 +621,12 @@ public class Main extends Application {
 
 		System.out.println("Server message : " + response.getConfirmed());
 		Platform.runLater(() -> {
-			MonitoringServerResponseArea.appendText(response.getConfirmed());
+			MonitoringServerResponseArea.appendText("\n"+response.getConfirmed());
 		});
 
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -605,7 +647,7 @@ public class Main extends Application {
 		for (EmergencyContact contact : contactsList) {
 			Platform.runLater(() -> {
 				MonitoringServerResponseArea
-						.appendText("Name: " + contact.getName() + ", Phone: " + contact.getPhone() + "\n");
+						.appendText("\n"+"Name: " + contact.getName() + ", Phone: " + contact.getPhone() + "\n");
 			});
 		}
 	}
@@ -630,42 +672,38 @@ public class Main extends Application {
 	}
 
 	public void startSendHeartRate(int heart1, int heart2, String patientName) {
-	    shutdownExecutorService();
-	    startExecutorService();
+		shutdownExecutorService();
+		startExecutorService();
 
-	    StreamObserver<HeartRateWarning> responseObserver = createResponseObserver();
-	    requestStreamObserverHeart = ServiceManager.asyncStubService3.monitorHeartRate(responseObserver);
+		StreamObserver<HeartRateWarning> responseObserver = createResponseObserver();
+		requestStreamObserverHeart = ServiceManager.asyncStubService3.monitorHeartRate(responseObserver);
 
-	    scheduledExecutorService.scheduleAtFixedRate(() -> sendHeartRate(heart1, heart2, patientName, requestStreamObserverHeart), 0, 5, TimeUnit.SECONDS);
+		scheduledExecutorService.scheduleAtFixedRate(() -> 
+					sendHeartRate(heart1, heart2, patientName, requestStreamObserverHeart), 0, 5, TimeUnit.SECONDS);
 	}
-	
+
 	private void stopSendingHeartRate() throws InterruptedException {
 		shutdownExecutorService();
 		requestStreamObserverHeart.onCompleted();
+	}
+
+	public static void sendHeartRate(int heart1, int heart2, String patientName,
+			StreamObserver<HeartRateRequest> requestStreamObserver) {
 		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
+			HeartRateRequest request = HeartRateRequest.newBuilder().setName(patientName)
+					.setHeartRate(ThreadLocalRandom.current().nextDouble(heart1, heart2)).build();
+			requestStreamObserver.onNext(request);
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void sendHeartRate(int heart1, int heart2, String patientName, StreamObserver<HeartRateRequest> requestStreamObserver) {
-	    try {
-	        HeartRateRequest request = HeartRateRequest.newBuilder()
-	                .setName(patientName)
-	                .setHeartRate(ThreadLocalRandom.current().nextDouble(heart1, heart2))
-	                .build();
-	        requestStreamObserver.onNext(request);
-	    } catch (RuntimeException e) {
-	        e.printStackTrace();
-	    }
-	}
+
 	private StreamObserver<HeartRateWarning> createResponseObserver() {
-	    return new StreamObserver<HeartRateWarning>() {
-	    	@Override
+		return new StreamObserver<HeartRateWarning>() {
+			@Override
 			public void onNext(HeartRateWarning heartRateWarning) {
 				Platform.runLater(() -> {
-					MonitoringServerResponseArea.appendText("ServerResponse: " + heartRateWarning.getMessage());
+					MonitoringServerResponseArea.appendText("\n"+"ServerResponse: " + heartRateWarning.getMessage());
 				});
 			}
 
@@ -674,7 +712,6 @@ public class Main extends Application {
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -682,11 +719,11 @@ public class Main extends Application {
 			@Override
 			public void onCompleted() {
 				Platform.runLater(() -> {
-					MonitoringServerResponseArea.appendText("Server Completes...");
+					MonitoringServerResponseArea.appendText("\n"+"Server Completes...");
 				});
 			}
 		};
-	    
+
 	}
 
 }

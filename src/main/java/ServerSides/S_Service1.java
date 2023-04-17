@@ -72,23 +72,38 @@ public class S_Service1 extends StepCounterImplBase{
 		StepsStreamingRequest.setRunTimeSteps(0);
 		int left = goal - StepsStreamingRequest.getRunTimeSteps();
 		boolean achive = false;
-		String msg = "Default";
-		while(achive==false) {
-			left = goal - StepsStreamingRequest.getRunTimeSteps();
-			if(left < goal-(goal/3)) {
-				msg = "You've done the first quarter";
-			}else if(left < goal-(goal/2)) {
-				msg = "You've done the first half";
-			}else if(left < (int)goal-(goal/1.5)) {
-				msg = "You've done some progress";
-			}else if(left < 0) {
-				msg = "You've made it!!!!";
-				achive = true;
-			}
+		String msg = "You haven't started yet!";
+		while (achive == false) {
+		    left = goal - StepsStreamingRequest.getRunTimeSteps();
+		    if (left <= 0) {
+		        msg = "You've made it!!!!";
+		        achive = true;
+		    } else if(goal == left) {
+		    	msg = "You haven't started yet!!";
+		    } else if (left >= (int) goal - (goal * 0.1)) {
+		        msg = "You've done 10% of the goal";
+		    } else if (left >= (int) goal - (goal * 0.2)) {
+		        msg = "You've done 20% of the goal";
+		    } else if (left >= (int) goal - (goal * 0.3)) {
+		        msg = "You've done 30% of the goal";
+		    } else if (left >= (int) goal - (goal * 0.4)) {
+		        msg = "You've done 40% of the goal";
+		    } else if (left >= (int) goal - (goal * 0.5)) {
+		        msg = "You've done the first half";
+		    } else if (left >= (int) goal - (goal * 0.6)) {
+		        msg = "You've done 60% of the goal";
+		    } else if (left >= (int) goal - (goal * 0.7)) {
+		        msg = "You've done 70% of the goal";
+		    } else if (left >= (int) goal - (goal * 0.8)) {
+		        msg = "You've done 80% of the goal";
+		    } else if (left >= (int) goal - (goal * 0.9)) {
+		        msg = "You've done 90% of the goal";
+		    }
+
 			StepGoalResponse reply = StepGoalResponse.newBuilder().setLeft(left).setMessage(msg).setSuccess(achive).build();
 			responseObserver.onNext(reply);
 			try {
-				Thread.sleep(5000);
+				Thread.sleep(8000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
