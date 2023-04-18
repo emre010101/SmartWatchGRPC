@@ -46,15 +46,16 @@ public class ReminderServiceGUI {
 
 	    // Set up task list display
 	    Label taskListLabel = new Label("Task List:");
-	    ListView<TaskReminder> taskListView = new ListView<>();
+        ListView<TaskReminder> taskListView = new ListView<>();
+        taskListView.setPrefHeight(300); // Set the preferred height for the taskListView
 
-	    // Set up server response area
-	    Label serverResponseLabel = new Label("Server Response:");
-	    TextArea serverResponseArea = new TextArea();
-	    serverResponseArea.setPrefWidth(250);
-	    serverResponseArea.setPrefHeight(100);
-	    serverResponseArea.setEditable(false);
-	    serverResponseArea.setWrapText(true);
+        // Set up server response area
+        Label serverResponseLabel = new Label("Server Response:");
+        TextArea serverResponseArea = new TextArea();
+        serverResponseArea.setPrefWidth(250);
+        serverResponseArea.setPrefHeight(100);
+        serverResponseArea.setEditable(false);
+        serverResponseArea.setWrapText(true);
 
 	    // Add elements to layout
 	    GridPane grid = new GridPane();
@@ -69,11 +70,10 @@ public class ReminderServiceGUI {
 	    grid.add(typeLabel, 0, 3);
 	    grid.add(typeComboBox, 1, 3);
 
-	    HBox buttons = new HBox(10, setTaskReminderButton);
-	    HBox lowerButtons = new HBox(10, getUnmarkedTasks, markTaskCompleteButton);
-	    HBox taskArea = new HBox(10, taskListView);
-	    VBox lowerSection = new VBox(10, lowerButtons, serverResponseLabel, serverResponseArea);
-	    layoutReminder.getChildren().addAll(titleLabel, backButton, grid, buttons, taskListLabel, taskArea, lowerSection);
+	    // Place all buttons in the same row
+	    HBox buttons = new HBox(10, setTaskReminderButton, markTaskCompleteButton, getUnmarkedTasks); // Add all buttons in a single HBox
+        VBox lowerSection = new VBox(10, serverResponseLabel, serverResponseArea);
+        layoutReminder.getChildren().addAll(titleLabel, backButton, grid, buttons, taskListLabel, taskListView, lowerSection);
 
 	    controls.put("taskNameField", taskNameField);
 	    controls.put("typeComboBox", typeComboBox);
@@ -81,6 +81,8 @@ public class ReminderServiceGUI {
 	    controls.put("hourSpinner", hourSpinner);
 	    controls.put("minuteSpinner", minuteSpinner);
 	    controls.put("layoutReminder", layoutReminder);
+	   
+
 	    controls.put("taskListView", taskListView);
 	    controls.put("serverResponseArea", serverResponseArea);
 

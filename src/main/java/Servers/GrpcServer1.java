@@ -9,22 +9,15 @@ import java.util.Properties;
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 
-/*import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import Server.GrpcServer;*/
 import ServerSides.S_Service1;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
-public class GrpcServer1 {
-	
-	//private static final Logger logger = LogManager.getLogger(GrpcServer.class);
-	//
-	private JmDNS jmdns;
+public class GrpcServer1 extends Thread{
 
-	
-	public static void main(String[] args) {
+	//private JmDNS jmdns;
+
+	public void run(){
 		//Creating the instance of the Server
 		GrpcServer1 stepserver = new GrpcServer1();
 		
@@ -116,9 +109,6 @@ public class GrpcServer1 {
 			}
 	    
 	}
-	
-	/*public void unregisterService() {
-		jmdns.unregisterAllServices();
-	}*/
+
 
 }

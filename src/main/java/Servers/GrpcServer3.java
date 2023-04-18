@@ -13,12 +13,10 @@ import ServerSides.S_Service3;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
-public class GrpcServer3 {
-	//
-	private JmDNS jmdns;
+public class GrpcServer3 extends Thread{
 
 	
-	public static void main(String[] args) {
+	public void run() {
 		//Creating the instance of the Server
 		GrpcServer3 server = new GrpcServer3();
 		
@@ -79,7 +77,7 @@ public class GrpcServer3 {
 	private void registerService(Properties prop) {
 		try {
 			//Create a JmDNS instance
-			jmdns = JmDNS.create(InetAddress.getLocalHost());
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
 			
 			//Initialising properties to variables
 			String service_type = prop.getProperty("service_type");
@@ -103,10 +101,6 @@ public class GrpcServer3 {
 		}catch(InterruptedException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public void unregisterService() {
-		jmdns.unregisterAllServices();
 	}
 
 }

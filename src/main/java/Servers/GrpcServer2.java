@@ -13,20 +13,18 @@ import ServerSides.S_Service2;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
-public class GrpcServer2 {
-	//
-	private JmDNS jmdns;
+public class GrpcServer2 extends Thread{
 
-	
-	public static void main(String[] args) {
+
+	public void run() {
 		//Creating the instance of the Server
-		GrpcServer2 server = new GrpcServer2();
+		GrpcServer2 reminderServer = new GrpcServer2();
 		
 		//Properties for required registering the server
-		Properties prop = server.getProperties();
+		Properties prop = reminderServer.getProperties();
 		
 		//Registering the properties
-		server.registerService(prop);
+		reminderServer.registerService(prop);
 		
 		//Port number is also in the properties file
 		int port = Integer.valueOf(prop.getProperty("service_port"));
@@ -40,6 +38,7 @@ public class GrpcServer2 {
 					.build()
 					.start();
 			
+			System.out.println("Step server started listening on " + port);
 			//To avoid instance start and termination
 			server2.awaitTermination();
 			
@@ -62,7 +61,7 @@ public class GrpcServer2 {
 	            prop.load(input);
 
 	            // get the property value and print it out
-	            System.out.println("TaskReminder Service properties ...");
+	            System.out.println("StepCounter Service properties ...");
 	            System.out.println("\t service_type: " + prop.getProperty("service_type"));
 	            System.out.println("\t service_name: " +prop.getProperty("service_name"));
 	            System.out.println("\t service_description: " +prop.getProperty("service_description"));
@@ -76,37 +75,39 @@ public class GrpcServer2 {
 	}
 	
 	//Passing the properties to register and share using JmDNS
-	private void registerService(Properties prop) {
-		try {
-			//Create a JmDNS instance
-			jmdns = JmDNS.create(InetAddress.getLocalHost());
-			
-			//Initialising properties to variables
-			String service_type = prop.getProperty("service_type");
-			String service_name = prop.getProperty("service_name");
-			int service_port = Integer.valueOf(prop.getProperty("service_port"));
-			String service_description_properties = prop.getProperty("service_description");
-			
-			//Register the service
-			ServiceInfo serviceInfo = ServiceInfo.create(service_type, service_name, service_port, service_description_properties);
-			jmdns.registerService(serviceInfo);
-			
-			System.out.printf("Registering service with type %s and name %s \n", service_type, service_name);
-			
-			//Wait a bit
-			Thread.sleep(1000);
-			
-			//Unregister all services
-            //jmdns.unregisterAllServices();
-		}catch(IOException e) {
-			System.out.println(e.getMessage());
-		}catch(InterruptedException e) {
-			e.printStackTrace();
-		}
+	private  void registerService(Properties prop) {
+		
+		 try {
+	            // Create a JmDNS instance
+	            JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+	            
+	            String service_type = prop.getProperty("service_type") ;//"_http._tcp.local.";
+	            String service_name = prop.getProperty("service_name")  ;
+	            int service_port = Integer.valueOf( prop.getProperty("service_port") );// 
+
+	            
+	            String service_description_properties = prop.getProperty("service_description")  ;//"path=index.html";
+	            
+	            // Register a service
+	            ServiceInfo serviceInfo = ServiceInfo.create(service_type, service_name, service_port, service_description_properties);
+	            jmdns.registerService(serviceInfo);
+	            
+	            System.out.printf("registrering service with type %s and name %s \n", service_type, service_name);
+	            
+	            // Wait a bit
+	            Thread.sleep(1000);
+
+	            // Unregister all services
+	            //jmdns.unregisterAllServices();
+
+	        } catch (IOException e) {
+	            System.out.println(e.getMessage());
+	        } catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    
 	}
 	
-	public void unregisterService() {
-		jmdns.unregisterAllServices();
-	}
 
 }

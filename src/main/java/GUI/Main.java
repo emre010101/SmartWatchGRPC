@@ -1,6 +1,8 @@
 package GUI;
 
 import com.google.protobuf.Empty;
+
+import Servers.ServerAllStart;
 import sw.Monitoring.service3.HeartRateWarning;
 
 import java.util.concurrent.Executors;
@@ -20,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.scene.control.TextArea;
+import javafx.geometry.Pos;
 import sw.Monitoring.service3.EmergencyContact;
 import sw.Monitoring.service3.GetHealthRecordsRequest;
 import sw.Monitoring.service3.GetHealthRecordsResponse;
@@ -42,7 +45,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 
 import javafx.application.Platform;
 
@@ -76,9 +78,15 @@ public class Main extends Application {
 	static TextArea MonitoringServerResponseArea = new TextArea();
 
 	public static void main(String[] args) throws IOException {
-		// ServiceManager serviceManager = new ServiceManager();
-		// serviceManager.discoverServices();
-
+		
+		try {
+			ServerAllStart.startServers();
+			ServiceManager.discoverAll();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		launch(args); // it sets up the javafx in application class
 	}
 
@@ -86,7 +94,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-        // Set IDs for your scenes
+        // Set IDs for the scenes
         sceneIds.put(SceneMain, "SceneMain");
         sceneIds.put(SceneStep, "SceneStep");
         sceneIds.put(SceneReminder, "SceneReminder");
@@ -95,9 +103,6 @@ public class Main extends Application {
 		// Layout---------------------------------------------------
 		window = primaryStage;
 		window.setTitle("Smart Watch");
-		/*
-		 * window.setWidth(500); window.setHeight(500);
-		 */
 
 		Label labelMain = new Label("Welcome to Smart Watch!");
 
@@ -116,16 +121,16 @@ public class Main extends Application {
 		// Main Page and main Buttons
 
 		buttonBackStep.setOnAction(e -> {
-			System.out.println(sceneIds.get(window.getScene()));
-			ServiceManager.shutdownStepChannel();
+			//System.out.println(sceneIds.get(window.getScene()));
+			//ServiceManager.shutdownStepChannel();
 			window.setScene(SceneMain);
 		});
 		buttonBackReminder.setOnAction(e -> {
-			ServiceManager.shutdownReminderChannel();
+			//ServiceManager.shutdownReminderChannel();
 			window.setScene(SceneMain);
 		});
 		buttonBackMonitoring.setOnAction(e -> {
-			ServiceManager.shutdownMonitoringChannel();
+			//ServiceManager.shutdownMonitoringChannel();
 			window.setScene(SceneMain);
 		});
 
@@ -134,22 +139,23 @@ public class Main extends Application {
 		 * one method "handle" lambda can be used.
 		 */
 		button1.setOnAction(e -> {
-			ServiceManager.discover("stepService");
+			//ServiceManager.discover("stepService");
 			window.setScene(SceneStep);
 		});
 
 		button2.setOnAction(e -> {
-			ServiceManager.discover("reminderingService");
+			//ServiceManager.discover("reminderingService");
 			window.setScene(SceneReminder);
 		});
 		button3.setOnAction(e -> {
-			ServiceManager.discover("monitoringService");
+			//ServiceManager.discover("monitoringService");
 			window.setScene(SceneMonitoring);
 		});
 		button4.setOnAction(e -> window.setScene(SceneMain));
 
 		// Main page layout
 		VBox layoutMain = new VBox(50);
+		layoutMain.setAlignment(Pos.CENTER); // Set alignment to center
 		layoutMain.getChildren().addAll(labelMain, button1, button2, button3);
 		SceneMain = new Scene(layoutMain, 500, 500);
 
@@ -204,54 +210,49 @@ public class Main extends Application {
 		markTaskCompleteButton = new Button("Mark Complete");
 		getUnmarkedTasksButton = new Button("Get Remaning Tasks");
 		HashMap<String, Object> reminderControls = ReminderServiceGUI.createReminderServiceLayout(buttonBackReminder,
-				setTaskReminderButton, markTaskCompleteButton, getUnmarkedTasksButton, ReminderServerResponseArea);
+		        setTaskReminderButton, markTaskCompleteButton, getUnmarkedTasksButton, ReminderServerResponseArea);
 
 		setTaskReminderButton.setOnAction(e -> {
-			try {
-				DatePicker datePicker = (DatePicker) reminderControls.get("datePicker");
-				TextField taskNameField = (TextField) reminderControls.get("taskNameField");
-				ComboBox<Type> typeComboBox = (ComboBox<Type>) reminderControls.get("typeComboBox");
-				Spinner<Integer> hourSpinner = (Spinner<Integer>) reminderControls.get("hourSpinner");
-				Spinner<Integer> minuteSpinner = (Spinner<Integer>) reminderControls.get("minuteSpinner");
-				setTaskReminder(datePicker, taskNameField, typeComboBox, hourSpinner, minuteSpinner);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
+		    try {
+		        DatePicker datePicker = (DatePicker) reminderControls.get("datePicker");
+		        TextField taskNameField = (TextField) reminderControls.get("taskNameField");
+		        ComboBox<Type> typeComboBox = (ComboBox<Type>) reminderControls.get("typeComboBox");
+		        Spinner<Integer> hourSpinner = (Spinner<Integer>) reminderControls.get("hourSpinner");
+		        Spinner<Integer> minuteSpinner = (Spinner<Integer>) reminderControls.get("minuteSpinner");
+		        setTaskReminder(datePicker, taskNameField, typeComboBox, hourSpinner, minuteSpinner);
+		    } catch (InterruptedException e1) {
+		        e1.printStackTrace();
+		    }
 		});
 		markTaskCompleteButton.setOnAction(e -> {
-			taskListView = (ListView<TaskReminder>) reminderControls.get("taskListView");
-			TaskReminder selectedTask = taskListView.getSelectionModel().getSelectedItem();
-			if (selectedTask != null) {
-				try {
-					markTask(selectedTask);
-					taskListView.getItems().remove(selectedTask);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
-			} else {
-				// Display a message to the user to select a task
-				ReminderServerResponseArea.appendText("Please select a task to mark as complete.\n");
-			}
+		    taskListView = (ListView<TaskReminder>) reminderControls.get("taskListView");
+		    TaskReminder selectedTask = taskListView.getSelectionModel().getSelectedItem();
+		    if (selectedTask != null) {
+		        try {
+		            markTask(selectedTask);
+		            taskListView.getItems().remove(selectedTask);
+		        } catch (InterruptedException e1) {
+		            e1.printStackTrace();
+		        }
+		    } else {
+		        // Display a message to the user to select a task
+		        ReminderServerResponseArea.appendText("Please select a task to mark as complete.\n");
+		    }
 		});
 
 		getUnmarkedTasksButton.setOnAction(e -> {
-			taskListView = (ListView<TaskReminder>) reminderControls.get("taskListView");
-			getUndoneTasks(taskListView);
+		    taskListView = (ListView<TaskReminder>) reminderControls.get("taskListView");
+		    getUndoneTasks(taskListView);
 		});
 
-		/**/
-		// ---Reminder Layout
-		/*
-		 * VBox layoutReminder = (VBox) reminderControls.get("layoutReminder");
-		 * SceneReminder = new Scene(layoutReminder, 400, 400);
-		 */
 		VBox layoutReminder = (VBox) reminderControls.get("layoutReminder");
 		ReminderServerResponseArea = (TextArea) reminderControls.get("serverResponseArea");
 
-		// Create a new HBox to wrap layoutReminder and serverResponseArea
-		HBox mainLayout = new HBox(10, layoutReminder, ReminderServerResponseArea);
+		// Create a new VBox to wrap layoutReminder and serverResponseArea
+		VBox mainLayout = new VBox(10, layoutReminder, ReminderServerResponseArea);
 
-		SceneReminder = new Scene(mainLayout, 800, 600);
+		SceneReminder = new Scene(mainLayout, 600, 800); // Adjust the scene size to better fit the new layout
+
 
 		// ----------------------------------------------------------------------------------------------------
 		HashMap<String, Object> controls = MonitoringServiceGUI.createMonitoringServiceLayout(buttonBackMonitoring);
@@ -343,7 +344,7 @@ public class Main extends Application {
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
-		});// sendHeartRateFlag.set(false));
+		});
 
 		// ----------------------------------------------------------------------------------------
 		window.setOnCloseRequest(e -> {
@@ -357,7 +358,6 @@ public class Main extends Application {
 
 	}
 
-	// ----------------------------------------------------------------------------------------------------------------
 	// ----------------------------------------------------------------------------------------------------
 	// ----------------------------------------------------------------------------------------------------------------
 	// ----------------------------------------------------------------------------------------------------------------
@@ -450,7 +450,7 @@ public class Main extends Application {
 	}
 
 	/*
-	 * Using scheduleded scheduler thos ,ethod will be invoked the sent steps
+	 * Using scheduleded scheduler thos ,method will be invoked the sent steps
 	 * periodically with the amount of steps typed by the user
 	 */
 	public static void stepStreamingRequest(int stepAverageinMinute, StreamObserver<StepsRequest> streamObserver) {
@@ -478,7 +478,6 @@ public class Main extends Application {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// ServiceManager.shutdownStepServiceChannel();
 	}
 
 	/* User can choose the period want to see for steps he/she has done */
@@ -543,7 +542,7 @@ public class Main extends Application {
 	}
 	/*--------------------------------------------------Reminder Service Client Side Methods----------------------------------------------------------------------------*/
 	// ----------------------------------------------------------------------------------------------------
-	// ----------------------------------------------------------------------------------------------------
+
 
 	public static void setTaskReminder(DatePicker datePicker, TextField taskNameField, ComboBox<Type> typeComboBox,
 		Spinner<Integer> hourSpinner, Spinner<Integer> minuteSpinner) throws InterruptedException {
@@ -629,7 +628,6 @@ public class Main extends Application {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public static void lookForUser(int id) {
