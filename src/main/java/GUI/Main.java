@@ -1,4 +1,13 @@
 package GUI;
+/**
+ * @author emrek
+ * @date 10/04/2023
+ * Main GUI to display the client side 
+ * it also makes call to other classes
+ * to activate the servers
+ * and discover and initialize the services
+ * */
+
 
 import com.google.protobuf.Empty;
 
@@ -16,6 +25,7 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.util.*;
 
+import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -68,22 +78,27 @@ public class Main extends Application {
 	// Monitoring Buttons
 	Button buttonBackMonitoring, saveUserCredentialsBtn, lookForUser, sendHeartRate, stopHeart;
 
+	//Creating a instance to use multithread to not keep going the app when biderectional streaming happening
 	private ScheduledExecutorService scheduledExecutorService;
+	
 	private static ListView<TaskReminder> taskListView;
+	
+	//Created instances of the sreamobserver
 	private StreamObserver<HeartRateRequest> requestStreamObserverHeart;
 	private StreamObserver<StepsRequest> requestStreamObserverStep;
 
+	//For displaying the server ansvers
 	static TextArea StepServerResponseArea = new TextArea();
 	static TextArea ReminderServerResponseArea = new TextArea();
 	static TextArea MonitoringServerResponseArea = new TextArea();
 
 	public static void main(String[] args) throws IOException {
 		
+		//Starting the servers and discovering them
 		try {
 			ServerAllStart.startServers();
 			ServiceManager.discoverAll();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -121,34 +136,27 @@ public class Main extends Application {
 		// Main Page and main Buttons
 
 		buttonBackStep.setOnAction(e -> {
-			//System.out.println(sceneIds.get(window.getScene()));
-			//ServiceManager.shutdownStepChannel();
 			window.setScene(SceneMain);
 		});
 		buttonBackReminder.setOnAction(e -> {
-			//ServiceManager.shutdownReminderChannel();
 			window.setScene(SceneMain);
 		});
 		buttonBackMonitoring.setOnAction(e -> {
-			//ServiceManager.shutdownMonitoringChannel();
 			window.setScene(SceneMain);
 		});
 
 		/*
-		 * use of lambda to use event listener Since Even Listener interface only have
-		 * one method "handle" lambda can be used.
+		 * use of lambda to use event listener Since Event Listener interface only have
+		 * one method "handle" lambda can be used without {}.
 		 */
 		button1.setOnAction(e -> {
-			//ServiceManager.discover("stepService");
 			window.setScene(SceneStep);
 		});
 
 		button2.setOnAction(e -> {
-			//ServiceManager.discover("reminderingService");
 			window.setScene(SceneReminder);
 		});
 		button3.setOnAction(e -> {
-			//ServiceManager.discover("monitoringService");
 			window.setScene(SceneMonitoring);
 		});
 		button4.setOnAction(e -> window.setScene(SceneMain));
@@ -158,7 +166,6 @@ public class Main extends Application {
 		layoutMain.setAlignment(Pos.CENTER); // Set alignment to center
 		layoutMain.getChildren().addAll(labelMain, button1, button2, button3);
 		SceneMain = new Scene(layoutMain, 500, 500);
-
 
 		// ------------------------------------------------Step Service
 		// Layout------------------------------------------------------------------------------------------------------
@@ -171,34 +178,62 @@ public class Main extends Application {
 		TextField stepGoalField = new TextField();
 		ComboBox<String> averageDailyStepsComboBox = new ComboBox<>(
 				FXCollections.observableArrayList("Last day", "Last 5 days", "Last 10 days", "Last 30 days"));
-
 		VBox stepServiceLayout = StepServiceGUI.createStepServiceLayout(buttonBackStep, startStep, stopStep,
 				getLastHourStepsButton, getAverageHourlyStepsButton, setStepGoalButton, StepServerResponseArea,
 				averageStepsPerMinuteField, stepGoalField, averageDailyStepsComboBox);
 
+		//Event listener for Step Service-------------------------------------------
 		startStep.setOnAction(event -> {
 			try {
 				int typedStepPerMinute = Integer.parseInt(averageStepsPerMinuteField.getText());
 				startSendingSteps(typedStepPerMinute);
 			} catch (NumberFormatException e) {
-				e.printStackTrace();
+				AlertBox.display("Format", "Only numbers are accepted!!");
+			} catch (StatusRuntimeException e) {
+				AlertBox.display("API", "Invalid API key is provided!!!");
 			}
 		});
 
-		stopStep.setOnAction(e -> stopSendingSteps());
+		stopStep.setOnAction(e -> { 
+			try {
+				stopSendingSteps();
+			} catch (NullPointerException e1) {
+				AlertBox.display("RUN", "Please first start the service!!");
+			} catch (StatusRuntimeException e2) {
+				AlertBox.display("API", "Invalid API key is provided!!!");
+			}
+		});
 
-		getLastHourStepsButton.setOnAction(e -> lastHour());
+		getLastHourStepsButton.setOnAction(e -> {
+			try {
+				lastHour();
+			} catch (StatusRuntimeException e2) {
+				AlertBox.display("API", "Invalid API key is provided!!!");
+			}
+			});
 
 		getAverageHourlyStepsButton.setOnAction(e -> {
-			// System.out.println(averageHourlyStepsComboBox);
-			String period = averageDailyStepsComboBox.getValue();
-			// System.out.println("TEST: " + period);
-			getAverage(period);
+			try {
+				String period = averageDailyStepsComboBox.getValue();
+				getAverage(period);
+			} catch (NullPointerException e2) {
+				AlertBox.display("Empty", "Please choose a period!!");
+			} catch (StatusRuntimeException e2) {
+				AlertBox.display("API", "Invalid API key is provided!!!");
+			}
 		});
 
 		setStepGoalButton.setOnAction(e -> {
-			int stepGoal = Integer.parseInt(stepGoalField.getText());
-			setStepGoal(stepGoal);
+			try {
+				int stepGoal = Integer.parseInt(stepGoalField.getText());
+				setStepGoal(stepGoal);
+			} catch (NullPointerException e2) {
+				AlertBox.display("Empty!", "Please fill the steps per minute field!!");
+			} catch (NumberFormatException e3) {
+				AlertBox.display("Number", "Only numbers required here");
+			} catch(StatusRuntimeException e4) {
+				AlertBox.display("API", "Invalid API key is provided!!!");
+			}
 		});
 
 		SceneStep = new Scene(stepServiceLayout, 500, 500);
@@ -212,6 +247,7 @@ public class Main extends Application {
 		HashMap<String, Object> reminderControls = ReminderServiceGUI.createReminderServiceLayout(buttonBackReminder,
 		        setTaskReminderButton, markTaskCompleteButton, getUnmarkedTasksButton, ReminderServerResponseArea);
 
+		//Reminder Service Event Listener ----------------
 		setTaskReminderButton.setOnAction(e -> {
 		    try {
 		        DatePicker datePicker = (DatePicker) reminderControls.get("datePicker");
@@ -220,10 +256,14 @@ public class Main extends Application {
 		        Spinner<Integer> hourSpinner = (Spinner<Integer>) reminderControls.get("hourSpinner");
 		        Spinner<Integer> minuteSpinner = (Spinner<Integer>) reminderControls.get("minuteSpinner");
 		        setTaskReminder(datePicker, taskNameField, typeComboBox, hourSpinner, minuteSpinner);
-		    } catch (InterruptedException e1) {
-		        e1.printStackTrace();
-		    }
+		    } catch(NullPointerException e2) {
+		    	e2.printStackTrace();
+		    	AlertBox.display("Empty", "Please choose and fill all required fields!");
+		    } catch(StatusRuntimeException e4) {
+				AlertBox.display("API", "Invalid API key is provided!!!");
+			}   
 		});
+		
 		markTaskCompleteButton.setOnAction(e -> {
 		    taskListView = (ListView<TaskReminder>) reminderControls.get("taskListView");
 		    TaskReminder selectedTask = taskListView.getSelectionModel().getSelectedItem();
@@ -233,7 +273,9 @@ public class Main extends Application {
 		            taskListView.getItems().remove(selectedTask);
 		        } catch (InterruptedException e1) {
 		            e1.printStackTrace();
-		        }
+		        } catch(StatusRuntimeException e4) {
+					AlertBox.display("API", "Invalid API key is provided!!!");
+				}
 		    } else {
 		        // Display a message to the user to select a task
 		        ReminderServerResponseArea.appendText("Please select a task to mark as complete.\n");
@@ -241,8 +283,12 @@ public class Main extends Application {
 		});
 
 		getUnmarkedTasksButton.setOnAction(e -> {
-		    taskListView = (ListView<TaskReminder>) reminderControls.get("taskListView");
-		    getUndoneTasks(taskListView);
+			try {
+				taskListView = (ListView<TaskReminder>) reminderControls.get("taskListView");
+			    getUndoneTasks(taskListView);
+			}catch(StatusRuntimeException e4) {
+				AlertBox.display("API", "Invalid API key is provided!!!");
+			}	    
 		});
 
 		VBox layoutReminder = (VBox) reminderControls.get("layoutReminder");
@@ -254,7 +300,8 @@ public class Main extends Application {
 		SceneReminder = new Scene(mainLayout, 600, 800); // Adjust the scene size to better fit the new layout
 
 
-		// ----------------------------------------------------------------------------------------------------
+		// ----------------------------------------Monitoring Service----------------------------------------------------------
+		//Layout ----------------------------------------------
 		HashMap<String, Object> controls = MonitoringServiceGUI.createMonitoringServiceLayout(buttonBackMonitoring);
 
 		VBox layoutMonitoring = (VBox) controls.get("layoutMonitoring");
@@ -268,8 +315,7 @@ public class Main extends Application {
 		sendHeartRate = (Button) controls.get("sendHeartRateBtn");
 		stopHeart = (Button) controls.get("stopheart");
 
-		// Add event listeners for buttons and other controls here.
-
+		//Monitoring Service Event Listeners --------------------------------------------------
 		saveUserCredentialsBtn.setOnAction(event -> {
 
 			TextField ageField = (TextField) controls.get("ageField");
@@ -308,16 +354,34 @@ public class Main extends Application {
 			emergencies.add(emergContact1);
 			emergencies.add(emergContact2);
 
-			saveUserCredentials(age, name, weight, height, address, emergencies);
+			try {
+				saveUserCredentials(age, name, weight, height, address, emergencies);
+			} catch (NullPointerException e1) {
+				AlertBox.display("Empty", "Please fill all the requiered fields");
+			}catch(StatusRuntimeException e4) {
+				AlertBox.display("API", "Invalid API key is provided!!!");
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
 		});
 
 		lookForUser.setOnAction(event -> {
 			TextField lookforNameID = (TextField) controls.get("lookForUserNameField");
 			String lokforUser = lookforNameID.getText();
-			if (isDigit(lokforUser)) {
-				lookForUser(Integer.parseInt(lokforUser));
-			} else {
-				lookForUser(lokforUser);
+			try {
+				if (isDigit(lokforUser)) {
+					lookForUser(Integer.parseInt(lokforUser));
+				} else {
+					lookForUser(lokforUser);
+				}
+			} catch (NullPointerException e1) {
+				AlertBox.display("Empty", "Please fill all the required fields");
+			} catch (NumberFormatException e2) {
+				AlertBox.display("Wrong", "Please fill all only with numbers or names");
+			} catch(StatusRuntimeException e4) {
+				AlertBox.display("API", "Invalid API key is provided!!!");
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		});
 
@@ -333,7 +397,15 @@ public class Main extends Application {
 					AlertBox.display("No Digit", "Plase change the user id with name!!");
 				});
 			} else {
-				startSendHeartRate(Integer.parseInt(heart1St), Integer.parseInt(heart2St), lokforUser);
+				try {
+					startSendHeartRate(Integer.parseInt(heart1St), Integer.parseInt(heart2St), lokforUser);
+				} catch (IllegalArgumentException e) {
+					AlertBox.display("Bounds", "Second value must be smaller than the first");
+				} catch(StatusRuntimeException e4) {
+					AlertBox.display("API", "Invalid API key is provided!!!");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 
 		});
@@ -341,8 +413,13 @@ public class Main extends Application {
 		stopHeart.setOnAction(e -> {
 			try {
 				stopSendingHeartRate();
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
+			} catch(StatusRuntimeException e4) {
+				AlertBox.display("API", "Invalid API key is provided!!!");
+			} catch(NullPointerException e3) {
+			 	AlertBox.display("RUN", "Please first start the service!!");
+			}
+			  catch (Exception e3) {
+				e3.printStackTrace();
 			}
 		});
 
@@ -360,8 +437,9 @@ public class Main extends Application {
 
 	// ----------------------------------------------------------------------------------------------------
 	// ----------------------------------------------------------------------------------------------------------------
-	// ----------------------------------------------------------------------------------------------------------------
+	// --------------------------Client Side Methods-------------------------------------
 
+	/** Checking if the user searching with the ID number or name*/
 	private boolean isDigit(String lokforUser) {
 		try {
 			Integer.parseInt(lokforUser);
@@ -380,6 +458,7 @@ public class Main extends Application {
 	    }
 	}
 
+	/*ASsigning the new instance to executor*/
 	public void startExecutorService() {
 		if (scheduledExecutorService == null || scheduledExecutorService.isShutdown()) {
 			scheduledExecutorService = Executors.newScheduledThreadPool(1);
@@ -395,20 +474,24 @@ public class Main extends Application {
 	/*---------------------------------------------------Step Service Client Side Methods------------------------------------------------------------*/
 	// ----------------------------------------------------------------------------------------------------------------
 
+	/*It's scheduleded to send typed steps in every each minute to server
+	 * using the asyncronezed stub for client streaming*/
 	private void startSendingSteps(int averageStep) {
 		shutdownExecutorService(); // Just in case shutting down every time before starting
 		startExecutorService();
 		StreamObserver<StepCount> responseObserver = createResponseObserverforStep();
-		requestStreamObserverStep = ServiceManager.asyncStubService1.sendSteps(responseObserver);
+		requestStreamObserverStep = ServiceManager.asyncStubService1withMeta.sendSteps(responseObserver);
 		scheduledExecutorService.scheduleAtFixedRate(() -> {
 			stepStreamingRequest(averageStep, requestStreamObserverStep);
 		}, 0, 60, TimeUnit.SECONDS);
 	}
 
+	/*As the method will be listening to user to end the steps, a global StreamObserver created
+	 * When button clicked method will be invoked*/
 	private void stopSendingSteps() {
 		shutdownExecutorService();
-		requestStreamObserverStep.onCompleted();
 		try {
+			requestStreamObserverStep.onCompleted();
 			Thread.sleep(10000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -460,23 +543,26 @@ public class Main extends Application {
 			Platform.runLater(() -> {
 				StepServerResponseArea.appendText(stepAverageinMinute + ": steps sent" + "\n");
 			});
-		} catch (Exception e) {
-			e.printStackTrace();
+		}catch(StatusRuntimeException e4) {
+			AlertBox.display("API", "Invalid API key is provided!!!");
 		}
 	}
 
-	/* The steps have been made in the last hour will be collected */
+	/* The steps have been made in the last hour will be collected
+	 * Made use of Empty message as the last hour request can't be changed 
+	 *  */
 	public static void lastHour() {
 		System.out.println("CS: lastHour() invoked");
 		try {
-			StepCount stepCount = ServiceManager.blockingStubService1.getLastHourSteps(Empty.getDefaultInstance());
+			StepCount stepCount = ServiceManager.blockingStubService1withMeta.getLastHourSteps(Empty.getDefaultInstance());
 			System.out.println("Test in lasthour: " + stepCount.getCount());
 			Platform.runLater(() -> {
 				StepServerResponseArea.appendText("\n"+"The steps taken in the last hour: " + stepCount.getCount() + "\n");
 			});
-			Thread.sleep(1000);
-		} catch (Exception e) {
-			e.printStackTrace();
+		}catch(StatusRuntimeException e4) {
+			AlertBox.display("API", "Invalid API key is provided!!!");
+		}catch (Exception e3) {
+			e3.printStackTrace();
 		}
 	}
 
@@ -498,7 +584,7 @@ public class Main extends Application {
 		}
 
 		HourlyStepRequest req = HourlyStepRequest.newBuilder().setWeekDays(week).build();
-		HourlyStepCount response = ServiceManager.blockingStubService1.getAverageHourlySteps(req);
+		HourlyStepCount response = ServiceManager.blockingStubService1withMeta.getAverageHourlySteps(req);
 		String serverMessage = "\n" + "For the period: " + response.getWeekDays() + "\n" + "Average steps: "
 				+ response.getAverageSteps() + "\n" + "Message: " + response.getMessage();
 		Platform.runLater(() -> {
@@ -517,7 +603,7 @@ public class Main extends Application {
 				System.out.println(value.getMessage());
 				System.out.println(value.getSuccess());
 				Platform.runLater(() -> {
-					StepServerResponseArea.appendText("\n" + "Completed: " + value.getSuccess() + " || " + "Left: "
+					StepServerResponseArea.appendText("\n" + "Completed: " + value.getSuccess() + " -> " + "Left: "
 							+ value.getLeft() + "\n" + value.getMessage());
 				});
 			}
@@ -538,30 +624,39 @@ public class Main extends Application {
 				});
 			}
 		};
-		ServiceManager.asyncStubService1.setStepGoal(req, responseObserver);
+		ServiceManager.asyncStubService1withMeta.setStepGoal(req, responseObserver);
 	}
 	/*--------------------------------------------------Reminder Service Client Side Methods----------------------------------------------------------------------------*/
 	// ----------------------------------------------------------------------------------------------------
 
 
 	public static void setTaskReminder(DatePicker datePicker, TextField taskNameField, ComboBox<Type> typeComboBox,
-		Spinner<Integer> hourSpinner, Spinner<Integer> minuteSpinner) throws InterruptedException {
-		LocalDate date = datePicker.getValue();
-		LocalTime time = LocalTime.of(hourSpinner.getValue(), minuteSpinner.getValue());
-		LocalDateTime dateTime = LocalDateTime.of(date, time);
+		Spinner<Integer> hourSpinner, Spinner<Integer> minuteSpinner) {
+		LocalDateTime dateTime = null;
+		String taskName= null;
+		Type type = null;
+		try {
+			LocalDate date = datePicker.getValue();
+			LocalTime time = LocalTime.of(hourSpinner.getValue(), minuteSpinner.getValue());
+			dateTime = LocalDateTime.of(date, time);
 
-		String taskName = taskNameField.getText();
-		Type type = typeComboBox.getValue();
+			taskName = taskNameField.getText();
+			type = typeComboBox.getValue();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			AlertBox.display("Empty", "Please fill all the required fields");
+		}
+
 
 		TaskReminder req = TaskReminder.newBuilder().setDateTime(dateTime.toString()).setTaskName(taskName)
 				.setType(type).build();
 
-		sw.Reminder.service2.ServerResponse response = ServiceManager.blockingStubService2.setTaskReminder(req);
+		sw.Reminder.service2.ServerResponse response = ServiceManager.blockingStubService2withMeta.setTaskReminder(req);
 		System.out.println("Service message: " + response.getConfirmed());
 		Platform.runLater(() -> {
 
 			taskListView.getItems().add(req);
-			ReminderServerResponseArea.appendText("Server message: " + response.getConfirmed() + "\n");
+			ReminderServerResponseArea.appendText("\n"+"Server message: " + response.getConfirmed() + "\n");
 
 		});
 	}
@@ -569,14 +664,15 @@ public class Main extends Application {
 	public static void markTask(TaskReminder task) throws InterruptedException {
 		String name = task.getTaskName();
 		TaskComplete req = TaskComplete.newBuilder().setTaskName(name).build();
-		sw.Reminder.service2.ServerResponse response = ServiceManager.blockingStubService2.markTaskComplete(req);
+		sw.Reminder.service2.ServerResponse response = ServiceManager.blockingStubService2withMeta.markTaskComplete(req);
 		System.out.println("Service message: " + response.getConfirmed());
 		Platform.runLater(() -> {
-			ReminderServerResponseArea.appendText("Server message: " + response.getConfirmed());
+			ReminderServerResponseArea.appendText("\n"+"Server message: " + response.getConfirmed());
 
 		});
 	}
 
+	/*It listens to server for the task are not marked completed to be received*/
 	public static void getUndoneTasks(ListView<TaskReminder> taskListView) {
 		StreamObserver<TaskReminder> responseObserver = new StreamObserver<TaskReminder>() {
 
@@ -604,36 +700,32 @@ public class Main extends Application {
 				System.out.println("Server completes..");
 			}
 		};
-		ServiceManager.asyncStubService2.getTaskList(null, responseObserver);
+		ServiceManager.asyncStubService2withMeta.getTaskList(null, responseObserver);
 	}
 
 	/*------------------------------------------Monitoring Service Client Side Methods--------------------------------------------------*/
 	// ----------------------------------------------------------------------------------------------------
-
+	
+	/*Unary method to*/
 	public static void saveUserCredentials(int p_age, String nam, double we, double he, String add,
 			List<EmergencyContact> emergencies) {
 
 		UserRecords reply = UserRecords.newBuilder().setAge(p_age).setName(nam).setWeight(we).setHeight(he)
 				.setAddress(add).addAllContacts(emergencies).build();
 
-		ServerResponse response = ServiceManager.blockingStubService3.setUserRecords(reply);
+		ServerResponse response = ServiceManager.blockingStubService3withMeta.setUserRecords(reply);
 
 		System.out.println("Server message : " + response.getConfirmed());
 		Platform.runLater(() -> {
 			MonitoringServerResponseArea.appendText("\n"+response.getConfirmed());
 		});
 
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public static void lookForUser(int id) {
 		// PatientID patient = PatientID.newBuilder().setPatientId(id).build();
 		GetHealthRecordsRequest reply = GetHealthRecordsRequest.newBuilder().setPatientId(id).build();
-		GetHealthRecordsResponse response = ServiceManager.blockingStubService3.getHealthRecords(reply);
+		GetHealthRecordsResponse response = ServiceManager.blockingStubService3withMeta.getHealthRecords(reply);
 		UserRecords user = response.getUserRecords();
 
 		List<EmergencyContact> contactsList = user.getContactsList();
@@ -653,7 +745,7 @@ public class Main extends Application {
 	public static void lookForUser(String name) {
 		// PatientID patient = PatientID.newBuilder().setPatientId(id).build();
 		GetHealthRecordsRequest reply = GetHealthRecordsRequest.newBuilder().setName(name).build();
-		GetHealthRecordsResponse response = ServiceManager.blockingStubService3.getHealthRecords(reply);
+		GetHealthRecordsResponse response = ServiceManager.blockingStubService3withMeta.getHealthRecords(reply);
 		UserRecords user = response.getUserRecords();
 		List<EmergencyContact> contactsList = user.getContactsList();
 
@@ -674,7 +766,7 @@ public class Main extends Application {
 		startExecutorService();
 
 		StreamObserver<HeartRateWarning> responseObserver = createResponseObserver();
-		requestStreamObserverHeart = ServiceManager.asyncStubService3.monitorHeartRate(responseObserver);
+		requestStreamObserverHeart = ServiceManager.asyncStubService3withMeta.monitorHeartRate(responseObserver);
 
 		scheduledExecutorService.scheduleAtFixedRate(() -> 
 					sendHeartRate(heart1, heart2, patientName, requestStreamObserverHeart), 0, 5, TimeUnit.SECONDS);

@@ -35,7 +35,7 @@ public class GeneralListener extends Thread{
 			jmdns.addServiceListener(serviceType, new SampleListener());
 			
 			// Wait a bit
-			Thread.sleep(20000);
+			Thread.sleep(15000);
 			
 			jmdns.close();
 			

@@ -36,6 +36,7 @@ public class GrpcServer1 extends Thread{
 			//Server starting on the port number given
 			Server server1 = ServerBuilder.forPort(port)
 					.addService(new S_Service1())
+					.intercept(new AuthInterceptor())
 					.build()
 					.start();
 			

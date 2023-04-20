@@ -11,24 +11,35 @@ import sw.Reminder.service2.ReminderGrpc.ReminderStub;
 import sw.stepCounter.service1.StepCounterGrpc;
 import sw.stepCounter.service1.StepCounterGrpc.StepCounterBlockingStub;
 import sw.stepCounter.service1.StepCounterGrpc.StepCounterStub;
+import io.grpc.Metadata;
+import io.grpc.stub.MetadataUtils;
 
 public class ServiceManager {
 	
-	static StepCounterBlockingStub blockingStubService1;
-	static StepCounterStub asyncStubService1;
-	static ReminderBlockingStub blockingStubService2;
-	static ReminderStub asyncStubService2;
-	static MonitoringBlockingStub blockingStubService3;
-	static MonitoringStub asyncStubService3;
+	//Creating stubs for each service
+	static StepCounterBlockingStub blockingStubService1withMeta;
+	static StepCounterStub asyncStubService1withMeta;
+	static ReminderBlockingStub blockingStubService2withMeta;
+	static ReminderStub asyncStubService2withMeta;
+	static MonitoringBlockingStub blockingStubService3withMeta;
+	static MonitoringStub asyncStubService3withMeta;
 
+	//Each service port number and IP address
 	private static int port1;
 	private static String resolvedIP1;
 	private static int port2;
 	private static String resolvedIP2;
 	private static int port3;
 	private static String resolvedIP3;
+	
+	static // Create the metadata.
+	Metadata metadata = new Metadata();
 
 	public static void discoverAll() throws InterruptedException {
+		
+		//Adding the authentication API key to metedata
+		metadata.put(Metadata.Key.of("Authorization", Metadata.ASCII_STRING_MARSHALLER), "API key <9546287>");
+
 		
 		//Creating the instances of the listener for each service
 		GeneralListener step = new GeneralListener("_steps._tcp.local.");
@@ -78,58 +89,72 @@ public class ServiceManager {
 	    		.usePlaintext()
 	    		.build();
 	    
-	    blockingStubService1 = StepCounterGrpc.newBlockingStub(stepChannel);
-	    asyncStubService1 = StepCounterGrpc.newStub(stepChannel);
-		
+	    // Initialise  the stubs for each service
+	    blockingStubService1withMeta = StepCounterGrpc.newBlockingStub(stepChannel);
+	    asyncStubService1withMeta = StepCounterGrpc.newStub(stepChannel);
+	    
+	    // Attach the metadata to the stubs
+	    blockingStubService1withMeta = MetadataUtils.attachHeaders(blockingStubService1withMeta, metadata);
+	    asyncStubService1withMeta = MetadataUtils.attachHeaders(asyncStubService1withMeta, metadata);
 	}
 
 	static void initializeReminderingServiceChannel() {
+		System.out.println("Initializing the reminder service in gui");
 	    ManagedChannel reminderChannel = ManagedChannelBuilder
 	            .forAddress(resolvedIP2, port2)
 	            .usePlaintext()
 	            .build();
-	    blockingStubService2 = ReminderGrpc.newBlockingStub(reminderChannel);
-	    asyncStubService2 = ReminderGrpc.newStub(reminderChannel);
+	  //Initialize  the stubs for each service
+	    blockingStubService2withMeta = ReminderGrpc.newBlockingStub(reminderChannel);
+	    asyncStubService2withMeta = ReminderGrpc.newStub(reminderChannel);
+	    
+	    blockingStubService2withMeta = MetadataUtils.attachHeaders(blockingStubService2withMeta, metadata);
+	    asyncStubService2withMeta = MetadataUtils.attachHeaders(asyncStubService2withMeta, metadata);
 	}
 
 	static void initializeMonitoringServiceChannel() {
+		System.out.println("Initializing the monitoring service in gui");
 	    ManagedChannel monitoringChannel = ManagedChannelBuilder
 	            .forAddress(resolvedIP3, port3)
 	            .usePlaintext()
 	            .build();
-	    blockingStubService3 = MonitoringGrpc.newBlockingStub(monitoringChannel);
-	    asyncStubService3 = MonitoringGrpc.newStub(monitoringChannel);
+	  //Initialize  the stubs for each service
+	    blockingStubService3withMeta = MonitoringGrpc.newBlockingStub(monitoringChannel);
+	    asyncStubService3withMeta = MonitoringGrpc.newStub(monitoringChannel);
+	    
+	    blockingStubService3withMeta = MetadataUtils.attachHeaders(blockingStubService3withMeta, metadata);
+	    asyncStubService3withMeta = MetadataUtils.attachHeaders(asyncStubService3withMeta, metadata);
 	}
 	
 	static void shutdownStepChannel() {
-	    if (blockingStubService1.getChannel() != null || asyncStubService1.getChannel() != null) {
-	        if (blockingStubService1.getChannel() != null) {
-	            ((ManagedChannel) blockingStubService1.getChannel()).shutdown();
+	    if (blockingStubService1withMeta.getChannel() != null || asyncStubService1withMeta.getChannel() != null) {
+	        if (blockingStubService1withMeta.getChannel() != null) {
+	            ((ManagedChannel) blockingStubService1withMeta.getChannel()).shutdown();
 	        }
-	        if (asyncStubService1.getChannel() != null) {
-	            ((ManagedChannel) asyncStubService1.getChannel()).shutdown();
+	        if (asyncStubService1withMeta.getChannel() != null) {
+	            ((ManagedChannel) asyncStubService1withMeta.getChannel()).shutdown();
 	        }
 	    }
 	}
 	
 	static void shutdownReminderChannel() {
-	    if (blockingStubService2.getChannel() != null || asyncStubService2.getChannel() != null) {
-	        if (blockingStubService2.getChannel() != null) {
-	            ((ManagedChannel) blockingStubService2.getChannel()).shutdown();
+	    if (blockingStubService2withMeta.getChannel() != null || asyncStubService2withMeta.getChannel() != null) {
+	        if (blockingStubService2withMeta.getChannel() != null) {
+	            ((ManagedChannel) blockingStubService2withMeta.getChannel()).shutdown();
 	        }
-	        if (asyncStubService2.getChannel() != null) {
-	            ((ManagedChannel) asyncStubService2.getChannel()).shutdown();
+	        if (asyncStubService2withMeta.getChannel() != null) {
+	            ((ManagedChannel) asyncStubService2withMeta.getChannel()).shutdown();
 	        }
 	    }
 	}
 	
 	static void shutdownMonitoringChannel() {
-	    if (blockingStubService3.getChannel() != null || asyncStubService3.getChannel() != null) {
-	        if (blockingStubService3.getChannel() != null) {
-	            ((ManagedChannel) blockingStubService3.getChannel()).shutdown();
+	    if (blockingStubService3withMeta.getChannel() != null || asyncStubService3withMeta.getChannel() != null) {
+	        if (blockingStubService3withMeta.getChannel() != null) {
+	            ((ManagedChannel) blockingStubService3withMeta.getChannel()).shutdown();
 	        }
-	        if (asyncStubService3.getChannel() != null) {
-	            ((ManagedChannel) asyncStubService3.getChannel()).shutdown();
+	        if (asyncStubService3withMeta.getChannel() != null) {
+	            ((ManagedChannel) asyncStubService3withMeta.getChannel()).shutdown();
 	        }
 	    }
 	}
