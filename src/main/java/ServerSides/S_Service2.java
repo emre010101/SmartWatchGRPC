@@ -13,6 +13,7 @@ import sw.Reminder.service2.TaskReminder;
 
 public class S_Service2 extends ReminderImplBase{
 
+	/*Receives the taks to be saved and sends them to database and return a message indicating everything went well*/
 	@Override
 	public void setTaskReminder(TaskReminder request, StreamObserver<ServerResponse> responseObserver) {
 		System.out.println("Receiving the reminder" + request.getTaskName() + request.getDateTime() + request.getTypeValue());
@@ -24,7 +25,6 @@ public class S_Service2 extends ReminderImplBase{
 		responseObserver.onNext(response);
 		responseObserver.onCompleted();
 	}
-
 
 	@Override
 	public void markTaskComplete(TaskComplete request, StreamObserver<ServerResponse> responseObserver) {
@@ -49,12 +49,6 @@ public class S_Service2 extends ReminderImplBase{
 				String[] parts = line.split("<->");
 				TaskReminder reply = TaskReminder.newBuilder().setTaskName(parts[0]).setDateTime(parts[1]).setTypeValue(Integer.parseInt(parts[2])).build();
 				responseObserver.onNext(reply);
-				try {
-					Thread.sleep(1500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 			}
 			System.out.println("Server: getTaskList is completed...");
 			responseObserver.onCompleted();

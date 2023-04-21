@@ -9,17 +9,15 @@ package service1;
 
 // StepCounter service
 service StepCounter {
-  // Sends multiple steps every second, changing on the current hour of the day(Client Streaming)
+  // Sends multiple steps every minute
   rpc SendSteps(stream StepsRequest) returns (StepCount) {}
 
   // Requests how many steps have been done in the last hour (Unary)
   rpc GetLastHourSteps(google.protobuf.Empty) returns (StepCount) {}
 
-//change this one to unary rpc //change the name to getAverage
-  // Requests average steps for the hours of the day (Unary)
-  rpc GetAverageHourlySteps(HourlyStepRequest) returns (HourlyStepCount) {}
+  // Requests average steps for the period given //changed
+  rpc GetAverage(AverageStepRequest) returns (AverageStepCount) {}
 
-//convert to serverStreaming
   // Sets a daily step goal and tracks progress towards that goal 
   rpc SetStepGoal(StepGoal) returns (stream StepGoalResponse) {}
 }
@@ -34,7 +32,7 @@ message StepCount {
 }
 
 //
-enum WeekDays {
+enum Periods {
 	LAST_DAY = 0;
 	LAST_5_DAYS = 1;
 	LAST_10_DAYS = 2;
@@ -42,14 +40,14 @@ enum WeekDays {
 }
 
 // HourlyStepRequest message references the TimePeriod enumeration
-message HourlyStepRequest {
-  WeekDays week_days = 1;
+message AverageStepRequest {
+  Periods period = 1;
 }
 
 // HourlyStepCount message also references the WeekDays enumeration
-message HourlyStepCount {
+message AverageStepCount {
   int32 average_steps = 1;
-  WeekDays week_days = 2;
+  Periods period = 2;
   string message = 3;
 }
 

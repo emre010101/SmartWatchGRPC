@@ -1,4 +1,9 @@
 package Servers;
+/**
+ * @author emrek
+ * @date 10/04/2023
+ * Server to add service and register using jmdns
+ * */
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,6 +17,7 @@ import javax.jmdns.ServiceInfo;
 import ServerSides.S_Service1;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+
 
 public class GrpcServer1 extends Thread{
 

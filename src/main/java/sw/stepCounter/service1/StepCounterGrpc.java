@@ -94,36 +94,36 @@ public final class StepCounterGrpc {
      return getGetLastHourStepsMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<sw.stepCounter.service1.HourlyStepRequest,
-      sw.stepCounter.service1.HourlyStepCount> getGetAverageHourlyStepsMethod;
+  private static volatile io.grpc.MethodDescriptor<sw.stepCounter.service1.AverageStepRequest,
+      sw.stepCounter.service1.AverageStepCount> getGetAverageMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "GetAverageHourlySteps",
-      requestType = sw.stepCounter.service1.HourlyStepRequest.class,
-      responseType = sw.stepCounter.service1.HourlyStepCount.class,
+      fullMethodName = SERVICE_NAME + '/' + "GetAverage",
+      requestType = sw.stepCounter.service1.AverageStepRequest.class,
+      responseType = sw.stepCounter.service1.AverageStepCount.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<sw.stepCounter.service1.HourlyStepRequest,
-      sw.stepCounter.service1.HourlyStepCount> getGetAverageHourlyStepsMethod() {
-    io.grpc.MethodDescriptor<sw.stepCounter.service1.HourlyStepRequest, sw.stepCounter.service1.HourlyStepCount> getGetAverageHourlyStepsMethod;
-    if ((getGetAverageHourlyStepsMethod = StepCounterGrpc.getGetAverageHourlyStepsMethod) == null) {
+  public static io.grpc.MethodDescriptor<sw.stepCounter.service1.AverageStepRequest,
+      sw.stepCounter.service1.AverageStepCount> getGetAverageMethod() {
+    io.grpc.MethodDescriptor<sw.stepCounter.service1.AverageStepRequest, sw.stepCounter.service1.AverageStepCount> getGetAverageMethod;
+    if ((getGetAverageMethod = StepCounterGrpc.getGetAverageMethod) == null) {
       synchronized (StepCounterGrpc.class) {
-        if ((getGetAverageHourlyStepsMethod = StepCounterGrpc.getGetAverageHourlyStepsMethod) == null) {
-          StepCounterGrpc.getGetAverageHourlyStepsMethod = getGetAverageHourlyStepsMethod = 
-              io.grpc.MethodDescriptor.<sw.stepCounter.service1.HourlyStepRequest, sw.stepCounter.service1.HourlyStepCount>newBuilder()
+        if ((getGetAverageMethod = StepCounterGrpc.getGetAverageMethod) == null) {
+          StepCounterGrpc.getGetAverageMethod = getGetAverageMethod = 
+              io.grpc.MethodDescriptor.<sw.stepCounter.service1.AverageStepRequest, sw.stepCounter.service1.AverageStepCount>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
-                  "service1.StepCounter", "GetAverageHourlySteps"))
+                  "service1.StepCounter", "GetAverage"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  sw.stepCounter.service1.HourlyStepRequest.getDefaultInstance()))
+                  sw.stepCounter.service1.AverageStepRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  sw.stepCounter.service1.HourlyStepCount.getDefaultInstance()))
-                  .setSchemaDescriptor(new StepCounterMethodDescriptorSupplier("GetAverageHourlySteps"))
+                  sw.stepCounter.service1.AverageStepCount.getDefaultInstance()))
+                  .setSchemaDescriptor(new StepCounterMethodDescriptorSupplier("GetAverage"))
                   .build();
           }
         }
      }
-     return getGetAverageHourlyStepsMethod;
+     return getGetAverageMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<sw.stepCounter.service1.StepGoal,
@@ -190,7 +190,7 @@ public final class StepCounterGrpc {
 
     /**
      * <pre>
-     * Sends multiple steps every second, changing on the current hour of the day(Client Streaming)
+     * Sends multiple steps every minute
      * </pre>
      */
     public io.grpc.stub.StreamObserver<sw.stepCounter.service1.StepsRequest> sendSteps(
@@ -210,18 +210,16 @@ public final class StepCounterGrpc {
 
     /**
      * <pre>
-     *change this one to unary rpc //change the name to getAverage
-     * Requests average steps for the hours of the day (Unary)
+     * Requests average steps for the period given //changed
      * </pre>
      */
-    public void getAverageHourlySteps(sw.stepCounter.service1.HourlyStepRequest request,
-        io.grpc.stub.StreamObserver<sw.stepCounter.service1.HourlyStepCount> responseObserver) {
-      asyncUnimplementedUnaryCall(getGetAverageHourlyStepsMethod(), responseObserver);
+    public void getAverage(sw.stepCounter.service1.AverageStepRequest request,
+        io.grpc.stub.StreamObserver<sw.stepCounter.service1.AverageStepCount> responseObserver) {
+      asyncUnimplementedUnaryCall(getGetAverageMethod(), responseObserver);
     }
 
     /**
      * <pre>
-     *convert to serverStreaming
      * Sets a daily step goal and tracks progress towards that goal 
      * </pre>
      */
@@ -247,12 +245,12 @@ public final class StepCounterGrpc {
                 sw.stepCounter.service1.StepCount>(
                   this, METHODID_GET_LAST_HOUR_STEPS)))
           .addMethod(
-            getGetAverageHourlyStepsMethod(),
+            getGetAverageMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                sw.stepCounter.service1.HourlyStepRequest,
-                sw.stepCounter.service1.HourlyStepCount>(
-                  this, METHODID_GET_AVERAGE_HOURLY_STEPS)))
+                sw.stepCounter.service1.AverageStepRequest,
+                sw.stepCounter.service1.AverageStepCount>(
+                  this, METHODID_GET_AVERAGE)))
           .addMethod(
             getSetStepGoalMethod(),
             asyncServerStreamingCall(
@@ -287,7 +285,7 @@ public final class StepCounterGrpc {
 
     /**
      * <pre>
-     * Sends multiple steps every second, changing on the current hour of the day(Client Streaming)
+     * Sends multiple steps every minute
      * </pre>
      */
     public io.grpc.stub.StreamObserver<sw.stepCounter.service1.StepsRequest> sendSteps(
@@ -309,19 +307,17 @@ public final class StepCounterGrpc {
 
     /**
      * <pre>
-     *change this one to unary rpc //change the name to getAverage
-     * Requests average steps for the hours of the day (Unary)
+     * Requests average steps for the period given //changed
      * </pre>
      */
-    public void getAverageHourlySteps(sw.stepCounter.service1.HourlyStepRequest request,
-        io.grpc.stub.StreamObserver<sw.stepCounter.service1.HourlyStepCount> responseObserver) {
+    public void getAverage(sw.stepCounter.service1.AverageStepRequest request,
+        io.grpc.stub.StreamObserver<sw.stepCounter.service1.AverageStepCount> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(getGetAverageHourlyStepsMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getGetAverageMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
      * <pre>
-     *convert to serverStreaming
      * Sets a daily step goal and tracks progress towards that goal 
      * </pre>
      */
@@ -365,18 +361,16 @@ public final class StepCounterGrpc {
 
     /**
      * <pre>
-     *change this one to unary rpc //change the name to getAverage
-     * Requests average steps for the hours of the day (Unary)
+     * Requests average steps for the period given //changed
      * </pre>
      */
-    public sw.stepCounter.service1.HourlyStepCount getAverageHourlySteps(sw.stepCounter.service1.HourlyStepRequest request) {
+    public sw.stepCounter.service1.AverageStepCount getAverage(sw.stepCounter.service1.AverageStepRequest request) {
       return blockingUnaryCall(
-          getChannel(), getGetAverageHourlyStepsMethod(), getCallOptions(), request);
+          getChannel(), getGetAverageMethod(), getCallOptions(), request);
     }
 
     /**
      * <pre>
-     *convert to serverStreaming
      * Sets a daily step goal and tracks progress towards that goal 
      * </pre>
      */
@@ -421,19 +415,18 @@ public final class StepCounterGrpc {
 
     /**
      * <pre>
-     *change this one to unary rpc //change the name to getAverage
-     * Requests average steps for the hours of the day (Unary)
+     * Requests average steps for the period given //changed
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<sw.stepCounter.service1.HourlyStepCount> getAverageHourlySteps(
-        sw.stepCounter.service1.HourlyStepRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<sw.stepCounter.service1.AverageStepCount> getAverage(
+        sw.stepCounter.service1.AverageStepRequest request) {
       return futureUnaryCall(
-          getChannel().newCall(getGetAverageHourlyStepsMethod(), getCallOptions()), request);
+          getChannel().newCall(getGetAverageMethod(), getCallOptions()), request);
     }
   }
 
   private static final int METHODID_GET_LAST_HOUR_STEPS = 0;
-  private static final int METHODID_GET_AVERAGE_HOURLY_STEPS = 1;
+  private static final int METHODID_GET_AVERAGE = 1;
   private static final int METHODID_SET_STEP_GOAL = 2;
   private static final int METHODID_SEND_STEPS = 3;
 
@@ -458,9 +451,9 @@ public final class StepCounterGrpc {
           serviceImpl.getLastHourSteps((com.google.protobuf.Empty) request,
               (io.grpc.stub.StreamObserver<sw.stepCounter.service1.StepCount>) responseObserver);
           break;
-        case METHODID_GET_AVERAGE_HOURLY_STEPS:
-          serviceImpl.getAverageHourlySteps((sw.stepCounter.service1.HourlyStepRequest) request,
-              (io.grpc.stub.StreamObserver<sw.stepCounter.service1.HourlyStepCount>) responseObserver);
+        case METHODID_GET_AVERAGE:
+          serviceImpl.getAverage((sw.stepCounter.service1.AverageStepRequest) request,
+              (io.grpc.stub.StreamObserver<sw.stepCounter.service1.AverageStepCount>) responseObserver);
           break;
         case METHODID_SET_STEP_GOAL:
           serviceImpl.setStepGoal((sw.stepCounter.service1.StepGoal) request,
@@ -532,7 +525,7 @@ public final class StepCounterGrpc {
               .setSchemaDescriptor(new StepCounterFileDescriptorSupplier())
               .addMethod(getSendStepsMethod())
               .addMethod(getGetLastHourStepsMethod())
-              .addMethod(getGetAverageHourlyStepsMethod())
+              .addMethod(getGetAverageMethod())
               .addMethod(getSetStepGoalMethod())
               .build();
         }

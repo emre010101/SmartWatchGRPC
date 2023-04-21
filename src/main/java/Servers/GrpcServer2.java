@@ -1,5 +1,9 @@
 package Servers;
-
+/**
+ * @author emrek
+ * @date 10/04/2023
+ * Server to add service and register using jmdns
+ * */
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,6 +39,7 @@ public class GrpcServer2 extends Thread{
 			//Server starting on the port number given
 			Server server2 = ServerBuilder.forPort(port)
 					.addService(new S_Service2())
+					.intercept(new AuthInterceptor())
 					.build()
 					.start();
 			
@@ -50,9 +55,7 @@ public class GrpcServer2 extends Thread{
 	
 	/*Method implemented to read and save the properties in the new instance of properties "prop"*/
 	private Properties getProperties() {
-		
 		Properties prop = null;		
-		
 		 try (InputStream input = new FileInputStream("src/main/resources/service2.properties")) {
 
 	            prop = new Properties();

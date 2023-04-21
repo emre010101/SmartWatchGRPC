@@ -3,8 +3,8 @@
 
 package sw.stepCounter.service1;
 
-public interface HourlyStepCountOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:service1.HourlyStepCount)
+public interface AverageStepCountOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:service1.AverageStepCount)
     com.google.protobuf.MessageOrBuilder {
 
   /**
@@ -13,13 +13,13 @@ public interface HourlyStepCountOrBuilder extends
   int getAverageSteps();
 
   /**
-   * <code>.service1.WeekDays week_days = 2;</code>
+   * <code>.service1.Periods period = 2;</code>
    */
-  int getWeekDaysValue();
+  int getPeriodValue();
   /**
-   * <code>.service1.WeekDays week_days = 2;</code>
+   * <code>.service1.Periods period = 2;</code>
    */
-  sw.stepCounter.service1.WeekDays getWeekDays();
+  sw.stepCounter.service1.Periods getPeriod();
 
   /**
    * <code>string message = 3;</code>

@@ -1,4 +1,10 @@
 package Servers;
+/**
+ * @author emrek
+ * @date 10/04/2023
+ * Server to add service and register using jmdns
+ * */
+
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -35,6 +41,7 @@ public class GrpcServer3 extends Thread{
 			//Server starting on the port number given
 			Server server2 = ServerBuilder.forPort(port)	
 					.addService(new S_Service3())
+					.intercept(new AuthInterceptor())
 					.build()
 					.start();
 

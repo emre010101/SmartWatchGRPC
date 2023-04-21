@@ -21,11 +21,8 @@ public class StepsStreamingRequest implements StreamObserver<StepsRequest>{
 	private int steps;
 	private int totalSteps; //to be written to database in every 10 minutes
 	private static int runTimeSteps; //to be sent to client when streaming is done
-    //private final Object lock = new Object();
     private static File directory = new File("C:\\Code\\SmartWatchGRPC\\database");
     private static final String FILE_NAME = directory.getAbsolutePath() + "//stepsDatabase.txt";
-	
-	
 	
 	public StepsStreamingRequest(StreamObserver<StepCount> stepSStreamObserver) {
 		System.out.println("ServerSide: receiving the steps... ");

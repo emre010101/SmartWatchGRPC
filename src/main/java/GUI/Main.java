@@ -42,12 +42,12 @@ import sw.Monitoring.service3.ServerResponse;
 import sw.Reminder.service2.TaskComplete;
 import sw.Reminder.service2.TaskReminder;
 import sw.Reminder.service2.Type;
-import sw.stepCounter.service1.HourlyStepCount;
-import sw.stepCounter.service1.HourlyStepRequest;
+import sw.stepCounter.service1.AverageStepCount;
+import sw.stepCounter.service1.AverageStepRequest;
+import sw.stepCounter.service1.Periods;
 import sw.stepCounter.service1.StepCount;
 import sw.stepCounter.service1.StepGoal;
 import sw.stepCounter.service1.StepsRequest;
-import sw.stepCounter.service1.WeekDays;
 import sw.stepCounter.service1.StepGoalResponse;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -567,25 +567,25 @@ public class Main extends Application {
 	}
 
 	/* User can choose the period want to see for steps he/she has done */
-	public static void getAverage(String period) {
+	public static void getAverage(String priod) {
 		System.out.println("CS: getAverage() invoked!");
-		WeekDays week = null;
+		Periods period = null;
 
-		if (period.equalsIgnoreCase("last day")) {
-			week = WeekDays.LAST_DAY;
-		} else if (period.equalsIgnoreCase("last 5 days")) {
-			week = WeekDays.LAST_5_DAYS;
-		} else if (period.equalsIgnoreCase("last 10 days")) {
-			week = WeekDays.LAST_10_DAYS;
-		} else if (period.equalsIgnoreCase("last 30 days")) {
-			week = WeekDays.LAST_30_DAYS;
+		if (priod.equalsIgnoreCase("last day")) {
+			period = Periods.LAST_DAY;
+		} else if (priod.equalsIgnoreCase("last 5 days")) {
+			period = Periods.LAST_5_DAYS;
+		} else if (priod.equalsIgnoreCase("last 10 days")) {
+			period = Periods.LAST_10_DAYS;
+		} else if (priod.equalsIgnoreCase("last 30 days")) {
+			period = Periods.LAST_30_DAYS;
 		} else {
-			week = WeekDays.LAST_5_DAYS;
+			period = Periods.LAST_5_DAYS;
 		}
 
-		HourlyStepRequest req = HourlyStepRequest.newBuilder().setWeekDays(week).build();
-		HourlyStepCount response = ServiceManager.blockingStubService1withMeta.getAverageHourlySteps(req);
-		String serverMessage = "\n" + "For the period: " + response.getWeekDays() + "\n" + "Average steps: "
+		AverageStepRequest req = AverageStepRequest.newBuilder().setPeriod(period).build();
+		AverageStepCount response = ServiceManager.blockingStubService1withMeta.getAverage(req);
+		String serverMessage = "\n" + "For the period: " + response.getPeriod() + "\n" + "Average steps: "
 				+ response.getAverageSteps() + "\n" + "Message: " + response.getMessage();
 		Platform.runLater(() -> {
 			StepServerResponseArea.appendText(serverMessage);
@@ -692,7 +692,6 @@ public class Main extends Application {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-
 			}
 
 			@Override
@@ -730,7 +729,7 @@ public class Main extends Application {
 
 		List<EmergencyContact> contactsList = user.getContactsList();
 		Platform.runLater(() -> {
-			MonitoringServerResponseArea.appendText("ClientSide: receiving the User Details: " + user.getName() + ", "
+			MonitoringServerResponseArea.appendText("\n"+"ClientSide: receiving the User Details: " + user.getName() + ", "
 					+ user.getAge() + ", " + user.getAddress() + ", " + user.getWeight() + ", " + user.getHeight());
 		});
 		System.out.println("Emergency Contacts:");
@@ -750,7 +749,7 @@ public class Main extends Application {
 		List<EmergencyContact> contactsList = user.getContactsList();
 
 		Platform.runLater(() -> {
-			MonitoringServerResponseArea.appendText("ClientSide: receiving the User Details: " + user.getName() + ", "
+			MonitoringServerResponseArea.appendText("\n"+"ClientSide: receiving the User Details: " + user.getName() + ", "
 					+ user.getAge() + ", " + user.getAddress() + ", " + user.getWeight() + ", " + user.getHeight());
 		});
 		for (EmergencyContact contact : contactsList) {
@@ -783,6 +782,8 @@ public class Main extends Application {
 			HeartRateRequest request = HeartRateRequest.newBuilder().setName(patientName)
 					.setHeartRate(ThreadLocalRandom.current().nextDouble(heart1, heart2)).build();
 			requestStreamObserver.onNext(request);
+		} catch (IllegalArgumentException e2) {
+			AlertBox.display("BOUND", "Second value must be greater!!");
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}

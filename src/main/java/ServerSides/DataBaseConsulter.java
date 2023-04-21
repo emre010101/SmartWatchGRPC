@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sw.Monitoring.service3.EmergencyContact;
-import sw.Monitoring.service3.GetHealthRecordsRequest;
 import sw.Monitoring.service3.UserRecords;
+import sw.stepCounter.service1.Periods;
 import sw.stepCounter.service1.WeekDays;
 
 public class DataBaseConsulter {
@@ -67,9 +67,9 @@ public class DataBaseConsulter {
     }
 
 	@SuppressWarnings("incomplete-switch")
-	public static int checkAverageSteps(WeekDays period) {
+	public static int checkAverageSteps(Periods periods) {
 		ZonedDateTime now = ZonedDateTime.now(ZoneId.systemDefault());
-		switch (period) {
+		switch (periods) {
 		
 		case LAST_DAY:
 			ZonedDateTime oneDayBefore = now.minusDays(24);

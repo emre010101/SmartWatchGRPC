@@ -2,6 +2,7 @@ package Servers;
 /**
  * @author emrek
  * @date 19/04/2023
+ * This class is used start the servers
  * */
 
 public class ServerAllStart {

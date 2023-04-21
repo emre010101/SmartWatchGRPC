@@ -8,19 +8,19 @@ package sw.stepCounter.service1;
  * HourlyStepRequest message references the TimePeriod enumeration
  * </pre>
  *
- * Protobuf type {@code service1.HourlyStepRequest}
+ * Protobuf type {@code service1.AverageStepRequest}
  */
-public  final class HourlyStepRequest extends
+public  final class AverageStepRequest extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:service1.HourlyStepRequest)
-    HourlyStepRequestOrBuilder {
+    // @@protoc_insertion_point(message_implements:service1.AverageStepRequest)
+    AverageStepRequestOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use HourlyStepRequest.newBuilder() to construct.
-  private HourlyStepRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use AverageStepRequest.newBuilder() to construct.
+  private AverageStepRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private HourlyStepRequest() {
-    weekDays_ = 0;
+  private AverageStepRequest() {
+    period_ = 0;
   }
 
   @java.lang.Override
@@ -28,7 +28,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private HourlyStepRequest(
+  private AverageStepRequest(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -50,7 +50,7 @@ private static final long serialVersionUID = 0L;
           case 8: {
             int rawValue = input.readEnum();
 
-            weekDays_ = rawValue;
+            period_ = rawValue;
             break;
           }
           default: {
@@ -74,32 +74,32 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return sw.stepCounter.service1.stepCounterImpl.internal_static_service1_HourlyStepRequest_descriptor;
+    return sw.stepCounter.service1.stepCounterImpl.internal_static_service1_AverageStepRequest_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return sw.stepCounter.service1.stepCounterImpl.internal_static_service1_HourlyStepRequest_fieldAccessorTable
+    return sw.stepCounter.service1.stepCounterImpl.internal_static_service1_AverageStepRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            sw.stepCounter.service1.HourlyStepRequest.class, sw.stepCounter.service1.HourlyStepRequest.Builder.class);
+            sw.stepCounter.service1.AverageStepRequest.class, sw.stepCounter.service1.AverageStepRequest.Builder.class);
   }
 
-  public static final int WEEK_DAYS_FIELD_NUMBER = 1;
-  private int weekDays_;
+  public static final int PERIOD_FIELD_NUMBER = 1;
+  private int period_;
   /**
-   * <code>.service1.WeekDays week_days = 1;</code>
+   * <code>.service1.Periods period = 1;</code>
    */
-  public int getWeekDaysValue() {
-    return weekDays_;
+  public int getPeriodValue() {
+    return period_;
   }
   /**
-   * <code>.service1.WeekDays week_days = 1;</code>
+   * <code>.service1.Periods period = 1;</code>
    */
-  public sw.stepCounter.service1.WeekDays getWeekDays() {
+  public sw.stepCounter.service1.Periods getPeriod() {
     @SuppressWarnings("deprecation")
-    sw.stepCounter.service1.WeekDays result = sw.stepCounter.service1.WeekDays.valueOf(weekDays_);
-    return result == null ? sw.stepCounter.service1.WeekDays.UNRECOGNIZED : result;
+    sw.stepCounter.service1.Periods result = sw.stepCounter.service1.Periods.valueOf(period_);
+    return result == null ? sw.stepCounter.service1.Periods.UNRECOGNIZED : result;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -116,8 +116,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (weekDays_ != sw.stepCounter.service1.WeekDays.LAST_DAY.getNumber()) {
-      output.writeEnum(1, weekDays_);
+    if (period_ != sw.stepCounter.service1.Periods.LAST_DAY.getNumber()) {
+      output.writeEnum(1, period_);
     }
     unknownFields.writeTo(output);
   }
@@ -128,9 +128,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (weekDays_ != sw.stepCounter.service1.WeekDays.LAST_DAY.getNumber()) {
+    if (period_ != sw.stepCounter.service1.Periods.LAST_DAY.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
-        .computeEnumSize(1, weekDays_);
+        .computeEnumSize(1, period_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -142,13 +142,13 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof sw.stepCounter.service1.HourlyStepRequest)) {
+    if (!(obj instanceof sw.stepCounter.service1.AverageStepRequest)) {
       return super.equals(obj);
     }
-    sw.stepCounter.service1.HourlyStepRequest other = (sw.stepCounter.service1.HourlyStepRequest) obj;
+    sw.stepCounter.service1.AverageStepRequest other = (sw.stepCounter.service1.AverageStepRequest) obj;
 
     boolean result = true;
-    result = result && weekDays_ == other.weekDays_;
+    result = result && period_ == other.period_;
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -160,76 +160,76 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + WEEK_DAYS_FIELD_NUMBER;
-    hash = (53 * hash) + weekDays_;
+    hash = (37 * hash) + PERIOD_FIELD_NUMBER;
+    hash = (53 * hash) + period_;
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static sw.stepCounter.service1.HourlyStepRequest parseFrom(
+  public static sw.stepCounter.service1.AverageStepRequest parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static sw.stepCounter.service1.HourlyStepRequest parseFrom(
+  public static sw.stepCounter.service1.AverageStepRequest parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static sw.stepCounter.service1.HourlyStepRequest parseFrom(
+  public static sw.stepCounter.service1.AverageStepRequest parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static sw.stepCounter.service1.HourlyStepRequest parseFrom(
+  public static sw.stepCounter.service1.AverageStepRequest parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static sw.stepCounter.service1.HourlyStepRequest parseFrom(byte[] data)
+  public static sw.stepCounter.service1.AverageStepRequest parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static sw.stepCounter.service1.HourlyStepRequest parseFrom(
+  public static sw.stepCounter.service1.AverageStepRequest parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static sw.stepCounter.service1.HourlyStepRequest parseFrom(java.io.InputStream input)
+  public static sw.stepCounter.service1.AverageStepRequest parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static sw.stepCounter.service1.HourlyStepRequest parseFrom(
+  public static sw.stepCounter.service1.AverageStepRequest parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static sw.stepCounter.service1.HourlyStepRequest parseDelimitedFrom(java.io.InputStream input)
+  public static sw.stepCounter.service1.AverageStepRequest parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static sw.stepCounter.service1.HourlyStepRequest parseDelimitedFrom(
+  public static sw.stepCounter.service1.AverageStepRequest parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static sw.stepCounter.service1.HourlyStepRequest parseFrom(
+  public static sw.stepCounter.service1.AverageStepRequest parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static sw.stepCounter.service1.HourlyStepRequest parseFrom(
+  public static sw.stepCounter.service1.AverageStepRequest parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -242,7 +242,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(sw.stepCounter.service1.HourlyStepRequest prototype) {
+  public static Builder newBuilder(sw.stepCounter.service1.AverageStepRequest prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -262,26 +262,26 @@ private static final long serialVersionUID = 0L;
    * HourlyStepRequest message references the TimePeriod enumeration
    * </pre>
    *
-   * Protobuf type {@code service1.HourlyStepRequest}
+   * Protobuf type {@code service1.AverageStepRequest}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:service1.HourlyStepRequest)
-      sw.stepCounter.service1.HourlyStepRequestOrBuilder {
+      // @@protoc_insertion_point(builder_implements:service1.AverageStepRequest)
+      sw.stepCounter.service1.AverageStepRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return sw.stepCounter.service1.stepCounterImpl.internal_static_service1_HourlyStepRequest_descriptor;
+      return sw.stepCounter.service1.stepCounterImpl.internal_static_service1_AverageStepRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return sw.stepCounter.service1.stepCounterImpl.internal_static_service1_HourlyStepRequest_fieldAccessorTable
+      return sw.stepCounter.service1.stepCounterImpl.internal_static_service1_AverageStepRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              sw.stepCounter.service1.HourlyStepRequest.class, sw.stepCounter.service1.HourlyStepRequest.Builder.class);
+              sw.stepCounter.service1.AverageStepRequest.class, sw.stepCounter.service1.AverageStepRequest.Builder.class);
     }
 
-    // Construct using sw.stepCounter.service1.HourlyStepRequest.newBuilder()
+    // Construct using sw.stepCounter.service1.AverageStepRequest.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -299,7 +299,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      weekDays_ = 0;
+      period_ = 0;
 
       return this;
     }
@@ -307,17 +307,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return sw.stepCounter.service1.stepCounterImpl.internal_static_service1_HourlyStepRequest_descriptor;
+      return sw.stepCounter.service1.stepCounterImpl.internal_static_service1_AverageStepRequest_descriptor;
     }
 
     @java.lang.Override
-    public sw.stepCounter.service1.HourlyStepRequest getDefaultInstanceForType() {
-      return sw.stepCounter.service1.HourlyStepRequest.getDefaultInstance();
+    public sw.stepCounter.service1.AverageStepRequest getDefaultInstanceForType() {
+      return sw.stepCounter.service1.AverageStepRequest.getDefaultInstance();
     }
 
     @java.lang.Override
-    public sw.stepCounter.service1.HourlyStepRequest build() {
-      sw.stepCounter.service1.HourlyStepRequest result = buildPartial();
+    public sw.stepCounter.service1.AverageStepRequest build() {
+      sw.stepCounter.service1.AverageStepRequest result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -325,9 +325,9 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public sw.stepCounter.service1.HourlyStepRequest buildPartial() {
-      sw.stepCounter.service1.HourlyStepRequest result = new sw.stepCounter.service1.HourlyStepRequest(this);
-      result.weekDays_ = weekDays_;
+    public sw.stepCounter.service1.AverageStepRequest buildPartial() {
+      sw.stepCounter.service1.AverageStepRequest result = new sw.stepCounter.service1.AverageStepRequest(this);
+      result.period_ = period_;
       onBuilt();
       return result;
     }
@@ -366,18 +366,18 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof sw.stepCounter.service1.HourlyStepRequest) {
-        return mergeFrom((sw.stepCounter.service1.HourlyStepRequest)other);
+      if (other instanceof sw.stepCounter.service1.AverageStepRequest) {
+        return mergeFrom((sw.stepCounter.service1.AverageStepRequest)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(sw.stepCounter.service1.HourlyStepRequest other) {
-      if (other == sw.stepCounter.service1.HourlyStepRequest.getDefaultInstance()) return this;
-      if (other.weekDays_ != 0) {
-        setWeekDaysValue(other.getWeekDaysValue());
+    public Builder mergeFrom(sw.stepCounter.service1.AverageStepRequest other) {
+      if (other == sw.stepCounter.service1.AverageStepRequest.getDefaultInstance()) return this;
+      if (other.period_ != 0) {
+        setPeriodValue(other.getPeriodValue());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -394,11 +394,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      sw.stepCounter.service1.HourlyStepRequest parsedMessage = null;
+      sw.stepCounter.service1.AverageStepRequest parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (sw.stepCounter.service1.HourlyStepRequest) e.getUnfinishedMessage();
+        parsedMessage = (sw.stepCounter.service1.AverageStepRequest) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -408,47 +408,47 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private int weekDays_ = 0;
+    private int period_ = 0;
     /**
-     * <code>.service1.WeekDays week_days = 1;</code>
+     * <code>.service1.Periods period = 1;</code>
      */
-    public int getWeekDaysValue() {
-      return weekDays_;
+    public int getPeriodValue() {
+      return period_;
     }
     /**
-     * <code>.service1.WeekDays week_days = 1;</code>
+     * <code>.service1.Periods period = 1;</code>
      */
-    public Builder setWeekDaysValue(int value) {
-      weekDays_ = value;
+    public Builder setPeriodValue(int value) {
+      period_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>.service1.WeekDays week_days = 1;</code>
+     * <code>.service1.Periods period = 1;</code>
      */
-    public sw.stepCounter.service1.WeekDays getWeekDays() {
+    public sw.stepCounter.service1.Periods getPeriod() {
       @SuppressWarnings("deprecation")
-      sw.stepCounter.service1.WeekDays result = sw.stepCounter.service1.WeekDays.valueOf(weekDays_);
-      return result == null ? sw.stepCounter.service1.WeekDays.UNRECOGNIZED : result;
+      sw.stepCounter.service1.Periods result = sw.stepCounter.service1.Periods.valueOf(period_);
+      return result == null ? sw.stepCounter.service1.Periods.UNRECOGNIZED : result;
     }
     /**
-     * <code>.service1.WeekDays week_days = 1;</code>
+     * <code>.service1.Periods period = 1;</code>
      */
-    public Builder setWeekDays(sw.stepCounter.service1.WeekDays value) {
+    public Builder setPeriod(sw.stepCounter.service1.Periods value) {
       if (value == null) {
         throw new NullPointerException();
       }
       
-      weekDays_ = value.getNumber();
+      period_ = value.getNumber();
       onChanged();
       return this;
     }
     /**
-     * <code>.service1.WeekDays week_days = 1;</code>
+     * <code>.service1.Periods period = 1;</code>
      */
-    public Builder clearWeekDays() {
+    public Builder clearPeriod() {
       
-      weekDays_ = 0;
+      period_ = 0;
       onChanged();
       return this;
     }
@@ -465,41 +465,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:service1.HourlyStepRequest)
+    // @@protoc_insertion_point(builder_scope:service1.AverageStepRequest)
   }
 
-  // @@protoc_insertion_point(class_scope:service1.HourlyStepRequest)
-  private static final sw.stepCounter.service1.HourlyStepRequest DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:service1.AverageStepRequest)
+  private static final sw.stepCounter.service1.AverageStepRequest DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new sw.stepCounter.service1.HourlyStepRequest();
+    DEFAULT_INSTANCE = new sw.stepCounter.service1.AverageStepRequest();
   }
 
-  public static sw.stepCounter.service1.HourlyStepRequest getDefaultInstance() {
+  public static sw.stepCounter.service1.AverageStepRequest getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<HourlyStepRequest>
-      PARSER = new com.google.protobuf.AbstractParser<HourlyStepRequest>() {
+  private static final com.google.protobuf.Parser<AverageStepRequest>
+      PARSER = new com.google.protobuf.AbstractParser<AverageStepRequest>() {
     @java.lang.Override
-    public HourlyStepRequest parsePartialFrom(
+    public AverageStepRequest parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new HourlyStepRequest(input, extensionRegistry);
+      return new AverageStepRequest(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<HourlyStepRequest> parser() {
+  public static com.google.protobuf.Parser<AverageStepRequest> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<HourlyStepRequest> getParserForType() {
+  public com.google.protobuf.Parser<AverageStepRequest> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public sw.stepCounter.service1.HourlyStepRequest getDefaultInstanceForType() {
+  public sw.stepCounter.service1.AverageStepRequest getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

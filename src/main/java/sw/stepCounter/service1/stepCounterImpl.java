@@ -25,15 +25,15 @@ public final class stepCounterImpl {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_service1_StepCount_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_service1_HourlyStepRequest_descriptor;
+    internal_static_service1_AverageStepRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_service1_HourlyStepRequest_fieldAccessorTable;
+      internal_static_service1_AverageStepRequest_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_service1_HourlyStepCount_descriptor;
+    internal_static_service1_AverageStepCount_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_service1_HourlyStepCount_fieldAccessorTable;
+      internal_static_service1_AverageStepCount_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
     internal_static_service1_StepGoal_descriptor;
   static final 
@@ -55,24 +55,24 @@ public final class stepCounterImpl {
     java.lang.String[] descriptorData = {
       "\n\016service1.proto\022\010service1\032\033google/proto" +
       "buf/empty.proto\"\035\n\014StepsRequest\022\r\n\005steps" +
-      "\030\001 \001(\005\"\032\n\tStepCount\022\r\n\005count\030\001 \001(\005\":\n\021Ho" +
-      "urlyStepRequest\022%\n\tweek_days\030\001 \001(\0162\022.ser" +
-      "vice1.WeekDays\"`\n\017HourlyStepCount\022\025\n\rave" +
-      "rage_steps\030\001 \001(\005\022%\n\tweek_days\030\002 \001(\0162\022.se" +
-      "rvice1.WeekDays\022\017\n\007message\030\003 \001(\t\"\030\n\010Step" +
-      "Goal\022\014\n\004goal\030\001 \001(\005\"B\n\020StepGoalResponse\022\017" +
-      "\n\007success\030\001 \001(\010\022\014\n\004left\030\002 \001(\005\022\017\n\007message" +
-      "\030\003 \001(\t*M\n\010WeekDays\022\014\n\010LAST_DAY\020\000\022\017\n\013LAST" +
-      "_5_DAYS\020\001\022\020\n\014LAST_10_DAYS\020\002\022\020\n\014LAST_30_D" +
-      "AYS\020\0032\244\002\n\013StepCounter\022<\n\tSendSteps\022\026.ser" +
-      "vice1.StepsRequest\032\023.service1.StepCount\"" +
-      "\000(\001\022A\n\020GetLastHourSteps\022\026.google.protobu" +
-      "f.Empty\032\023.service1.StepCount\"\000\022Q\n\025GetAve" +
-      "rageHourlySteps\022\033.service1.HourlyStepReq" +
-      "uest\032\031.service1.HourlyStepCount\"\000\022A\n\013Set" +
-      "StepGoal\022\022.service1.StepGoal\032\032.service1." +
-      "StepGoalResponse\"\0000\001B,\n\027sw.stepCounter.s" +
-      "ervice1B\017stepCounterImplP\001b\006proto3"
+      "\030\001 \001(\005\"\032\n\tStepCount\022\r\n\005count\030\001 \001(\005\"7\n\022Av" +
+      "erageStepRequest\022!\n\006period\030\001 \001(\0162\021.servi" +
+      "ce1.Periods\"]\n\020AverageStepCount\022\025\n\ravera" +
+      "ge_steps\030\001 \001(\005\022!\n\006period\030\002 \001(\0162\021.service" +
+      "1.Periods\022\017\n\007message\030\003 \001(\t\"\030\n\010StepGoal\022\014" +
+      "\n\004goal\030\001 \001(\005\"B\n\020StepGoalResponse\022\017\n\007succ" +
+      "ess\030\001 \001(\010\022\014\n\004left\030\002 \001(\005\022\017\n\007message\030\003 \001(\t" +
+      "*L\n\007Periods\022\014\n\010LAST_DAY\020\000\022\017\n\013LAST_5_DAYS" +
+      "\020\001\022\020\n\014LAST_10_DAYS\020\002\022\020\n\014LAST_30_DAYS\020\0032\233" +
+      "\002\n\013StepCounter\022<\n\tSendSteps\022\026.service1.S" +
+      "tepsRequest\032\023.service1.StepCount\"\000(\001\022A\n\020" +
+      "GetLastHourSteps\022\026.google.protobuf.Empty" +
+      "\032\023.service1.StepCount\"\000\022H\n\nGetAverage\022\034." +
+      "service1.AverageStepRequest\032\032.service1.A" +
+      "verageStepCount\"\000\022A\n\013SetStepGoal\022\022.servi" +
+      "ce1.StepGoal\032\032.service1.StepGoalResponse" +
+      "\"\0000\001B,\n\027sw.stepCounter.service1B\017stepCou" +
+      "nterImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -99,18 +99,18 @@ public final class stepCounterImpl {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_service1_StepCount_descriptor,
         new java.lang.String[] { "Count", });
-    internal_static_service1_HourlyStepRequest_descriptor =
+    internal_static_service1_AverageStepRequest_descriptor =
       getDescriptor().getMessageTypes().get(2);
-    internal_static_service1_HourlyStepRequest_fieldAccessorTable = new
+    internal_static_service1_AverageStepRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_service1_HourlyStepRequest_descriptor,
-        new java.lang.String[] { "WeekDays", });
-    internal_static_service1_HourlyStepCount_descriptor =
+        internal_static_service1_AverageStepRequest_descriptor,
+        new java.lang.String[] { "Period", });
+    internal_static_service1_AverageStepCount_descriptor =
       getDescriptor().getMessageTypes().get(3);
-    internal_static_service1_HourlyStepCount_fieldAccessorTable = new
+    internal_static_service1_AverageStepCount_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_service1_HourlyStepCount_descriptor,
-        new java.lang.String[] { "AverageSteps", "WeekDays", "Message", });
+        internal_static_service1_AverageStepCount_descriptor,
+        new java.lang.String[] { "AverageSteps", "Period", "Message", });
     internal_static_service1_StepGoal_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_service1_StepGoal_fieldAccessorTable = new

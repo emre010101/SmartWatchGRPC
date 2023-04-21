@@ -23,18 +23,16 @@ import org.apache.logging.log4j.Logger;*/
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
-import sw.stepCounter.service1.HourlyStepCount;
-import sw.stepCounter.service1.HourlyStepRequest;
+import sw.stepCounter.service1.AverageStepCount;
+import sw.stepCounter.service1.AverageStepRequest;
+import sw.stepCounter.service1.Periods;
 import sw.stepCounter.service1.StepCount;
 import sw.stepCounter.service1.StepCounterGrpc;
 import sw.stepCounter.service1.StepCounterGrpc.StepCounterBlockingStub;
 import sw.stepCounter.service1.StepCounterGrpc.StepCounterStub;
 import sw.stepCounter.service1.StepsRequest;
-import sw.stepCounter.service1.WeekDays;
-
 public class C_Service1 {
-	
-	
+
 	private static StepCounterBlockingStub blockingStub;
 	private static StepCounterStub asyncStub;
 	private static ManagedChannel managedChannel;
@@ -110,7 +108,6 @@ public class C_Service1 {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
@@ -181,36 +178,37 @@ public class C_Service1 {
 	
 	public static void getAverage() {
 		System.out.println("getAverage invoked!!");
-		WeekDays week = null;
+		Periods period = null;
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Please type from which day to now want to see the daily average"
 				+ "/n last day, last 5 day, last 10 day, last 30 Day");
 		
 		while (true) {
-			String period = sc.nextLine();
-			if(period.equalsIgnoreCase("last day")) {
-				week = WeekDays.LAST_DAY;
+			String input = sc.nextLine();
+			if(input.equalsIgnoreCase("last day")) {
+				period = Periods.LAST_DAY;
 				break;
-			}else if(period.equalsIgnoreCase("last 5 day")){
-				week = WeekDays.LAST_5_DAYS;
+			}else if(input.equalsIgnoreCase("last 5 day")){
+				period = Periods.LAST_5_DAYS;
 				break;
-			}else if(period.equalsIgnoreCase("last 10 day")){
-				week = WeekDays.LAST_10_DAYS;
+			}else if(input.equalsIgnoreCase("last 10 day")){
+				period = Periods.LAST_10_DAYS;
 				break;
-			}else if(period.equalsIgnoreCase("last 30 day")){
-				week = WeekDays.LAST_30_DAYS;
+			}else if(input.equalsIgnoreCase("last 30 day")){
+				period = Periods.LAST_30_DAYS;
 				break;
 			}else {
 				System.out.println("Please type valid period!!");
 			}
 		}
+		sc.close();
 		
 		//WeekDays.LAST_DAY
 		
-		HourlyStepRequest req = HourlyStepRequest.newBuilder().setWeekDays(week).build();
-		HourlyStepCount response = blockingStub.getAverageHourlySteps(req);
+		AverageStepRequest req = AverageStepRequest.newBuilder().setPeriod(period).build();
+		AverageStepCount response = blockingStub.getAverage(req);
 		System.out.println(
-				"For the period: " + response.getWeekDays() + "\n"+
+				"For the period: " + response.getPeriod() + "\n"+
 				"Average steps: " + response.getAverageSteps()+ "\n"+
 				"Message: " + response.getMessage()
 				);
