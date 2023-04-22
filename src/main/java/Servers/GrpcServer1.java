@@ -14,7 +14,7 @@ import java.util.Properties;
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 
-import ServerSides.S_Service1;
+import Services.S_Service1;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
@@ -89,13 +89,12 @@ public class GrpcServer1 extends Thread{
 	            // Create a JmDNS instance
 	            JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
 	            
-	            String service_type = prop.getProperty("service_type") ;//"_http._tcp.local.";
+	            String service_type = prop.getProperty("service_type") ;
 	            String service_name = prop.getProperty("service_name")  ;
-	            int service_port = Integer.valueOf( prop.getProperty("service_port") );// 
+	            int service_port = Integer.valueOf( prop.getProperty("service_port") );
 
 	            
-	            String service_description_properties = prop.getProperty("service_description")  ;//"path=index.html";
-	            
+	            String service_description_properties = prop.getProperty("service_description")  ;
 	            // Register a service
 	            ServiceInfo serviceInfo = ServiceInfo.create(service_type, service_name, service_port, service_description_properties);
 	            jmdns.registerService(serviceInfo);

@@ -1,4 +1,4 @@
-package ServerSides;
+package Services;
 
 import io.grpc.stub.StreamObserver;
 import sw.Monitoring.service3.HeartRateRequest;

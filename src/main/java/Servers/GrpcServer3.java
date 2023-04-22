@@ -15,7 +15,7 @@ import java.util.Properties;
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 
-import ServerSides.S_Service3;
+import Services.S_Service3;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 

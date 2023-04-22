@@ -1,4 +1,4 @@
-package ServerSides;
+package Services;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -16,7 +16,6 @@ import java.util.List;
 import sw.Monitoring.service3.EmergencyContact;
 import sw.Monitoring.service3.UserRecords;
 import sw.stepCounter.service1.Periods;
-import sw.stepCounter.service1.WeekDays;
 
 public class DataBaseConsulter {
 	

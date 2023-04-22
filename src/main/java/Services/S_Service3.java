@@ -1,4 +1,4 @@
-package ServerSides;
+package Services;
 
 import java.util.List;
 
@@ -11,7 +11,6 @@ import sw.Monitoring.service3.HeartRateWarning;
 import sw.Monitoring.service3.MonitoringGrpc.MonitoringImplBase;
 import sw.Monitoring.service3.ServerResponse;
 import sw.Monitoring.service3.UserRecords;
-//import sw.Monitoring.service3.PatientID;*/
 
 public class S_Service3 extends MonitoringImplBase{
 

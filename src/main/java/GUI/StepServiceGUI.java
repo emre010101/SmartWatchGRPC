@@ -1,6 +1,5 @@
 package GUI;
 
-import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -9,10 +8,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+@SuppressWarnings("restriction")
 public class StepServiceGUI {
-
-    public static VBox createStepServiceLayout(Button buttonBackStep, Button startStep, Button stopStep, Button getLastHourStepsButton, Button getAverageHourlyStepsButton, Button setStepGoalButton, TextArea serverMessageArea, TextField averageStepsPerMinuteField, TextField stepGoalField, ComboBox<String> averageHourlyStepsComboBox) {
-        VBox layoutStep = new VBox(20);
+	  public static VBox createStepServiceLayout(Button buttonBackStep, Button startStep, Button stopStep, Button getLastHourStepsButton, Button getAverageHourlyStepsButton, Button setStepGoalButton, TextArea serverMessageArea, TextField averageStepsPerMinuteField, TextField stepGoalField, ComboBox<String> averageHourlyStepsComboBox) {
+		VBox layoutStep = new VBox(20);
 
         Label title = new Label("Step Service");
         title.setFont(Font.font("Arial", FontWeight.BOLD, 24));
@@ -32,7 +31,7 @@ public class StepServiceGUI {
 
         // Group get average hourly steps button and the drop-down list together
         HBox getAverageHourlyStepsGroup = new HBox(10);
-        getAverageHourlyStepsGroup.getChildren().addAll(getAverageHourlyStepsButton, new Label("Average daily steps:"), averageHourlyStepsComboBox);
+        getAverageHourlyStepsGroup.getChildren().addAll(getAverageHourlyStepsButton, new Label("Choose a period:"), averageHourlyStepsComboBox);
 
         // Add the groups to the grid
         buttonGrid.add(startStopGroup, 0, 0, 2, 1);
