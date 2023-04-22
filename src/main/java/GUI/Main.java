@@ -542,7 +542,6 @@ public class Main extends Application {
 
 		};
 	}
-
 	/*
 	 * Using scheduleded scheduler thos ,method will be invoked the sent steps
 	 * periodically with the amount of steps typed by the user

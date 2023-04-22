@@ -1,5 +1,13 @@
 package Services;
 
+/**
+ * @author emrek
+ * @date 31/03/2023
+ * DataBaseConsulter.java
+ * This class responsible for
+ * manipulating the data and reading it
+ * */
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
