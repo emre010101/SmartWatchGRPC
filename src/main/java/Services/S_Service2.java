@@ -49,6 +49,11 @@ public class S_Service2 extends ReminderImplBase{
 				String[] parts = line.split("<->");
 				TaskReminder reply = TaskReminder.newBuilder().setTaskName(parts[0]).setDateTime(parts[1]).setTypeValue(Integer.parseInt(parts[2])).build();
 				responseObserver.onNext(reply);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 			System.out.println("Server: getTaskList is completed...");
 			responseObserver.onCompleted();

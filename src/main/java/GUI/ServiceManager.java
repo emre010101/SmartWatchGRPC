@@ -55,6 +55,7 @@ public class ServiceManager {
 		step.join();
 		port1 = step.getPort();
 		resolvedIP1 = step.getResolvedIP();
+		System.out.println("Teeeeeeeeeeeeees: " + resolvedIP1);
 		initializeStepsServiceChannel();
 		reminder.join();
 		port2 = reminder.getPort();

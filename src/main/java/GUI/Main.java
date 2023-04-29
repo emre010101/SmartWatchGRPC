@@ -665,8 +665,9 @@ public class Main extends Application {
 		sw.Reminder.service2.ServerResponse response = ServiceManager.blockingStubService2withMeta.setTaskReminder(req);
 		System.out.println("Service message: " + response.getConfirmed());
 		Platform.runLater(() -> {
-
-			taskListView.getItems().add(req);
+			if(taskListView!=null) {
+				taskListView.getItems().add(req);
+			}
 			ReminderServerResponseArea.appendText("\n" + "Server message: " + response.getConfirmed() + "\n");
 
 		});

@@ -36,7 +36,7 @@ public class GrpcServer1 extends Thread{
 		//Port number is also in the properties file
 		int port = Integer.valueOf(prop.getProperty("service_port"));
 		
-		
+	
 		//Using try and catch on starting a server
 		try {
 			//Server starting on the port number given
